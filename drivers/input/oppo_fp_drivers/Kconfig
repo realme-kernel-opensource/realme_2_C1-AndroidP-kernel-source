@@ -1,0 +1,15 @@
+config SILEAD_FP_PLATFORM
+ bool "silead fingerprint Driver"
+          default y
+          help
+            Say Y here if you have a silead fingerprint.
+            If unsure, say N
+
+source "drivers/input/oppo_fp_drivers/silead/Kconfig"
+
+config FINGERPRINT_FPC_1020
+         tristate "FPC Fingerprint"
+         default y
+         help
+            FPC Fingerprint
+source "drivers/input/oppo_fp_drivers/fpc1020/Kconfig

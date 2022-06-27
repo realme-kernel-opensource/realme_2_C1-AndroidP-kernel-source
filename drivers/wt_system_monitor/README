@@ -1,0 +1,3 @@
+wt_system_monitor module
+1. print the bootloader log to kmsg
+2. record crash reason

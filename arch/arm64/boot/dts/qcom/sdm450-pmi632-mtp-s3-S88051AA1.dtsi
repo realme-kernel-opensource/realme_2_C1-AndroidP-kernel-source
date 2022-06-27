@@ -1,0 +1,250 @@
+/*
+ * Copyright (c) 2018, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+#include "msm8953-mtp.dtsi"
+#include "dsi-panel-nt36525-tianma-hdp-video.dtsi"
+#include "dsi-panel-nt36525-truly-hdp-video.dtsi"
+#include "dsi-panel-ilt9881h_txd-hdp-video.dtsi"
+#include "dsi-panel-ilt9881h_hlt-hdp-video.dtsi"
+#include "dsi-panel-ilt9881h-hlt-new-id-hdp-video.dtsi"
+#include "dsi-panel-hx83102d_hlt-hdp-video.dtsi"
+#include "dsi-panel-hx831112a_huaxian-hdp-video.dtsi"
+#include "dsi-panel-ft8006p-truly-hdp-video.dtsi"
+#include "dsi-panel-ilt7807g-huaxian-hdp-video.dtsi"
+
+/*
+&eeprom0 {
+	cam_vdig-supply = <&pm8953_l23>;
+};
+
+&camera0 {
+	cam_vdig-supply = <&pm8953_l23>;
+};
+*/
+
+&mdss_dsi0 {
+	qcom,dsi-pref-prim-pan = <&dsi_sim_vid>;
+	pinctrl-names = "mdss_default", "mdss_sleep";
+	pinctrl-0 = <&mdss_dsi_active &mdss_te_active>;
+	pinctrl-1 = <&mdss_dsi_suspend &mdss_te_suspend>;
+
+	parent_iovdd_gpio-supply = <&pm8953_s4>;
+	iovdd_gpio-supply = <&iovdd_gpio_vreg>;
+	//qcom,platform-bklight-en-gpio = <&pm8953_gpios 4 0>;
+	lab-supply = <&lcdb_ldo_vreg>;
+	ibb-supply = <&lcdb_ncp_vreg>;
+
+};
+&dsi_nt36525_tianma_hdp_video {
+        qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
+ };
+ &dsi_nt36525_truly_hdp_video {
+        qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
+ };
+ &dsi_ilt9881h_txd_hdp_video {
+        qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
+ };
+ &dsi_ilt9881h_hlt_hdp_video {
+        qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
+ };
+ &dsi_ilt9881h_hlt_new_id_hdp_video {
+        qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
+ };
+ &dsi_hx83102d_hlt_hdp_video {
+        qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
+ };
+ &dsi_hx831112a_huaxian_hdp_video {
+        qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
+ };
+ &dsi_ft8006p_truly_hdp_video {
+        qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
+ };
+ &dsi_ilt7807g_huaxian_hdp_video {
+        qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
+ };
+
+&soc {
+	sn_fuse: snfuse@0xa0128 {
+		compatible = "qcom,sn-fuse";
+		reg = <0xa0128 0x4>;
+		reg-names = "sn-base";
+	};
+
+	sec_boot_fuse: secbootfuse@0xa41d0 {
+		compatible = "qcom,sec-boot-fuse";
+		reg = <0xa41d0 0x4>;
+		reg-names = "sec-boot-base";
+	};
+
+	int_codec: sound {
+		status = "okay";
+		qcom,msm-mbhc-hphl-swh = <1>;
+		qcom,msm-micbias2-ext-cap;
+		qcom,audio-routing =
+				"RX_BIAS", "MCLK",
+				"SPK_RX_BIAS", "MCLK",
+				"INT_LDO_H", "MCLK",
+				"RX_I2S_CLK", "MCLK",
+				"TX_I2S_CLK", "MCLK",
+				"MIC BIAS External", "Handset Mic",
+				"MIC BIAS Internal2", "Headset Mic",
+				"AMIC1", "MIC BIAS External",
+				"AMIC2", "MIC BIAS Internal2",
+				"ADC1_IN", "ADC1_OUT",
+				"ADC2_IN", "ADC2_OUT",
+				"ADC3_IN", "ADC3_OUT",
+				"PDM_IN_RX1", "PDM_OUT_RX1",
+				"PDM_IN_RX2", "PDM_OUT_RX2",
+				"PDM_IN_RX3", "PDM_OUT_RX3";
+
+		qcom,msm-spk-ext-pa = <&tlmm 96 0>;
+		qcom,cdc-us-euro-gpios;
+		qcom,cdc-us-eu-gpios;
+		asoc-wsa-codec-names;
+	};
+
+	i2c@78b6000 {
+		status = "disabled";
+		wsa881x_i2c_f: wsa881x-i2c-codec@f {
+			status = "disabled";
+		};
+		wsa881x_i2c_45: wsa881x-i2c-codec@45 {
+			status = "disabled";
+		};
+	};
+	gpio_keys {
+		vol_up {
+			label = "volume_down";
+			gpios = <&tlmm 85 0x1>;
+			linux,input-type = <1>;
+			linux,code = <114>;
+			debounce-interval = <15>;
+		};
+	};
+
+	silead_fp {
+	   compatible = "sil,silead_fp";
+		qcom,qup-id = <7>;
+		interrupt-parent = <&tlmm>;
+		interrupts = <48 0x1>;
+		irq-gpios = <&tlmm 48 0x00>;
+		rst-gpios = <&tlmm 140 0x00>;
+		power-gpios = <&tlmm 134 0x00>;
+		spi-max-frequency = <4800000>;
+		status="ok";
+	};
+	/*goodix fingerprint*/
+	goodix_fp {
+		compatible = "goodix,fingerprint";
+		interrupt-parent = <&tlmm>;
+		interrupts = <48 0x1>;
+		fp-gpio-irq = <&tlmm 48 0x00>;
+		fp-gpio-reset = <&tlmm 140 0x00>;
+		power_enable = <&tlmm 134 0x00>;
+		status = "okay";
+	};
+	/*suwuve fingerprint*/
+	sw_fp{
+                 compatible = "qcom,fingerprint";
+                 status = "ok";
+                 reg = <0>;
+                 interrupt-parent = <&tlmm>;
+                 interrupts = <48 0x0>;
+                 fp,gpio_rst = <&tlmm 140 0x0>;
+                 fp,gpio_irq = <&tlmm 48 0x0>;
+                 fp,gpio_vdd3v = <&tlmm 134 0x0>;
+         };
+    /*fpc fingerprint*/
+    fpc1020 {
+		status = "ok";
+		compatible = "fpc,fpc1020";
+		interrupt-parent = <&tlmm>;
+		interrupts = <48 0x0>;
+		fpc,gpio_rst    = <&tlmm 140 0x0>;
+		fpc,gpio_irq    = <&tlmm 48 0x0>;
+
+		pinctrl-names = "fpc1020_reset_reset",
+			"fpc1020_reset_active",
+			"fpc1020_irq_active";
+
+		pinctrl-0 = <&msm_gpio_140>;
+		pinctrl-1 = <&msm_gpio_140_output_high>;
+		pinctrl-2 = <&msm_gpio_48>;
+	};
+};
+
+&spmi_bus {
+	qcom,pm8953@0 {
+		qcom,power-on@800 {
+			qcom,pon_2 {
+				qcom,pon-type = <1>;
+				qcom,pull-up = <1>;
+				linux,code = <115>;
+			};
+		};
+	};
+};
+
+&mtp_batterydata {
+	#include "qg-batterydata-OPPO-DD003desay-ATL-4v4-4230mAh.dtsi"
+	#include "qg-batterydata-OPPO-DD003desay-ATL_300-4v4-4230mAh.dtsi"
+	#include "qg-batterydata-OPPO-DD003desay-SDI-4v4-4230mAh.dtsi"
+	#include "qg-batterydata-OPPO-DD003desay-SDI_300-4v4-4230mAh.dtsi"
+};
+
+&pmi632_charger {
+       qcom,usb-icl-ua = <2000000>;
+       qcom,auto-recharge-vbat-mv = <4270>;
+       qcom,sw-jeita-enable;
+       qcom,float-option = <1>;
+};
+
+&pmi632_qg {
+       qcom,qg-restore-batt-info;
+};
+
+&sdhc_2 {
+    cd-gpios = <&tlmm 133 0x0>;
+};
+
+&reserved_memory {
+	wt_share_mem: wt_region@93000000 {
+		compatible = "wt_share_mem";
+		no-map;
+		reg = <0 0x93000000 0 0x00100000>;
+	};
+
+	pstore: ramoops@93100000 {
+		compatible = "ramoops";
+		reg = <0 0x93100000 0 0x100000>;
+		record-size	= <0x40000>;
+		no-dump-oops;
+	};
+};
+
+&soc {
+	qcom,msm-imem@8600000 {
+		wt_reset_reason_addr@fe4 {
+			compatible = "qcom,msm-imem-wt_reset_reason_addr";
+			reg = <0xfe4 4>;
+		};
+
+		tz_reset_reason_addr@7a4 {
+			compatible = "qcom,msm-imem-tz_reset_reason_addr";
+			reg = <0x7a4 4>;
+		};
+	};
+	qcom,wdt@b017000 {
+		qcom,bark-time = <15000>;
+	};
+};
