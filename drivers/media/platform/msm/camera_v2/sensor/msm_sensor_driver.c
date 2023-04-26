@@ -59,7 +59,7 @@ static const char *g_module_info[]=
 
 extern void devinfo_info_set(char *name, char *version, char *manufacture);
 
-#endif
+#endif /*ODM_WT_EDIT*/
 
 /* Logging macro */
 #undef CDBG
@@ -818,7 +818,7 @@ int32_t msm_sensor_driver_probe(void *setting,
 #ifdef ODM_WT_EDIT
 	int32_t				i = 0;
 	struct camera_vreg_t *cam_vreg = NULL;
-#endif
+#endif /* ODM_WT_EDIT */
 
 	struct msm_camera_i2c_reg_array     *reg_setting = NULL;
 	struct msm_sensor_id_info_t         *id_info = NULL;
@@ -1119,7 +1119,7 @@ int32_t msm_sensor_driver_probe(void *setting,
         rc = -EINVAL;
         goto free_slave_info;
     }
-#endif
+#endif /* ODM_WT_EDIT */
 	/* Extract s_ctrl from camera id */
 	s_ctrl = g_sctrl[slave_info->camera_id];
 	if (!s_ctrl) {
@@ -1246,7 +1246,7 @@ int32_t msm_sensor_driver_probe(void *setting,
 			}
 		}
 	}
-#endif
+#endif /* ODM_WT_EDIT */
 #ifdef ODM_WT_EDIT
 	cam_vreg = s_ctrl->sensordata->power_info.cam_vreg;
 	if (!(strcmp(slave_info->sensor_name, "s5k3p9sp") ) && cam_vreg != NULL) {
@@ -1337,7 +1337,7 @@ int32_t msm_sensor_driver_probe(void *setting,
 			}
 		}
     }
-#endif
+#endif /* ODM_WT_EDIT */
 
 	/* Parse and fill vreg params for powerup settings */
 	rc = msm_camera_fill_vreg_params(
@@ -1493,7 +1493,7 @@ CSID_TG:
 			g_module_info[g_aux_module_id]);
 		devinfo_info_set("r2_camera", probed_info->sensor_name, (char*)g_module_info[g_aux_module_id]);
 	}
-#endif
+#endif /*ODM_WT_EDIT*/
 	/*
 	 * Set probe succeeded flag to 1 so that no other camera shall
 	 * probed on this slot

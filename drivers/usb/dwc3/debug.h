@@ -44,10 +44,11 @@
 #define dbg_setup(ep_num, req) \
 	dwc3_dbg_setup(dwc, ep_num, req)
 #ifdef ODM_WT_EDIT
+/*Hanxing.Duan@ODM.RH.BSP.USB.Basic  Disable device events after maximum error retries     2019.7.23 */
 #define dbg_log_string(fmt, ...) \
 	ipc_log_string(dwc->dwc_ipc_log_ctxt,\
 			"%s: " fmt, __func__, ##__VA_ARGS__)
-#endif
+#endif /*ODM_WT_EDIT*/
 /**
  * dwc3_gadget_ep_cmd_string - returns endpoint command string
  * @cmd: command code

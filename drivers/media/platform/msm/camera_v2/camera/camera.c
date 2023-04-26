@@ -28,7 +28,6 @@
 #include <media/v4l2-fh.h>
 #include <media/videobuf2-v4l2.h>
 #ifdef VENDOR_EDIT
-/*Added by Jinshui.Liu@Camera 20150714 start for print camera time*/
 #include <linux/time.h>
 #include <linux/rtc.h>
 #endif
@@ -635,7 +634,6 @@ static int camera_v4l2_open(struct file *filep)
 	unsigned long opn_idx, idx;
 
 #ifdef VENDOR_EDIT
-/*Added by Jinshui.Liu@Camera 20150714 start for print camera time*/
 	struct timespec ts;
 	struct rtc_time tm;
 #endif
@@ -646,7 +644,6 @@ static int camera_v4l2_open(struct file *filep)
 	mutex_lock(&pvdev->video_drvdata_mutex);
 
 #ifdef VENDOR_EDIT
-/*Added by Jinshui.Liu@Camera 20150714 start for print camera time*/
 	if (!atomic_read(&pvdev->opened)) {
 		getnstimeofday(&ts);
 		rtc_time_to_tm(ts.tv_sec, &tm);
@@ -771,7 +768,6 @@ static int camera_v4l2_close(struct file *filep)
 	struct msm_session *session;
 
 #ifdef VENDOR_EDIT
-/*Added by Jinshui.Liu@Camera 20150714 start for print camera time*/
 	struct timespec ts;
 	struct rtc_time tm;
 #endif
@@ -827,7 +823,6 @@ static int camera_v4l2_close(struct file *filep)
 
 	camera_v4l2_fh_release(filep);
 #ifdef VENDOR_EDIT
-/*Added by Jinshui.Liu@Camera 20150714 start for print camera time*/
 	if (atomic_read(&pvdev->opened) == 0) {
 		getnstimeofday(&ts);
 		rtc_time_to_tm(ts.tv_sec, &tm);

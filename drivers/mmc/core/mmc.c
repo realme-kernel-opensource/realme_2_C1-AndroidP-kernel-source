@@ -977,7 +977,7 @@ static ssize_t flash_name_show(struct device *dev,
 }
 
 static DEVICE_ATTR(flash_name, S_IRUGO, flash_name_show, NULL);
-#endif
+#endif /* ODM_WT_EDIT */
 
 static ssize_t mmc_dsr_show(struct device *dev,
 			    struct device_attribute *attr,
@@ -1021,7 +1021,7 @@ static struct attribute *mmc_std_attrs[] = {
 	&dev_attr_dsr.attr,
 #ifdef ODM_WT_EDIT
 	&dev_attr_flash_name.attr,
-#endif
+#endif /* ODM_WT_EDIT */
 	NULL,
 };
 ATTRIBUTE_GROUPS(mmc_std);
@@ -3273,7 +3273,7 @@ static void oppoversion_info_set_4_ramsize(void)
 		ramsize_info = "unknown";
 	oppoversion_info_set("ramSize", ramsize_info);
 }
-#endif
+#endif /* ODM_WT_EDIT */
 
 /*
  * Starting point for MMC card init.
@@ -3340,7 +3340,7 @@ int mmc_attach_mmc(struct mmc_host *host)
 
 #ifdef ODM_WT_EDIT
 	oppoversion_info_set_4_ramsize();
-#endif
+#endif /* ODM_WT_EDIT */
 
 	return 0;
 

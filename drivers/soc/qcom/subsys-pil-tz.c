@@ -35,7 +35,7 @@
 #include "peripheral-loader.h"
 #ifdef ODM_WT_EDIT
 #include <linux/wt_system_monitor.h>
-#endif
+#endif /* ODM_WT_EDIT */
 #define XO_FREQ			19200000
 #define PROXY_TIMEOUT_MS	10000
 #define MAX_SSR_REASON_LEN	256U
@@ -845,7 +845,7 @@ static struct pil_reset_ops pil_ops_trusted = {
 #ifdef WT_BOOT_REASON
 char subsys_restart_reason[MAX_SSR_REASON_LEN];
 #endif
-#endif
+#endif /* ODM_WT_EDIT */
 static void log_failure_reason(const struct pil_tz_data *d)
 {
 	u32 size;
@@ -873,7 +873,7 @@ static void log_failure_reason(const struct pil_tz_data *d)
 #ifdef WT_BOOT_REASON
 	strlcpy(subsys_restart_reason, smem_reason, min(size, MAX_SSR_REASON_LEN));
 #endif
-#endif
+#endif /* ODM_WT_EDIT */
 }
 
 static int subsys_shutdown(const struct subsys_desc *subsys, bool force_stop)
@@ -969,7 +969,7 @@ static irqreturn_t subsys_wdog_bite_irq_handler(int irq, void *dev_id)
 #ifdef WT_BOOT_REASON
 		set_reset_magic(RESET_MAGIC_SUBSYSTEM);
 #endif
-#endif
+#endif /* ODM_WT_EDIT */
 		panic("%s: System ramdump requested. Triggering device restart!\n",
 							__func__);
 	}

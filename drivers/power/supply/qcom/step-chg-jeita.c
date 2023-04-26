@@ -36,14 +36,14 @@ struct range_data {
 	u32 high_threshold;
 	u32 value;
 };
-#else
+#else /* ODM_WT_EDIT */
 /* Can use negative value */
 struct range_data {
 	int low_threshold;
 	int high_threshold;
 	int value;
 };
-#endif
+#endif /* ODM_WT_EDIT */
 
 struct step_chg_cfg {
 	u32			psy_prop;
@@ -73,7 +73,7 @@ struct jeita_rechr_uv_cfg {
 	int			hysteresis;
 	struct range_data	rechr_uv_cfg[MAX_STEP_CHG_ENTRIES];
 };
-#endif
+#endif /* ODM_WT_EDIT */
 
 struct step_chg_info {
 	struct device		*dev;
@@ -90,7 +90,7 @@ struct step_chg_info {
 	int			jeita_fv_index;
 	#ifdef ODM_WT_EDIT
 	int			jeita_rechr_uv_index;
-	#endif
+	#endif /* ODM_WT_EDIT */
 	int			step_index;
 	int			get_config_retry_count;
 
@@ -99,7 +99,7 @@ struct step_chg_info {
 	struct jeita_fv_cfg	*jeita_fv_config;
 	#ifdef ODM_WT_EDIT
 	struct jeita_rechr_uv_cfg	*jeita_rechr_uv_config;
-	#endif
+	#endif /* ODM_WT_EDIT */
 
 	struct votable		*fcc_votable;
 	struct votable		*fv_votable;
@@ -120,9 +120,9 @@ static struct step_chg_info *the_chip;
 
 #ifndef ODM_WT_EDIT
 #define STEP_CHG_HYSTERISIS_DELAY_US		5000000 /* 5 secs */
-#else
+#else /* ODM_WT_EDIT */
 #define STEP_CHG_HYSTERISIS_DELAY_US		1500000 /* 1.5 secs */
-#endif
+#endif /* ODM_WT_EDIT */
 
 #define BATT_HOT_DECIDEGREE_MAX			600
 #define GET_CONFIG_DELAY_MS		2000
@@ -229,7 +229,7 @@ clean:
 	memset(ranges, 0, tuples * sizeof(struct range_data));
 	return rc;
 }
-#else
+#else /* ODM_WT_EDIT */
 /* Can use negative value */
 static int read_range_data_from_node(struct device_node *node,
 		const char *prop_str, struct range_data *ranges,
@@ -313,7 +313,7 @@ int return_step_chg_jeita_fcc_low_threshold(void)
 		return the_chip->jeita_fcc_config->fcc_cfg[the_chip->jeita_fcc_index].low_threshold;
 	}
 }
-#endif
+#endif /* ODM_WT_EDIT */
 
 static int get_step_chg_jeita_setting_from_profile(struct step_chg_info *chip)
 {
@@ -431,7 +431,7 @@ static int get_step_chg_jeita_setting_from_profile(struct step_chg_info *chip)
 		pr_debug("Read qcom,jeita-rechr-uv-ranges failed from battery profile, rc=%d\n",
 					rc);
 	}
-	#endif
+	#endif /* ODM_WT_EDIT */
 
 	return rc;
 }
@@ -479,7 +479,7 @@ static void get_config_work(struct work_struct *work)
 			chip->jeita_rechr_uv_config->rechr_uv_cfg[i].low_threshold,
 			chip->jeita_rechr_uv_config->rechr_uv_cfg[i].high_threshold,
 			chip->jeita_rechr_uv_config->rechr_uv_cfg[i].value);
-	#endif
+	#endif /* ODM_WT_EDIT */
 
 	return;
 
@@ -550,7 +550,7 @@ static int get_val(struct range_data *range, int hysteresis, int current_index,
 		} else if (*new_index < current_index - 1) {
 			*new_index = current_index - 1;
 		}
-	#endif
+	#endif /* ODM_WT_EDIT */
 
 	/*
 	 * Check for hysteresis if it in the neighbourhood
@@ -653,7 +653,7 @@ static int handle_jeita(struct step_chg_info *chip)
 	int temp_fv_index = 0;
 	int temp_rechr_index = 0;
 	union power_supply_propval pvol_val = {0, };
-	#endif
+	#endif /* ODM_WT_EDIT */
 
 	rc = power_supply_get_property(chip->batt_psy,
 		POWER_SUPPLY_PROP_SW_JEITA_ENABLED, &pval);
@@ -689,7 +689,7 @@ static int handle_jeita(struct step_chg_info *chip)
 #ifdef ODM_WT_EDIT
 	temp_fcc_index = chip->jeita_fcc_index;
 	temp_fv_index = chip->jeita_fv_index;
-#endif
+#endif /* ODM_WT_EDIT */
 
 	rc = get_val(chip->jeita_fcc_config->fcc_cfg,
 			chip->jeita_fcc_config->hysteresis,
@@ -721,7 +721,7 @@ static int handle_jeita(struct step_chg_info *chip)
 			}
 		}
 	}
-	#endif
+	#endif /* ODM_WT_EDIT */
 	vote(chip->fcc_votable, JEITA_VOTER, fcc_ua ? true : false, fcc_ua);
 
 	rc = get_val(chip->jeita_fv_config->fv_cfg,
@@ -803,15 +803,15 @@ set_jeita_fv:
 			chip->jeita_fcc_config->prop_name, pval.intval, fcc_ua, temp_fcc_index, chip->jeita_fcc_index,
 			fv_uv, temp_fv_index, chip->jeita_fv_index, rechr_uv, temp_rechr_index, chip->jeita_rechr_uv_index);
 	}
-	#endif
+	#endif /* ODM_WT_EDIT */
 
 	#ifndef ODM_WT_EDIT
 	pr_debug("%s = %d FCC = %duA FV = %duV\n",
 		chip->jeita_fcc_config->prop_name, pval.intval, fcc_ua, fv_uv);
-	#else
+	#else /* ODM_WT_EDIT */
 	pr_debug("%s = %d FCC = %duA FV = %duV Recharger = %duV\n",
 		chip->jeita_fcc_config->prop_name, pval.intval, fcc_ua, fv_uv, rechr_uv);
-	#endif
+	#endif /* ODM_WT_EDIT */
 
 update_time:
 	chip->jeita_last_update_time = ktime_get();
@@ -880,7 +880,7 @@ static void status_change_work(struct work_struct *work)
 		__pm_relax(chip->step_chg_ws);
 		return;
 	}
-#endif
+#endif /* ODM_WT_EDIT */
 
 	handle_battery_insertion(chip);
 
@@ -1020,7 +1020,7 @@ int qcom_step_chg_init(struct device *dev,
 		chip->jeita_rechr_uv_config->prop_name = "BATT_TEMP";
 		chip->jeita_rechr_uv_config->hysteresis = 10;
 	}
-	#endif
+	#endif /* ODM_WT_EDIT */
 
 	INIT_DELAYED_WORK(&chip->status_change_work, status_change_work);
 	INIT_DELAYED_WORK(&chip->get_config_work, get_config_work);
@@ -1055,7 +1055,7 @@ void qcom_step_chg_deinit(void)
 	power_supply_unreg_notifier(&chip->nb);
 	#ifdef ODM_WT_EDIT
 	 __pm_relax(chip->step_chg_ws);
-	 #endif
+	 #endif /*ODM_WT_EDIT*/
 	wakeup_source_unregister(chip->step_chg_ws);
 	the_chip = NULL;
 }

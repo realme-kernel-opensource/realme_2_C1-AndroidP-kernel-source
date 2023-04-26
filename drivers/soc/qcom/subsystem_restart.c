@@ -43,7 +43,7 @@
 #include "peripheral-loader.h"
 #ifdef ODM_WT_EDIT
 #include <linux/wt_system_monitor.h>
-#endif
+#endif /* ODM_WT_EDIT */
 #define DISABLE_SSR 0x9889deed
 /* If set to 0x9889deed, call to subsystem_restart_dev() returns immediately */
 static uint disable_restart_work;
@@ -1248,7 +1248,7 @@ int subsystem_restart_dev(struct subsys_device *dev)
 		save_panic_key_log("%s subsystem failure reason: %s.\n", name, subsys_restart_reason);
 	}
 #endif
-#endif
+#endif /* ODM_WT_EDIT */
 	/*
 	 * If a system reboot/shutdown is underway, ignore subsystem errors.
 	 * However, print a message so that we know that a subsystem behaved
@@ -1803,7 +1803,7 @@ struct subsys_device *subsys_register(struct subsys_desc *desc)
 #else
 	subsys->restart_level = RESET_SOC;
 #endif //WT_FINAL_RELEASE
-#endif
+#endif /* ODM_WT_EDIT */
 
 	subsys->notify = subsys_notif_add_subsys(desc->name);
 

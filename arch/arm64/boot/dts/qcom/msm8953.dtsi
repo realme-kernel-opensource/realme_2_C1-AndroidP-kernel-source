@@ -93,6 +93,7 @@
 		};
 
 		*/
+		//#else VENDOR_EDIT
 		adsp_fw_mem: adsp_fw_region@0 {
 			compatible = "removed-dma-pool";
 			no-map;
@@ -104,6 +105,7 @@
 			no-map;
 			reg = <0x0 0x8ec00000 0x0 0x700000>;
 		};
+		//#endif
 
 		venus_mem: venus_region@0 {
 			compatible = "shared-dma-pool";
@@ -143,11 +145,13 @@
 			size = <0 0x400000>;
 		};
 		*/
+		//#else VENDOR_EDIT
 		adsp_mem: adsp_region@0 {
 			compatible = "removed-dma-pool";
 			no-map;
 			size = <0 0x400000>;
 		};
+		//#endif
 
 		dfps_data_mem: dfps_data_mem@90000000 {
 			reg = <0 0x90000000 0 0x1000>;
@@ -174,12 +178,14 @@
 			size = <0x400000>;
 		};
 
+		/*#ifdef VENDOR_EDIT*/
 		ramoops@0x91400000 {
 			compatible = "ramoops";
 			reg = <0x0 0x91400000 0x0 0x100000>;
 			record-size = <0x0 0x00020000>;
 			no-dump-oops;
 		};
+		/*#endif VENDOR_EDIT*/
 	};
 
 	aliases {
@@ -368,15 +374,17 @@
 		reg-names = "rmtfs";
 		qcom,client-id = <0x00000001>;
 	};
-//
+//        /* #ifdef ODM_WT_EDIT*/
 //        qcom,oem_rmtfs_sharedmem@00000000 {
 //                compatible = "qcom,sharedmem-uio";
 //                reg = <0x00000000 0x00001000>;
 //                reg-names = "oemrmtfs";
 //                qcom,client-id = <0x00000002>;
 //        };
-//
+//	/* #endif ODM_WT_EDIT  */
 
+        //#ifdef VENDOR_EDIT
+        //#ifdef FEATURE_OPPO_NV_BACKUP
         //add for creating a shared memory with uio for nv backup and restore
         qcom,oembackup_sharedmem@0 {
             compatible = "qcom,sharedmem-uio";
@@ -385,6 +393,8 @@
             qcom,client-id = <0x00000004>;
             qcom,guard-memory;
         };
+        //#endif /* FEATURE_OPPO_NV_BACKUP */
+        //#endif /* VENDOR_EDIT */
 	restart@4ab000 {
 		compatible = "qcom,pshold";
 		reg = <0x4ab000 0x4>,
@@ -462,9 +472,11 @@
 		#thermal-sensor-cells = <1>;
 	};
 
+//#ifdef VENDOR_EDIT
 	oppo_secure_common {
 		compatible = "oppo,secure_common";
        };
+//#endif
 
 	silead_fp {
 	   compatible = "sil,silead_fp";
@@ -630,7 +642,9 @@
 		interrupt-map-mask = <0xffffffff>;
 		interrupt-map = <0 &intc 0 108 0
 				1 &intc 0 238 0>;
+				//#ifdef ODM_WT_EDIT
 				//2 &tlmm 13 0>;
+				//#endif /* ODM_WT_EDIT */
 
 		qcom,inject-rx-on-wakeup;
 		qcom,rx-char-to-inject = <0xFD>;
@@ -1382,8 +1396,11 @@
 		reg = <0xb017000 0x1000>;
 		reg-names = "wdt-base";
 		interrupts = <0 3 0>, <0 4 0>;
+		//#ifdef VENDOR_EDIT //yixue.ge modify bark time to 20s
 		//qcom,bark-time = <11000>;
+		//#else
 		qcom,bark-time = <20000>;
+		//#endif
 		qcom,pet-time = <9360>;
 		qcom,ipi-ping;
 		qcom,wakeup-enable;
@@ -1900,6 +1917,8 @@
 		vdda33-supply = <&pm8953_l13>;
 		qcom,vdd-voltage-level = <0 925000 925000>;
 
+		//#ifdef ODM_WT_EDIT
+		//Tianchen.Zhao@ODM_RH.BSP.Storage Porting
 		qcom,qusb-phy-init-seq = <0xf8 0x80
 					0x23 0x84
 					0x83 0x88
@@ -1911,6 +1930,7 @@
 					0x00 0x90
 					0x9f 0x1c
 					0x00 0x18>;
+		//#else
 		/*
 		qcom,qusb-phy-init-seq = <0xf8 0x80
 					0xb3 0x84
@@ -1924,6 +1944,7 @@
 					0x9f 0x1c
 					0x00 0x18>;
 		*/
+		//#endif
 
 		phy_type= "utmi";
 		qcom,phy-clk-scheme = "cml";

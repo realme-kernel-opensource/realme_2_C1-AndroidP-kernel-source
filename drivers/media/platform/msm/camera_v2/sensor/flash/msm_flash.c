@@ -22,7 +22,6 @@
 #include "msm_cci.h"
 
 #ifdef VENDOR_EDIT
-/*Add by Zhengrong.Zhang@Camera 20160630 for flash*/
 #include <linux/proc_fs.h>
 #include <linux/time.h>
 #include <linux/rtc.h>
@@ -301,7 +300,6 @@ static int32_t msm_flash_i2c_init(
 		cci_client->id_map = 0;
 		cci_client->i2c_freq_mode = flash_init_info->i2c_freq_mode;
 #ifdef VENDOR_EDIT
-/*Add by Zhengrong.Zhang@Camera 20160630 for flash*/
 		flash_ctrl->flash_i2c_client.addr_type =
 			flash_data->cfg.flash_init_info->settings->addr_type;
 #endif
@@ -328,10 +326,9 @@ static int32_t msm_flash_i2c_init(
 
 #ifdef ODM_WT_EDIT
 	CDBG("Do not Parse and fill vreg params for powerup settings here");
-#else
+#else /*ODM_WT_EDIT*/
 
 #ifdef VENDOR_EDIT
-/*Add by Zhengrong.Zhang@Camera 20160630 for flash*/
 	/* Parse and fill vreg params for powerup settings */
 	rc = msm_camera_fill_vreg_params(
 		flash_ctrl->power_info.cam_vreg,
@@ -352,7 +349,7 @@ static int32_t msm_flash_i2c_init(
 		pr_err("failed: msm_camera_fill_vreg_params for PDOWN rc %d", rc);
 	}
 #endif
-#endif
+#endif /*ODM_WT_EDIT*/
 	rc = msm_camera_power_up(&flash_ctrl->power_info,
 		flash_ctrl->flash_device_type,
 		&flash_ctrl->flash_i2c_client);
@@ -469,7 +466,6 @@ static int32_t msm_flash_off(struct msm_flash_ctrl_t *flash_ctrl,
 }
 
 #ifdef VENDOR_EDIT
-/*modified by Zhengrong.Zhang@Camera 20160612 start for lm3642*/
 static int32_t msm_flash_lm3642_setting(
 	struct msm_flash_ctrl_t *flash_ctrl,
 	struct msm_flash_cfg_data_t *flash_data)
@@ -576,7 +572,6 @@ static int32_t msm_flash_i2c_write_setting_array(
 	}
 
 #ifdef VENDOR_EDIT
-/*modified by Zhengrong.Zhang@Camera 20160612 start for lm3642*/
 	if (strcmp(flash_ctrl->flash_name, "lm3642") == 0) {
 		msm_flash_lm3642_setting(flash_ctrl, flash_data);
 	}
@@ -1261,7 +1256,6 @@ static int32_t msm_flash_get_dt_data(struct device_node *of_node,
 	}
 
 #ifdef VENDOR_EDIT
-/*Add by Zhengrong.Zhang@Camera 20160630 for flash*/
 	rc = of_property_read_string(of_node, "qcom,flash-name",
 		&fctrl->flash_name);
 	if (rc < 0) {
@@ -1316,7 +1310,6 @@ static int32_t msm_flash_get_dt_data(struct device_node *of_node,
 		fctrl->flash_driver_type);
 
 #ifdef VENDOR_EDIT
-/*Add by Zhengrong.Zhang@Camera 20160630 for flash*/
     if (fctrl->flash_driver_type != FLASH_DRIVER_PMIC)
     {
 	    struct msm_camera_power_ctrl_t *power_info = NULL;
@@ -1420,7 +1413,6 @@ static long msm_flash_subdev_fops_ioctl(struct file *file,
 #endif
 
 #ifdef VENDOR_EDIT
-/*Add by Zhengrong.Zhang@Camera 20160630 for flash*/
 struct msm_sensor_power_setting power_setting_a[] =
 {
     {
@@ -1542,12 +1534,10 @@ static ssize_t flash_on_off(void)
     if(pre_flash_mode == flash_mode)
         return 0;
 
-/*Add by Jindian.Guan@Camera 20170426 not use flashlight when use camera*/
     if(pre_flash_mode == 5 && flash_mode == 0){
         pr_err("camera is opened,not to set flashlight off");
         return 0;
     }
-/*Add by Jindian.Guan@Camera 20160815 for flash*/
     if(!vendor_flash_ctrl->flash_name)
         return 0;
 
@@ -1670,7 +1660,6 @@ static ssize_t flash_on_off(void)
                 break;
             case 1:
                 #ifndef VENDOR_EDIT
-                /*modify by hongbo.dai@Camera 20171213, for support dual flash LED*/
                 flash_data.flash_current[0] = 100; /*100mA*/
                 flash_data.flash_current[1] = 100; /*100mA*/
                 #else
@@ -1681,7 +1670,7 @@ static ssize_t flash_on_off(void)
                     #ifdef ODM_WT_EDIT
                     flash_data.flash_current[0] = 50; /*100mA*/
                     flash_data.flash_current[1] = 50; /*100mA*/
-                    #endif
+                    #endif /* ODM_WT_EDIT */
                 }
                 #endif
                 vendor_flash_ctrl->func_tbl->camera_flash_low(vendor_flash_ctrl, &flash_data);
@@ -1872,7 +1861,6 @@ static int32_t msm_flash_platform_probe(struct platform_device *pdev)
 		rc = msm_torch_create_classdev(pdev, flash_ctrl);
 
 #ifdef VENDOR_EDIT
-/*Add by Zhengrong.Zhang@Camera 20160630 for flash*/
 	flash_proc_init(flash_ctrl);
 #endif
 

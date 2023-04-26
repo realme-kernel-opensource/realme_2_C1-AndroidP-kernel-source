@@ -3901,7 +3901,7 @@ static int msm_isp_stream_axi_cfg_update(struct vfe_device *vfe_dev,
 	spin_unlock_irqrestore(&stream_info->lock, flags);
 	return 0;
 }
-#endif
+#endif /* ODM_WT_EDIT */
 
 int msm_isp_update_axi_stream(struct vfe_device *vfe_dev, void *arg)
 {
@@ -3909,7 +3909,7 @@ int msm_isp_update_axi_stream(struct vfe_device *vfe_dev, void *arg)
 	int rc = 0, i;
 #else
 	int rc = 0, i, j, k;
-#endif
+#endif /* ODM_WT_EDIT */
 	struct msm_vfe_axi_stream *stream_info;
 	struct msm_vfe_axi_stream_update_cmd *update_cmd = arg;
 	struct msm_vfe_axi_stream_cfg_update_info *update_info = NULL;
@@ -4109,7 +4109,7 @@ int msm_isp_update_axi_stream(struct vfe_device *vfe_dev, void *arg)
 			        cfg_wm_reg(vfe_dev, stream_info, j);
 			    }
 			}
-#endif
+#endif /* ODM_WT_EDIT */
 
 		}
 		break;

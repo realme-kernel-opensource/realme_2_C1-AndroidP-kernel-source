@@ -157,7 +157,6 @@ static enum alarmtimer_restart hardidletimer_tg_alarmproc(struct alarm *alarm,
 }
 
 #ifdef VENDOR_EDIT
-//Yunqing.Zeng@BSP.Power.Basic 2017/12/12 add for filter net alarm counter
 enum alarmtimer_restart	(*net_alarm_func)(struct alarm *, ktime_t now) = hardidletimer_tg_alarmproc;
 #endif /* VENDOR_EDIT */
 
@@ -193,7 +192,6 @@ static int hardidletimer_tg_create(struct hardidletimer_tg_info *info)
 	alarm_init(&info->timer->alarm, ALARM_BOOTTIME,
 		   hardidletimer_tg_alarmproc);
 	#ifdef VENDOR_EDIT
-	//Yunqing.Zeng@BSP.Power.Basic 2017/12/12 add for filter net alarm counter
 	net_alarm_func = hardidletimer_tg_alarmproc;
 	#endif /* VENDOR_EDIT */
 

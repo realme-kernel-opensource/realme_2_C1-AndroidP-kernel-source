@@ -1628,7 +1628,7 @@ int tcp_v4_rcv(struct sk_buff *skb)
     invalid, drop the packet.*/
     if (skb->ip_summed == CHECKSUM_COMPLETE && skb->csum_valid == 0)
           goto csum_error;
-    #endif
+    #endif /* ODM_WT_EDIT */
 
 	/* An explanation is required here, I think.
 	 * Packet length and doff are validated by header prediction,

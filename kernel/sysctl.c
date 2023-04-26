@@ -134,7 +134,7 @@ static int __maybe_unused four = 4;
 static unsigned long one_ul = 1;
 static int one_hundred = 100;
 
-#ifdef VENDOR_EDIT //yixue.ge@PSW.BSP.Kernel.Driver 20170720 add for add direct_vm_swappiness
+#ifdef VENDOR_EDIT
 extern int direct_vm_swappiness;
 static int two_hundred = 200;
 #endif
@@ -1524,7 +1524,7 @@ static struct ctl_table vm_table[] = {
 		.mode		= 0644,
 		.proc_handler	= proc_dointvec_minmax,
 		.extra1		= &zero,
-#ifdef VENDOR_EDIT //yixue.ge@PSW.BSP.Kernel.Driver 20170720 add for add direct_vm_swappiness
+#ifdef VENDOR_EDIT
 		.extra2		= &two_hundred,
 #else
 		.extra2		= &one_hundred,
@@ -1539,7 +1539,7 @@ static struct ctl_table vm_table[] = {
 		.extra1         = &zero,
 		.extra2         = &one,
 	},
-#ifdef VENDOR_EDIT //yixue.ge@PSW.BSP.Kernel.Driver 20170720 add for add direct_vm_swappiness
+#ifdef VENDOR_EDIT
         {
                 .procname       = "direct_swappiness",
                 .data           = &direct_vm_swappiness,

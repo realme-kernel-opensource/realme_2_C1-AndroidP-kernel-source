@@ -73,7 +73,7 @@ enum pon_restart_reason {
 	PON_RESTART_REASON_ODM_ANDROID	= 0x25,
 	PON_RESTART_REASON_ODM_SILENCE	= 0x26,
 	PON_RESTART_REASON_ODM_SAU		= 0x27,
-	#endif
+	#endif /* ODM_WT_EDIT */
 	PON_RESTART_REASON_OEM_MAX		= 0x3f,
 };
 

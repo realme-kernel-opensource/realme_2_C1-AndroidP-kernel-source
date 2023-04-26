@@ -4784,7 +4784,7 @@ static const struct mmc_fixup blk_fixups[] =
 
 #ifdef ODM_WT_EDIT
 extern void devinfo_info_set(char *name, char *version, char *manufacture);
-#endif
+#endif /* ODM_WT_EDIT */
 
 static int mmc_blk_probe(struct mmc_card *card)
 {
@@ -4794,7 +4794,7 @@ static int mmc_blk_probe(struct mmc_card *card)
 	char *vendor_name = NULL;
 	char *emcp_name = NULL;
 	static char temp_version[10];
-#endif
+#endif /* ODM_WT_EDIT */
 
 
 	/*
@@ -4808,6 +4808,7 @@ static int mmc_blk_probe(struct mmc_card *card)
 	mmc_fixup_device(card, blk_fixups);
 
 #ifdef ODM_WT_EDIT
+//Tianchen.Zhao@ODM_RH.BSP.Storage Porting
 	switch (card->cid.manfid) {
 		case 0x11:
 			vendor_name = "TOSHIBA";
@@ -4847,7 +4848,7 @@ static int mmc_blk_probe(struct mmc_card *card)
 		}
 		devinfo_info_set("emmc_version", mmc_card_name(card), temp_version);
 	}
-#endif
+#endif /* ODM_WT_EDIT */
 
 	md = mmc_blk_alloc(card);
 	if (IS_ERR(md))
@@ -4865,7 +4866,6 @@ static int mmc_blk_probe(struct mmc_card *card)
 	dev_set_drvdata(&card->dev, md);
 
 #ifdef VENDOR_EDIT
-//Guohua.Zhong@BSP.Storage.Sdcard,1411172 2018-07-18 disable CONFIG_MMC_BLOCK_DEFERRED_RESUME for sdcard only
 	if (!(mmc_card_is_removable(card->host) && !(card->host->caps & MMC_CAP_NEEDS_POLL)))
 #endif /*VENDOR_EDIT*/
 		mmc_set_bus_resume_policy(card->host, 1);
@@ -4914,7 +4914,6 @@ static void mmc_blk_remove(struct mmc_card *card)
 	mmc_blk_remove_req(md);
 	dev_set_drvdata(&card->dev, NULL);
 #ifdef VENDOR_EDIT
-//Guohua.Zhong@BSP.Storage.Sdcard,1411172 2018-07-18 disable CONFIG_MMC_BLOCK_DEFERRED_RESUME for sdcard only
 	if (!(mmc_card_is_removable(card->host) && !(card->host->caps & MMC_CAP_NEEDS_POLL)))
 #endif /*VENDOR_EDIT*/
 		mmc_set_bus_resume_policy(card->host, 0);

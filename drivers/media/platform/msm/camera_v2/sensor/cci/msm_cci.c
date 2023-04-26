@@ -32,6 +32,7 @@
 #define CYCLES_PER_MICRO_SEC_DEFAULT 4915
 #define CCI_MAX_DELAY 1000000
 
+/* Jianying.zhang@ODM_RH.Camera.Portting */
 #ifdef VENDOR_EDIT
 /*oppo hufeng modify to add cci timeout time*/
 #define CCI_TIMEOUT msecs_to_jiffies(500)
@@ -1668,8 +1669,8 @@ static int32_t msm_cci_write(struct v4l2_subdev *sd,
 	return rc;
 }
 
+/* Jianying.zhang@ODM_RH.Camera.Portting */
 #ifndef VENDOR_EDIT
-/*modified by Jinshui.Liu@Camera 20151229 for [cci retry]*/
 static int32_t msm_cci_config(struct v4l2_subdev *sd,
 	struct msm_camera_cci_ctrl *cci_ctrl)
 {
@@ -2159,6 +2160,7 @@ static int msm_cci_probe(struct platform_device *pdev)
 		return -ENOMEM;
 	}
 
+        /* Jianying.zhang@ODM_RH.Camera.Portting */
         #ifdef VENDOR_EDIT
         /* Add by Liubin for cci dev mutex at 20160730 */
         mutex_init(&new_cci_dev->mutex);
@@ -2262,6 +2264,7 @@ cci_release_mem:
 	msm_camera_put_reg_base(pdev, new_cci_dev->base, "cci", true);
 cci_no_resource:
 
+        /* Jianying.zhang@ODM_RH.Camera.Portting */
         #ifdef VENDOR_EDIT
         /* Add by liubin for cci dev mutex at 20160730 */
         mutex_destroy(&new_cci_dev->mutex);

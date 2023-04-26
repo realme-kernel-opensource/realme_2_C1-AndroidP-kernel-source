@@ -216,7 +216,7 @@ static char *power_supply_name[] = {
 	#ifdef ODM_WT_EDIT
 	POWER_SUPPLY_NAME(StopCharging_Test),
 	POWER_SUPPLY_NAME(StartCharging_Test),
-	#endif
+	#endif /* ODM_WT_EDIT */
 	#ifdef ODM_WT_EDIT
 	POWER_SUPPLY_NAME(adapter_fw_update),
 	POWER_SUPPLY_NAME(authenticate),
@@ -235,11 +235,11 @@ static char *power_supply_name[] = {
 	POWER_SUPPLY_NAME(soc_notify_ready),
 	POWER_SUPPLY_NAME(ui_soc),
 	POWER_SUPPLY_NAME(real_status),
-	#endif
+	#endif /* ODM_WT_EDIT */
 	#ifdef ODM_WT_EDIT
 	POWER_SUPPLY_NAME(otg_switch),
 	POWER_SUPPLY_NAME(otg_online),
-	#endif
+	#endif /* ODM_WT_EDIT */
 	POWER_SUPPLY_NAME(pr_swap),
 	POWER_SUPPLY_NAME(cc_step),
 	POWER_SUPPLY_NAME(cc_step_sel),
@@ -257,7 +257,7 @@ static char *power_supply_name[] = {
 	POWER_SUPPLY_NAME(recharge_soc),
 	#ifdef ODM_WT_EDIT
 	POWER_SUPPLY_NAME(recharge_uv),
-	#endif
+	#endif /* ODM_WT_EDIT */
 	POWER_SUPPLY_NAME(hvdcp_opti_allowed),
 	/* Local extensions of type int64_t */
 	POWER_SUPPLY_NAME(charge_counter_ext),
@@ -268,7 +268,7 @@ static char *power_supply_name[] = {
 	POWER_SUPPLY_NAME(battery_type),
 	#ifdef ODM_WT_EDIT
 	POWER_SUPPLY_NAME(batt_cc),
-	#endif
+	#endif /* ODM_WT_EDIT */
 };
 
 static enum power_supply_property smb5_batt_props[] = {
@@ -301,11 +301,11 @@ static enum power_supply_property smb5_batt_props[] = {
 	POWER_SUPPLY_PROP_RECHARGE_SOC,
 	#ifdef ODM_WT_EDIT
 	POWER_SUPPLY_PROP_RECHARGE_UV,
-	#endif
+	#endif /* ODM_WT_EDIT */
 	#ifdef ODM_WT_EDIT
 	//POWER_SUPPLY_PROP_STOPCHARGING_TEST,
 	//POWER_SUPPLY_PROP_STARTCHARGING_TEST,
-	#endif
+	#endif /* ODM_WT_EDIT */
 	#ifdef ODM_WT_EDIT
 	//POWER_SUPPLY_PROP_ADAPTER_FW_UPDATE,
 	POWER_SUPPLY_PROP_AUTHENTICATE,
@@ -324,7 +324,7 @@ static enum power_supply_property smb5_batt_props[] = {
 	//POWER_SUPPLY_PROP_STEP_CHARGING_STEP,
 	//POWER_SUPPLY_PROP_VOOCCHG_ING,
 	POWER_SUPPLY_PROP_NOTIFY_CODE,
-	#endif
+	#endif /* ODM_WT_EDIT */
 };
 
 static enum power_supply_property smb5_usb_props[] = {
@@ -354,7 +354,7 @@ static enum power_supply_property smb5_usb_props[] = {
 #ifdef ODM_WT_EDIT
 	POWER_SUPPLY_PROP_OTG_SWITCH,
 	POWER_SUPPLY_PROP_OTG_ONLINE,
-#endif
+#endif /* ODM_WT_EDIT */
 	POWER_SUPPLY_PROP_VOLTAGE_NOW,
 	POWER_SUPPLY_PROP_HVDCP_OPTI_ALLOWED,
 };
@@ -386,7 +386,7 @@ static enum power_supply_property qg_psy_props[] = {
 	POWER_SUPPLY_PROP_AUTHENTICATE,
 	//POWER_SUPPLY_PROP_BATT_CC,
 	//POWER_SUPPLY_PROP_BATT_FCC,
-	#endif
+	#endif /* ODM_WT_EDIT */
 	POWER_SUPPLY_PROP_CYCLE_COUNTS,
 	POWER_SUPPLY_PROP_CHARGE_FULL,
 	POWER_SUPPLY_PROP_CHARGE_FULL_DESIGN,

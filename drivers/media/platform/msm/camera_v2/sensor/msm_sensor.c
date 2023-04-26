@@ -252,7 +252,6 @@ static uint16_t msm_sensor_id_by_mask(struct msm_sensor_ctrl_t *s_ctrl,
 }
 
 #ifdef VENDOR_EDIT
-/*Add by Zhengrong.Zhang@Camera 20160630 for merge basic modification*/
 static int at_msm_sensor_power_down(struct msm_sensor_ctrl_t *s_ctrl)
 {
 	if (msm_sensor_power_down(s_ctrl)< 0) {
@@ -395,7 +394,6 @@ static long msm_sensor_subdev_ioctl(struct v4l2_subdev *sd,
 	}
 
 #ifdef VENDOR_EDIT
-/*Add by Zhengrong.Zhang@Camera 20160630 for merge basic modification*/
 	if (cmd == 0 && arg == NULL) {
 		rc = at_msm_sensor_power_down(s_ctrl);
 		return rc;
@@ -403,14 +401,13 @@ static long msm_sensor_subdev_ioctl(struct v4l2_subdev *sd,
 #ifndef VENDOR_EDIT
 	else if (cmd ==1 && arg == NULL) {
 		rc = at_msm_sensor_power_up(s_ctrl);
-#else  /*add by hongbo.dai@camera 20170325 for AT test*/
+#else
 	else if (cmd ==1) {
 		rc = at_msm_sensor_power_up(s_ctrl);
 		if(rc<0){
 			pr_err("%s power up err\n", __func__);
 			return rc;
 		}
-		/*add by hongbo.dai@camera 20170325,return sensor name for AT test*/
 		if(argp!=NULL){
 			memcpy((char *)argp,s_ctrl->sensordata->sensor_name,16);
 			}

@@ -801,11 +801,14 @@ static struct file_operations himax_proc_Gesture_ops = {
 };
 #endif
 #ifdef ODM_WT_EDIT
+//Tianchen.Zhao@ODM_RH.TP Porting
 #ifdef CONFIG_TOUCHSCREEN_HIMAX_INSPECT
 extern void (*fp_himax_baseline_test_init)(void);
 #endif
 #endif
+//#endif
 #ifdef ODM_WT_EDIT
+//Tianchen.Zhao@ODM_RH.TP Porting
 static ssize_t wt_hiamx_mptest_read(struct file *file, char __user *buf, size_t len, loff_t *ppos)
 {
 #if 0
@@ -982,6 +985,7 @@ static const struct file_operations himax_black_screen_test_fops = {
 int himax_common_proc_init(void)
 {
 #ifdef ODM_WT_EDIT
+//Tianchen.Zhao@ODM_RH.TP Porting
 		struct proc_dir_entry *proc_mp_dir;
 		struct proc_dir_entry *proc_mptest_node;
 		proc_mp_dir = proc_mkdir("touchscreen", NULL);
@@ -1075,6 +1079,7 @@ int himax_common_proc_init(void)
 		goto fail_oppo_8;
 	}
 
+//#endif
 	return 0;
 	//wdd 18/07/25 unreachable code
 	//remove_proc_entry(HIMAX_PROC_GAME_SWITCH_FILE, himax_touch_proc_dir);
@@ -1361,6 +1366,7 @@ static void himax_esd_hw_reset(void)
 
 
 #ifdef ODM_WT_EDIT
+//Tianchen.Zhao@ODM_RH.TP Porting
 #ifdef HX_ZERO_FLASH
 	I("It will update fw after esd event in zero flash mode!\n");
 	do {
@@ -3380,10 +3386,12 @@ int himax_chip_common_suspend(struct himax_ts_data *ts)
 int himax_chip_common_resume(struct himax_ts_data *ts)
 {
 #ifdef ODM_WT_EDIT
+//Tianchen.Zhao@ODM_RH.TP Porting
 
 //#ifndef HX_SMART_WAKEUP
 //#if defined(HX_RST_PIN_FUNC) && defined(HX_RESUME_HW_RESET) && defined(HX_ZERO_FLASH)
 	//int result = 0;
+//#endif
 #endif
     //int pwr = 0;
     //int gpio = 0;
@@ -3437,6 +3445,7 @@ if ( !(ts->SMWP_enable)) {
 #ifdef HX_ZERO_FLASH
 	I("It will update fw after esd event in zero flash mode!\n");
 #ifdef ODM_WT_EDIT
+//Tianchen.Zhao@ODM_RH.TP Porting
 	result = g_core_fp.fp_0f_operation_dirly();
 	if(result) {
 		E("Something is wrong! Skip Update with zero flash! %s: END \n",__func__);

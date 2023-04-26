@@ -40,9 +40,6 @@
 #include "security.h"
 #include "objsec.h"
 #include "conditional.h"
-#ifdef VENDOR_EDIT
-#include "proc.h"
-#endif /* VENDOR_EDIT */
 
 /* Policy capability filenames */
 static char *policycap_names[] = {
@@ -1932,9 +1929,6 @@ static int __init init_sel_fs(void)
 		selinuxfs_mount = NULL;
 	}
 
-#ifdef VENDOR_EDIT
-	init_denied_proc();
-#endif /* VENDOR_EDIT */
 
 	return err;
 }

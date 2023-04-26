@@ -1123,11 +1123,12 @@ static int32_t msm_actuator_power_down(struct msm_actuator_ctrl_t *a_ctrl)
 
 		if (a_ctrl->func_tbl && a_ctrl->func_tbl->actuator_park_lens) {
 #ifndef ODM_WT_EDIT
-			/*deleted by houyujun@Camera 20180418 for af*/
+			/*#ifdef VENDOR_EDIT*/
 			//rc = a_ctrl->func_tbl->actuator_park_lens(a_ctrl);
+			/*#ENDIF*/
 #else
 			rc = a_ctrl->func_tbl->actuator_park_lens(a_ctrl);
-#endif
+#endif /* ODM_WT_EDIT */
 			if (rc < 0)
 				pr_err("%s:%d Lens park failed.\n",
 					__func__, __LINE__);

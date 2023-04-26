@@ -432,7 +432,7 @@ struct mipi_panel_info {
 	char lp11_init;
 #ifdef ODM_WT_EDIT
 	char lp11_deinit;
-#endif
+#endif /* ODM_WT_EDIT */
 	u32  init_delay;
 	u32  post_init_delay;
 	u8 default_lanes;
@@ -647,7 +647,7 @@ struct mdss_panel_info {
 #ifdef ODM_WT_EDIT
 	int blmap_size;
 	int *blmap;
-#endif
+#endif /* ODM_WT_EDIT */
 	u32 fb_num;
 	u64 clk_rate;
 	u32 clk_min;
@@ -670,12 +670,13 @@ struct mdss_panel_info {
 	bool esd_check_enabled;
 	bool allow_phy_power_off;
 #ifdef ODM_WT_EDIT
+	//Tianchen.Zhao@ODM_RH.Display Porting
 	u32 tp_rst_seq[MDSS_DSI_RST_SEQ_LEN];
 	u32 tp_rst_seq_len;
 	bool vddio_always_on;
 	bool gesture_off_cmd;
 	bool esd_check_running;
-#endif
+#endif /* ODM_WT_EDIT */
 	char dfps_update;
 	/* new requested fps before it is updated in hw */
 	int new_fps;

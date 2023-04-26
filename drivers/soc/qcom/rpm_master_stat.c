@@ -279,7 +279,6 @@ static int msm_rpm_master_copy_stats(
 	return RPM_MASTERS_BUF_LEN - count;
 }
 #ifdef VENDOR_EDIT
-//Yunqing.Zeng@BSP.Power.Basic 2017/11/13 add for get rpm_stats
 #define MSM_ARCH_TIMER_FREQ 19200000
 static inline u64 get_time_in_msec(u64 counter)
 {
@@ -289,7 +288,6 @@ static inline u64 get_time_in_msec(u64 counter)
 }
 #endif /* VENDOR_EDIT */
 #ifdef VENDOR_EDIT
-//Fuchun.Liao@BSP.Power.Basic 2017/09/05 add for get rpm_stats
 static int oppo_rpm_master_copy_stats(
 		struct msm_rpm_master_stats_private_data *prvdata)
 {
@@ -380,7 +378,6 @@ exit:
 	return ret;
 }
 #ifdef VENDOR_EDIT
-//Fuchun.Liao@BSP.Power.Basic 2017/09/05 add for get rpm_stats
 static ssize_t oppo_rpm_master_stats_file_read(struct file *file,
 				char __user *bufu, size_t count, loff_t *ppos)
 {
@@ -469,7 +466,6 @@ static const struct file_operations msm_rpm_master_stats_fops = {
 	.llseek   = no_llseek,
 };
 #ifdef VENDOR_EDIT
-//Fuchun.Liao@BSP.Power.Basic 2017/09/05 add for get rpm_stats
 static const struct file_operations oppo_rpm_master_stats_fops = {
 	.owner	  = THIS_MODULE,
 	.open	  = msm_rpm_master_stats_file_open,
@@ -576,7 +572,6 @@ static  int msm_rpm_master_stats_probe(struct platform_device *pdev)
 		return -ENOMEM;
 	}
 #ifdef VENDOR_EDIT
-//Fuchun.Liao@BSP.Power.Basic 2017/09/05 add for get rpm_stats
 	dent = debugfs_create_file("oppo_rpm_master_stats", 0444, NULL,
 					pdata, &oppo_rpm_master_stats_fops);
 

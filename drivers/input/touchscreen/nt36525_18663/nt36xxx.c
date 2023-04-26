@@ -1271,7 +1271,7 @@ static bool nvt_corner_point_process(int i)
 	int flag = 0;
 	//printk("ts->edge_limit.limit_00 = %d\n",ts->edge_limit.limit_00);
 	if (ts->edge_limit.limit_00 == 0) {
-		//½Úµã/proc/touchpanel/oppo_tp_limit_enableµÄbit1Î»À´¿ØÖÆ¿ØÖÆ
+		//Â½ÃšÂµÃ£/proc/touchpanel/oppo_tp_limit_enableÂµÃ„bit1ÃŽÂ»Ã€Â´Â¿Ã˜Ã–Ã†Â¿Ã˜Ã–Ã†
 		if ((ts->edge_limit.limit_lu) && (ts->nvt_point_info[i].x < ts->nvt_limit_area.area_xlu && ts->nvt_point_info[i].y < ts->nvt_limit_area.area_ylu)) {
 			//printk("1  ts->nvt_point_info[i].x = %d,ts->nvt_point_info[i].y = %d\n",ts->nvt_point_info[i].x,ts->nvt_point_info[i].y);
 		    ts->nvt_point_info[i].type  = NVT_AREA_CORNER;
@@ -1284,7 +1284,7 @@ static bool nvt_corner_point_process(int i)
 			flag = 1;
 
         }
-         //½Úµã/proc/touchpanel/oppo_tp_limit_enableµÄbit2Î»À´¿ØÖÆ¿ØÖÆ
+         //Â½ÃšÂµÃ£/proc/touchpanel/oppo_tp_limit_enableÂµÃ„bit2ÃŽÂ»Ã€Â´Â¿Ã˜Ã–Ã†Â¿Ã˜Ã–Ã†
         if ((ts->edge_limit.limit_ru)  && (ts->nvt_point_info[i].x > ts->nvt_limit_area.area_xru && ts->nvt_point_info[i].y < ts->nvt_limit_area.area_yru)) {
 			//printk("2  ts->nvt_point_info[i].x = %d,ts->nvt_point_info[i].y = %d\n",ts->nvt_point_info[i].x,ts->nvt_point_info[i].y);
 			ts->nvt_point_info[i].type  = NVT_AREA_CORNER;
@@ -1297,7 +1297,7 @@ static bool nvt_corner_point_process(int i)
 			flag = 1;
 
         }
-         //½Úµã/proc/touchpanel/oppo_tp_limit_enableµÄbit3Î»À´¿ØÖÆ¿ØÖÆ
+         //Â½ÃšÂµÃ£/proc/touchpanel/oppo_tp_limit_enableÂµÃ„bit3ÃŽÂ»Ã€Â´Â¿Ã˜Ã–Ã†Â¿Ã˜Ã–Ã†
        if ((ts->edge_limit.limit_lb) && (ts->nvt_point_info[i].x < ts->nvt_limit_area.area_xlb && ts->nvt_point_info[i].y > ts->nvt_limit_area.area_ylb)) {
 			//printk("3  ts->nvt_point_info[i].x = %d,ts->nvt_point_info[i].y = %d\n",ts->nvt_point_info[i].x,ts->nvt_point_info[i].y);
             ts->nvt_point_info[i].type  = NVT_AREA_CORNER;
@@ -1310,7 +1310,7 @@ static bool nvt_corner_point_process(int i)
 			flag = 1;
 
         }
-         //½Úµã/proc/touchpanel/oppo_tp_limit_enableµÄbit4Î»À´¿ØÖÆ¿ØÖÆ
+         //Â½ÃšÂµÃ£/proc/touchpanel/oppo_tp_limit_enableÂµÃ„bit4ÃŽÂ»Ã€Â´Â¿Ã˜Ã–Ã†Â¿Ã˜Ã–Ã†
        if ((ts->edge_limit.limit_rb) && (ts->nvt_point_info[i].x > ts->nvt_limit_area.area_xrb && ts->nvt_point_info[i].y > ts->nvt_limit_area.area_yrb)) {
 			//printk("4  ts->nvt_point_info[i].x = %d,ts->nvt_point_info[i].y = %d\n",ts->nvt_point_info[i].x,ts->nvt_point_info[i].y);
 			ts->nvt_point_info[i].type  = NVT_AREA_CORNER;
@@ -1324,7 +1324,7 @@ static bool nvt_corner_point_process(int i)
 			flag = 1;
 
         }
-        //×ø±êµãÎª·Ç±ß½ÇÇøÓòÊ±£¬µ¯ÆðÇ°Ãæ¼ÇÂ¼µÄ±ß½Ç×ø±êµã
+        //Ã—Ã¸Â±ÃªÂµÃ£ÃŽÂªÂ·Ã‡Â±ÃŸÂ½Ã‡Ã‡Ã¸Ã“Ã²ÃŠÂ±Â£Â¬ÂµÂ¯Ã†Ã°Ã‡Â°ÃƒÃ¦Â¼Ã‡Ã‚Â¼ÂµÃ„Â±ÃŸÂ½Ã‡Ã—Ã¸Â±ÃªÂµÃ£
         if (ts->nvt_point_info[i].type != NVT_AREA_CORNER) {
 			//printk("ii i = %d,ts->nvt_point_info[i].type = %d\n",i,ts->nvt_point_info[i].type);
 			//printk("NVT_AREA_CORNER =%d,NVT_AREA_NORMAL = %d\n",NVT_AREA_CORNER,NVT_AREA_NORMAL);
@@ -2278,6 +2278,7 @@ static int32_t nvt_ts_suspend(struct device *dev)
 //#if NVT_TOUCH_ESD_PROTECT
 	//cancel_delayed_work_sync(&nvt_esd_check_work);
 	//nvt_esd_check_enable(false);
+//#endif /* #if NVT_TOUCH_ESD_PROTECT */
 
 #if WAKEUP_GESTURE
 	if (ts->gesture_enable) {

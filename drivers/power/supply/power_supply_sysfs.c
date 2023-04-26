@@ -111,7 +111,7 @@ static ssize_t power_supply_show_property(struct device *dev,
 	else if (off == POWER_SUPPLY_PROP_REAL_STATUS)
 		return scnprintf(buf, PAGE_SIZE, "%s\n",
 				status_text[value.intval]);
-#endif
+#endif /* ODM_WT_EDIT */
 	else if (off == POWER_SUPPLY_PROP_CHARGE_TYPE)
 		return scnprintf(buf, PAGE_SIZE, "%s\n",
 				charge_type[value.intval]);
@@ -320,7 +320,7 @@ static struct device_attribute power_supply_attrs[] = {
 	#ifdef ODM_WT_EDIT
 	POWER_SUPPLY_ATTR(StopCharging_Test),
 	POWER_SUPPLY_ATTR(StartCharging_Test),
-	#endif
+	#endif /* ODM_WT_EDIT */
 	#ifdef ODM_WT_EDIT
 	POWER_SUPPLY_ATTR(adapter_fw_update),
 	POWER_SUPPLY_ATTR(authenticate),
@@ -339,7 +339,7 @@ static struct device_attribute power_supply_attrs[] = {
 	POWER_SUPPLY_ATTR(soc_notify_ready),
 	POWER_SUPPLY_ATTR(ui_soc),
 	POWER_SUPPLY_ATTR(real_status),
-	#endif
+	#endif /* ODM_WT_EDIT */
 	POWER_SUPPLY_ATTR(pr_swap),
 	POWER_SUPPLY_ATTR(cc_step),
 	POWER_SUPPLY_ATTR(cc_step_sel),
@@ -371,10 +371,10 @@ static struct device_attribute power_supply_attrs[] = {
 	#ifdef ODM_WT_EDIT
 	POWER_SUPPLY_ATTR(otg_switch),
 	POWER_SUPPLY_ATTR(otg_online),
-	#endif
+	#endif /* ODM_WT_EDIT */
 	#ifdef ODM_WT_EDIT
 	POWER_SUPPLY_ATTR(recharge_uv),
-	#endif
+	#endif /* ODM_WT_EDIT */
 	POWER_SUPPLY_ATTR(cc_soc),
 	POWER_SUPPLY_ATTR(qg_vbms_mode),
 	/* Local extensions of type int64_t */
@@ -485,7 +485,7 @@ int power_supply_uevent(struct device *dev, struct kobj_uevent_env *env)
 		if ((psy->desc->properties[j] == POWER_SUPPLY_PROP_STOPCHARGING_TEST)
 			|| (psy->desc->properties[j] == POWER_SUPPLY_PROP_STARTCHARGING_TEST))
 			continue;
-		#endif
+		#endif /* ODM_WT_EDIT */
 		attr = &power_supply_attrs[psy->desc->properties[j]];
 
 		ret = power_supply_show_property(dev, attr, prop_buf);

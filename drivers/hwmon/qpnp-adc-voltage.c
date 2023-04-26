@@ -512,11 +512,10 @@ static int qpnp_vadc_hc_pre_configure_usb_in(struct qpnp_vadc_chip *vadc,
 {
 	int rc = 0;
 #ifndef ODM_WT_EDIT
-/*Hanxing.Duan@ODM.BSP.CHG.Basic  Write regs separately for VADC conversion 2019.07.15*/
 	u8 buf;
-#else
+#else /*ODM_WT_EDIT*/
 	u8 buf, check = 0;
-#endif
+#endif /*ODM_WT_EDIT*/
 	u8 dig_param = 0;
 	struct qpnp_adc_amux_properties conv;
 	bool channel_check = false;
@@ -560,7 +559,6 @@ static int qpnp_vadc_hc_pre_configure_usb_in(struct qpnp_vadc_chip *vadc,
 		return rc;
 
 #ifdef ODM_WT_EDIT
-/*Hanxing.Duan@ODM.BSP.CHG.Basic  Write regs separately for VADC conversion 2019.07.15*/
 	rc = qpnp_vadc_read_reg(vadc, QPNP_VADC_HC1_EN_CTL1, &check, 1);
 	if (rc < 0) {
 		pr_err("qpnp adc configure block read failed\n");
@@ -570,7 +568,7 @@ static int qpnp_vadc_hc_pre_configure_usb_in(struct qpnp_vadc_chip *vadc,
 	if (check != buf)
 		pr_err("Peripheral enable fails for GND for USB_IN_V written:0x%x, read back:0x%x\n",
 					buf, check);
-#endif
+#endif /*ODM_WT_EDIT*/
 
 	if (!vadc->vadc_poll_eoc)
 		reinit_completion(&vadc->adc->adc_rslt_completion);
@@ -587,7 +585,6 @@ static int qpnp_vadc_hc_pre_configure_usb_in(struct qpnp_vadc_chip *vadc,
 		return rc;
 
 #ifdef ODM_WT_EDIT
-/*Hanxing.Duan@ODM.BSP.CHG.Basic  Write regs separately for VADC conversion 2019.07.15*/
 	rc = qpnp_vadc_read_reg(vadc, QPNP_VADC_HC1_ADC_DIG_PARAM, &check, 1);
 	if (rc < 0) {
 		pr_err("qpnp adc configure block read failed\n");
@@ -597,7 +594,7 @@ static int qpnp_vadc_hc_pre_configure_usb_in(struct qpnp_vadc_chip *vadc,
 	if (check != (dig_param & 0x7c))
 		pr_err("Dig param write fails for USB_IN_V, written:0x%x, read back:0x%x\n",
 					dig_param, check);
-#endif
+#endif /*ODM_WT_EDIT*/
 
 	buf = VADC_USB_IN_V_DIV_16_PM5;
 	rc = qpnp_vadc_write_reg(vadc, QPNP_VADC_HC1_ADC_CH_SEL_CTL, &buf, 1);
@@ -631,13 +628,12 @@ static int qpnp_vadc_hc_configure(struct qpnp_vadc_chip *vadc,
 				struct qpnp_adc_amux_properties *amux_prop)
 {
 #ifndef ODM_WT_EDIT
-/*Hanxing.Duan@ODM.BSP.CHG.Basic  Write regs separately for VADC conversion 2019.07.15*/
 	int rc = 0;
 	u8 buf[5];
-#else
+#else /*ODM_WT_EDIT*/
 	int rc = 0, i = 0;
 	u8 buf[5], check[5];
-#endif
+#endif /*ODM_WT_EDIT*/
 	u8 conv_req = 0;
 	bool channel_check = false;
 
@@ -679,14 +675,13 @@ static int qpnp_vadc_hc_configure(struct qpnp_vadc_chip *vadc,
 		buf[0], buf[1], buf[2], buf[3]);
 
 #ifndef ODM_WT_EDIT
-/*Hanxing.Duan@ODM.BSP.CHG.Basic  Write regs separately for VADC conversion 2019.07.15*/
 	/* Block register write from 0x42 through 0x46 */
 	rc = qpnp_vadc_write_reg(vadc, QPNP_VADC_HC1_ADC_DIG_PARAM, buf, 5);
 	if (rc < 0) {
 		pr_err("qpnp adc block register configure failed\n");
 		return rc;
 	}
-#else
+#else /*ODM_WT_EDIT*/
 	/* Register write from 0x42 through 0x46 */
 	rc = qpnp_vadc_write_reg(vadc, QPNP_VADC_HC1_ADC_DIG_PARAM, &buf[0], 1);
 	if (rc < 0) {
@@ -717,7 +712,7 @@ static int qpnp_vadc_hc_configure(struct qpnp_vadc_chip *vadc,
 		pr_err("qpnp adc block register configure failed for peripheral enable\n");
 		return rc;
 	}
-#endif
+#endif /*ODM_WT_EDIT*/
 
 	if (channel_check) {
 		rc = qpnp_vadc_channel_check(vadc, buf[2]);
@@ -725,7 +720,6 @@ static int qpnp_vadc_hc_configure(struct qpnp_vadc_chip *vadc,
 			return rc;
 
 #ifdef ODM_WT_EDIT
-/*Hanxing.Duan@ODM.BSP.CHG.Basic  Write regs separately for VADC conversion 2019.07.15*/
 		rc = qpnp_vadc_read_reg(vadc, QPNP_VADC_HC1_ADC_DIG_PARAM, check, 5);
 		if (rc < 0) {
 			pr_err("qpnp adc configure block read failed\n");
@@ -736,7 +730,7 @@ static int qpnp_vadc_hc_configure(struct qpnp_vadc_chip *vadc,
 			if (buf[i] != check[i])
 				pr_err("Reg 0x%x wrong: written:0x%x, read back:0x%x",
 						(0x42 + i), buf[i], check[i]);
-#endif
+#endif /*ODM_WT_EDIT*/
 	}
 
 	rc = qpnp_vadc_write_reg(vadc, QPNP_VADC_HC1_CONV_REQ,
@@ -831,9 +825,9 @@ int32_t qpnp_vadc_hc_read(struct qpnp_vadc_chip *vadc,
 #ifdef ODM_WT_EDIT
 /*Hanxing.Duan@ODB.RH.BSP.CHG.Basic fix do not release adc_lock 2019.07.29*/
 			goto fail_unlock;
-#else
+#else /*ODM_WT_EDIT*/
 			return rc;
-#endif
+#endif /*ODM_WT_EDIT*/
 		}
 	}
 

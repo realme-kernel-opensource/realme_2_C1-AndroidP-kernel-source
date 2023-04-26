@@ -100,7 +100,7 @@ enum {
 #define JEITA_EN_CFG_REG			(CHGR_BASE + 0x90)
 #ifdef ODM_WT_EDIT
 #define JEITA_EN_HARDLIMIT_BIT                  BIT(4)
-#endif
+#endif /* ODM_WT_EDIT */
 #define JEITA_EN_HOT_SL_FCV_BIT			BIT(3)
 #define JEITA_EN_COLD_SL_FCV_BIT		BIT(2)
 #define JEITA_EN_HOT_SL_CCC_BIT			BIT(1)

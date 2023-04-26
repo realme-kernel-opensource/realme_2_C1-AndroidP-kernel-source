@@ -26,7 +26,7 @@ enum batt_info_params {
 	BATT_INFO_FCC,
 	BATT_INFO_MAX,
 };
-#endif
+#endif /* ODM_WT_EDIT */
 
 struct qg_batt_props {
 	const char		*batt_type_str;
@@ -184,7 +184,7 @@ struct qpnp_qg {
 	bool		batt_info_restore;
 	bool		batt_range_ocv;
 	int			batt_range_pct;
-	#endif
+	#endif /* ODM_WT_EDIT */
 };
 
 struct ocv_all {
@@ -215,7 +215,7 @@ enum debug_mask {
 	QG_DEBUG_ALG_CL		= BIT(10),
 #ifdef ODM_WT_EDIT
 	QG_DEBUG_RESTORE_SOC	= BIT(11),
-#endif
+#endif /* ODM_WT_EDIT */
 };
 
 enum qg_irq {

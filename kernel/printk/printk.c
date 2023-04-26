@@ -343,7 +343,7 @@ static int console_may_schedule;
  */
 #ifdef ODM_WT_EDIT
 #include <linux/sched.h>
-#endif
+#endif /* ODM_WT_EDIT */
 enum log_flags {
 	LOG_NOCONS	= 1,	/* already flushed, do not print to console */
 	LOG_NEWLINE	= 2,	/* text ended with a newline */
@@ -362,7 +362,7 @@ struct printk_log {
 #ifdef ODM_WT_EDIT
 	pid_t pid;
 	char comm[TASK_COMM_LEN];
-#endif
+#endif /* ODM_WT_EDIT */
 }
 #ifdef CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS
 __packed __aligned(4)
@@ -603,7 +603,7 @@ static int log_store(int facility, int level,
 	msg->pid = current->pid;
 	memset(msg->comm, 0, TASK_COMM_LEN);
 	memcpy(msg->comm, current->comm, TASK_COMM_LEN-1);
-#endif
+#endif /* ODM_WT_EDIT */
 	if (ts_nsec > 0)
 		msg->ts_nsec = ts_nsec;
 	else
@@ -1234,7 +1234,7 @@ static size_t print_task_info(pid_t pid, const char *task_name,char *buf)
 		return snprintf(NULL, 0, "[%d, %s]", pid, task_name);
 	return sprintf(buf, "[%d, %s]", pid, task_name);
 }
-#endif
+#endif /* ODM_WT_EDIT */
 
 static size_t print_prefix(const struct printk_log *msg, bool syslog, char *buf)
 {
@@ -1258,7 +1258,7 @@ static size_t print_prefix(const struct printk_log *msg, bool syslog, char *buf)
 	len += print_time(msg->ts_nsec, buf ? buf + len : NULL);
 #ifdef ODM_WT_EDIT
 	len += print_task_info(msg->pid, msg->comm, buf ? buf + len : NULL);
-#endif
+#endif /* ODM_WT_EDIT */
 	return len;
 }
 

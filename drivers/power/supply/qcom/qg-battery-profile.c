@@ -444,7 +444,7 @@ int lookup_ocv_soc(u32 *ocv_uv, u32 soc, int batt_temp, bool charging)
 
 	return 0;
 }
-#endif
+#endif /* ODM_WT_EDIT */
 
 int qg_batterydata_init(struct device_node *profile_node)
 {

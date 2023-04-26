@@ -180,7 +180,7 @@ static void update_msoc(struct qpnp_qg *chip)
 		chip->catch_up_soc = chip->msoc;
 		skip_soc_catch_up_cnt ++;
 	}
-#endif
+#endif /* ODM_WT_EDIT */
 
 	if (chip->catch_up_soc > chip->msoc) {
 		/* SOC increased */
@@ -256,7 +256,7 @@ static void scale_soc_work(struct work_struct *work)
 
 #ifdef ODM_WT_EDIT
 	dump_all_soc(chip);
-#endif
+#endif /* ODM_WT_EDIT */
 
 	mutex_lock(&chip->soc_lock);
 
@@ -306,7 +306,7 @@ int qg_scale_soc(struct qpnp_qg *chip, bool force_soc)
 
 #ifdef ODM_WT_EDIT
 	dump_all_soc(chip);
-#endif
+#endif /* ODM_WT_EDIT */
 
 	mutex_lock(&chip->soc_lock);
 

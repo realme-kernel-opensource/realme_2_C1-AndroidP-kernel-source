@@ -1355,4 +1355,4 @@ int deinit_chg_monitor_work(struct smb_charger *chg)
 
 	return 0;
 }
-#endif
+#endif /* ODM_WT_EDIT */

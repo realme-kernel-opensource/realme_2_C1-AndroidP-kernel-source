@@ -29,7 +29,7 @@ enum print_reason {
 	PR_OTG		= BIT(4),
 #ifdef ODM_WT_EDIT
 	PR_OTHERS	= BIT(5),
-#endif
+#endif /* ODM_WT_EDIT */
 };
 
 #define DEFAULT_VOTER			"DEFAULT_VOTER"
@@ -78,7 +78,7 @@ enum print_reason {
 #define CHG_CHK_VOTER			"CHG_CHK_VOTER"
 #define CALL_VOTER				"CALL_VOTER"
 #define JEITA_VOTER				"JEITA_VOTER"
-#endif
+#endif /* ODM_WT_EDIT */
 #ifdef ODM_WT_EDIT
 #define AICL_THRESHOLD_VOTER		"AICL_THRESHOLD_VOTER"
 #endif
@@ -335,7 +335,7 @@ struct smb_charger {
 	struct power_supply		*dc_psy;
 #ifdef ODM_WT_EDIT
 	struct power_supply		*ac_psy;
-#endif
+#endif /* ODM_WT_EDIT */
 	struct power_supply		*bms_psy;
 	struct power_supply		*usb_main_psy;
 	struct power_supply		*usb_port_psy;
@@ -387,7 +387,7 @@ struct smb_charger {
 	struct notifier_block	fb_notif;
 	struct delayed_work	charger_monitor_work;
 	struct task_struct *tbatt_pwroff_task;
-#endif
+#endif /* ODM_WT_EDIT */
 	struct alarm		chg_termination_alarm;
 
 	/* pd */
@@ -430,7 +430,7 @@ struct smb_charger {
 	int			auto_recharge_soc;
 	#ifdef ODM_WT_EDIT
 	int			auto_recharge_mv;
-	#endif
+	#endif /* ODM_WT_EDIT */
 	bool			jeita_configured;
 	enum sink_src_mode	sink_src_mode;
 	bool			hw_die_temp_mitigation;
@@ -474,7 +474,7 @@ struct smb_charger {
 	int usb_id_gpio;
 	int usb_id_irq;
 	bool otg_switch;
-#endif
+#endif /* ODM_WT_EDIT */
 #ifdef ODM_WT_EDIT
 	int notify_code;
 	unsigned long charger_times;
@@ -482,10 +482,10 @@ struct smb_charger {
 	int ui_soc;
 	int prop_status;
 	unsigned long sleep_tm_sec;
-#endif
+#endif /* ODM_WT_EDIT */
 #ifdef ODM_WT_EDIT
 	bool         usb_online_status;
-#endif
+#endif /* ODM_WT_EDIT*/
 
 };
 
@@ -528,7 +528,7 @@ int smblib_vconn_regulator_is_enabled(struct regulator_dev *rdev);
 irqreturn_t default_irq_handler(int irq, void *data);
 #ifdef ODM_WT_EDIT
 irqreturn_t default_irq_handler_nolog(int irq, void *data);
-#endif
+#endif /* ODM_WT_EDIT */
 irqreturn_t chg_state_change_irq_handler(int irq, void *data);
 irqreturn_t batt_temp_changed_irq_handler(int irq, void *data);
 irqreturn_t batt_psy_changed_irq_handler(int irq, void *data);
@@ -574,7 +574,7 @@ int smblib_get_prop_batt_fcc(struct smb_charger *chg,
 				     union power_supply_propval *val);
 int smblib_get_prop_batt_cc(struct smb_charger *chg,
 				     union power_supply_propval *val);
-#endif
+#endif /* ODM_WT_EDIT */
 int smblib_set_prop_input_suspend(struct smb_charger *chg,
 				const union power_supply_propval *val);
 int smblib_set_prop_batt_capacity(struct smb_charger *chg,
@@ -681,7 +681,7 @@ int do_charger_icl(struct smb_charger *chg);
 void reset_charge_modify_setting(struct smb_charger *chg, int chg_triggle);
 void set_icl_flags(struct smb_charger *chg, int val);
 int get_battery_status_modify(struct smb_charger *chg);
-#endif
+#endif /* ODM_WT_EDIT */
 
 
 #endif /* __SMB5_CHARGER_H */

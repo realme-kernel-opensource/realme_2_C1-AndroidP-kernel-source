@@ -22,6 +22,7 @@
 #include "dsi-panel-ft8006p-truly-hdp-video.dtsi"
 #include "dsi-panel-ilt7807g-huaxian-hdp-video.dtsi"
 
+//#ifdef ODM_WT_EDIT
 /*
 &eeprom0 {
 	cam_vdig-supply = <&pm8953_l23>;
@@ -31,6 +32,7 @@
 	cam_vdig-supply = <&pm8953_l23>;
 };
 */
+//#endif /*ODM_WT_EDIT*/
 
 &mdss_dsi0 {
 	qcom,dsi-pref-prim-pan = <&dsi_sim_vid>;

@@ -151,7 +151,7 @@ struct scan_control {
  */
 int vm_swappiness = 60;
 
-#ifdef VENDOR_EDIT //yixue.ge@psw.bsp.kernel 20170720 add for add direct_vm_swappiness
+#ifdef VENDOR_EDIT
 /*
  * Direct reclaim swappiness, exptct 0 - 60. Higher means more swappy and slower.
  */
@@ -2254,7 +2254,7 @@ static void get_scan_count(struct lruvec *lruvec, struct mem_cgroup *memcg,
 		swappiness = direct_vm_swappiness;
 	}
 	/* If we have no swap space, do not bother scanning anon pages. */
-#ifndef VENDOR_EDIT //yixue.ge@psw.bsp.kernel.driver 20170810 modify for reserver some zram disk size
+#ifndef VENDOR_EDIT
 	if (!sc->may_swap || mem_cgroup_get_nr_swap_pages(memcg) <= 0) {
 #else
 	if (!sc->may_swap || (mem_cgroup_get_nr_swap_pages(memcg) <= total_swap_pages>>6)) {
@@ -2432,7 +2432,6 @@ out:
 	}
 }
 #ifdef VENDOR_EDIT
-/*Huacai.Zhou@PSW.BSP.Kernel.MM 20171227 modify for filelru first */
 #define for_each_evictable_lru_file(lru) for (lru = LRU_INACTIVE_FILE; lru <= LRU_ACTIVE_FILE; lru++)
 #define for_each_evictable_lru_anon(lru) for (lru = LRU_INACTIVE_ANON; lru <= LRU_ACTIVE_ANON; lru++)
 static unsigned  int swap_max_ratio = 1;
@@ -2480,7 +2479,6 @@ static void shrink_node_memcg(struct pglist_data *pgdat, struct mem_cgroup *memc
 		unsigned long nr_anon, nr_file, percentage;
 		unsigned long nr_scanned;
 #ifdef VENDOR_EDIT
-/*Huacai.Zhou@PSW.BSP.Kernel.MM 20171227 modify for filelru first */
 		for_each_evictable_lru_file(lru) {
 			if (nr[lru]) {
 				nr_to_scan = min(nr[lru], SWAP_CLUSTER_MAX);
@@ -3107,7 +3105,6 @@ unsigned long try_to_free_pages(struct zonelist *zonelist, int order,
 		.may_swap = 1,
 	};
 #ifdef VENDOR_EDIT
-/*Huacai.Zhou@PSW.BSP.Kernel.MM 2018-08-30 increase nr_to_reclaim*/
 	sc.nr_to_reclaim = SWAP_CLUSTER_MAX  <<  swap_max_ratio;
 #endif /*VENDOR_EDIT*/
 	/*
@@ -3707,6 +3704,8 @@ void wakeup_kswapd(struct zone *zone, int order, enum zone_type classzone_idx)
 
 //#ifndef VENDOR_EDIT
 //Remove for low memory shrink
+//#ifdef CONFIG_HIBERNATION
+//#endif /* VENDOR_EDIT */
 /*
  * Try to free `nr_to_reclaim' of memory, system-wide, and return the number of
  * freed pages.
@@ -3747,7 +3746,10 @@ unsigned long shrink_all_memory(unsigned long nr_to_reclaim)
 }
 //#ifndef VENDOR_EDIT
 //Modify for low memory shrink
+//#endif /* CONFIG_HIBERNATION */
+//#else /* VENDOR_EDIT */
 EXPORT_SYMBOL(shrink_all_memory);
+//#endif /* VENDOR_EDIT */
 
 /* It's optimal to keep kswapds on the same CPUs as their memory, but
    not required for correctness.  So if the last cpu in a node goes

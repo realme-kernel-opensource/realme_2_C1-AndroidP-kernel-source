@@ -312,6 +312,6 @@ source "fs/dlm/Kconfig"
 
 #ifdef ODM_WT_EDIT
 source "fs/exfat/Kconfig"
-#endif
+#endif /*ODM_WT_EDIT*/
 
 endmenu

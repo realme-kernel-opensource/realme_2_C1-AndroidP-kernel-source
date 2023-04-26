@@ -425,6 +425,7 @@ static int msm_ispif_reset_hw(struct ispif_device *ispif)
 	int rc = 0;
 	long timeout = 0;
 
+	/* Jianying.zhang@ODM_RH.Camera.Portting */
 	#ifdef VENDOR_EDIT
 	uint32_t ispifIrqStatus;
 
@@ -460,6 +461,7 @@ static int msm_ispif_reset_hw(struct ispif_device *ispif)
 	CDBG("%s: VFE0 done\n", __func__);
 
 	if (timeout <= 0) {
+        /* Jianying.zhang@ODM_RH.Camera.Portting */
 	    #ifdef VENDOR_EDIT
         ispifIrqStatus = msm_camera_io_r(ispif->base +
             ISPIF_VFE_m_IRQ_STATUS_0(VFE0));
@@ -489,6 +491,7 @@ static int msm_ispif_reset_hw(struct ispif_device *ispif)
 				msecs_to_jiffies(500));
 		CDBG("%s: VFE1 done\n", __func__);
 		if (timeout <= 0) {
+            /* Jianying.zhang@ODM_RH.Camera.Portting */
 	        #ifdef VENDOR_EDIT
 			ispifIrqStatus = msm_camera_io_r(ispif->base +
 				ISPIF_VFE_m_IRQ_STATUS_0(VFE1));

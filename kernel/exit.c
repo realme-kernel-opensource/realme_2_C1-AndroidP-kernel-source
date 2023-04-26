@@ -762,6 +762,7 @@ static void check_stack_usage(void)
 static inline void check_stack_usage(void) {}
 #endif
 
+//#ifdef VENDOR_EDIT
 static bool is_zygote_process(struct task_struct *t)
 {
 	const struct cred *tcred = __task_cred(t);
@@ -792,6 +793,7 @@ static bool is_critial_process(struct task_struct *t) {
     }
 
 }
+//#endif /*VENDOR_EDIT*/
 
 void __noreturn do_exit(long code)
 {
@@ -799,9 +801,11 @@ void __noreturn do_exit(long code)
 	int group_dead;
 	TASKS_RCU(int tasks_rcu_i);
 
+//#ifdef VENDOR_EDIT
     if (is_critial_process(tsk)) {
         printk("critical svc %d:%s exit with %ld !\n", tsk->pid, tsk->comm,code);
     }
+//#endif /*VENDOR_EDIT*/
 
 	profile_task_exit(tsk);
 	kcov_task_exit(tsk);

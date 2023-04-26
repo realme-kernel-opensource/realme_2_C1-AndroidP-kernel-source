@@ -8,7 +8,6 @@
 ** Version: 1.0 
 ** --------------------------- Revision History: --------------------------------
 ** 	<author>	<data>			<desc>
-** tong.han@BasicDrv.TP&LCD 11/01/2014 add this file
 ************************************************************************************/
 #ifndef _OPPO_BOOT_H
 #define _OPPO_BOOT_H
@@ -28,15 +27,12 @@ enum{
 
 extern int get_boot_mode(void);
 #ifdef VENDOR_EDIT
-//Fuchun.Liao@Mobile.BSP.CHG 2016-01-14 add for charge
 extern bool qpnp_is_power_off_charging(void);
 #endif
 #ifdef VENDOR_EDIT
-//PengNan@SW.BSP add for detect charger when reboot 2016-04-22
 extern bool qpnp_is_charger_reboot(void);
 #endif /*VENDOR_EDIT*/
 #ifdef VENDOR_EDIT
-/*Xianlin.Wu@ROM.Security add for detect bootloader unlock state 2019-10-28*/
 enum{
         VERIFIED_BOOT_STATE__GREEN,
         VERIFIED_BOOT_STATE__ORANGE,

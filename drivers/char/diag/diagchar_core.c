@@ -2360,6 +2360,7 @@ static int diag_ioctl_query_pd_logging(struct diag_logging_mode_param_t *param)
 	return ret;
 }
 
+//#ifdef VENDOR_EDIT
 //add for fix diag_mdlog kill fail,case 03877835 ,cr 2326409
 static void diag_ioctl_query_session_pid(struct diag_query_pid_t *param)
 {
@@ -2447,6 +2448,7 @@ static void diag_ioctl_query_session_pid(struct diag_query_pid_t *param)
 	DIAG_LOG(DIAG_DEBUG_USERSPACE,
 	"diag: Pid for the active ODL session: %d\n", param->pid);
 }
+//#endif
 
 static int diag_ioctl_register_callback(unsigned long ioarg)
 {
@@ -2574,11 +2576,17 @@ long diagchar_compat_ioctl(struct file *filp,
 	uint16_t remote_dev;
 	struct diag_dci_client_tbl *dci_client = NULL;
 	struct diag_logging_mode_param_t mode_param;
+//#ifdef VENDOR_EDIT
 //add for fix diag_mdlog kill fail,case 03877835 ,cr 2326409
 	struct diag_con_all_param_t con_param;
 	struct diag_query_pid_t pid_query;
+//#endif
+//#ifdef VENDOR_EDIT
 //add for modem log postback
+//#ifdef FEATURE_MODEMLOG_POSTBACK
 	int clear_mask_param = diag_mask_clear_param;
+//#endif/*FEATURE_MODEMLOG_POSTBACK*/
+//#endif/*VENDOR_EDIT*/
 	switch (iocmd) {
 	case DIAG_IOCTL_COMMAND_REG:
 		result = diag_ioctl_cmd_reg_compat(ioarg);
@@ -2696,6 +2704,7 @@ long diagchar_compat_ioctl(struct file *filp,
 			return -EFAULT;
 		result = diag_ioctl_query_pd_logging(&mode_param);
 		break;
+//#ifdef VENDOR_EDIT
 //add for fix diag_mdlog kill fail,case 03877835 ,cr 2326409
 	case DIAG_IOCTL_QUERY_CON_ALL:
 		con_param.diag_con_all = DIAG_CON_ALL;
@@ -2722,7 +2731,10 @@ long diagchar_compat_ioctl(struct file *filp,
 		else
 			result = 0;
 		break;
+//#endif
+//#ifdef VENDOR_EDIT
 //add for modem log postback
+//#ifdef FEATURE_MODEMLOG_POSTBACK
 	case DIAG_IOCTL_SET_CLEARMASK:
 		if (copy_from_user(&clear_mask_param, (void __user *)ioarg,
 			sizeof(int))) {
@@ -2733,6 +2745,8 @@ long diagchar_compat_ioctl(struct file *filp,
 		diag_mask_clear_param = clear_mask_param;
 		result = 0;
 		break;
+//#endif/*FEATURE_MODEMLOG_POSTBACK*/
+//#endif/*VENDOR_EDIT*/
 	}
 	return result;
 }
@@ -2747,11 +2761,17 @@ long diagchar_ioctl(struct file *filp,
 	uint16_t remote_dev;
 	struct diag_dci_client_tbl *dci_client = NULL;
 	struct diag_logging_mode_param_t mode_param;
+//#ifdef VENDOR_EDIT
 //add for fix diag_mdlog kill fail,case 03877835 ,cr 2326409
 	struct diag_con_all_param_t con_param;
 	struct diag_query_pid_t pid_query;
+//#endif
+//#ifdef VENDOR_EDIT
 //add for modem log postback
+//#ifdef FEATURE_MODEMLOG_POSTBACK
 	int clear_mask_param = diag_mask_clear_param;
+//#endif/*FEATURE_MODEMLOG_POSTBACK*/
+//#endif/*VENDOR_EDIT*/
 
 	switch (iocmd) {
 	case DIAG_IOCTL_COMMAND_REG:
@@ -2870,6 +2890,7 @@ long diagchar_ioctl(struct file *filp,
 			return -EFAULT;
 		result = diag_ioctl_query_pd_logging(&mode_param);
 		break;
+//#ifdef VENDOR_EDIT
 //add for fix diag_mdlog kill fail,case 03877835 ,cr 2326409
 	case DIAG_IOCTL_QUERY_CON_ALL:
 		con_param.diag_con_all = DIAG_CON_ALL;
@@ -2897,7 +2918,10 @@ long diagchar_ioctl(struct file *filp,
 		else
 			result = 0;
 		break;
+//#endif
+//#ifdef VENDOR_EDIT
 //add for modem log postback
+//#ifdef FEATURE_MODEMLOG_POSTBACK
 	case DIAG_IOCTL_SET_CLEARMASK:
 		if (copy_from_user(&clear_mask_param, (void __user *)ioarg,
 			sizeof(int))) {
@@ -2908,6 +2932,8 @@ long diagchar_ioctl(struct file *filp,
 		diag_mask_clear_param = clear_mask_param;
 		result = 0;
 		break;
+//#endif/*FEATURE_MODEMLOG_POSTBACK*/
+//#endif/*VENDOR_EDIT*/
 	}
 	return result;
 }

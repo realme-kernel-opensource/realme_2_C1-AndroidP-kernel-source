@@ -44,7 +44,7 @@
 
 #ifdef ODM_WT_EDIT
 #include <linux/proc_fs.h>
-#endif
+#endif /* ODM_WT_EDIT */
 
 #include "sdhci-msm.h"
 #include "sdhci-msm-ice.h"
@@ -480,7 +480,7 @@ static void card_tray_detect_remove_proc(void)
 {
 	remove_proc_entry("sd_tray_gpio_value", NULL);
 }
-#endif
+#endif /* ODM_WT_EDIT */
 
 static ssize_t store_auto_cmd21(struct device *dev, struct device_attribute
 				*attr, const char *buf, size_t count)
@@ -2038,7 +2038,7 @@ struct sdhci_msm_pltfm_data *sdhci_msm_populate_pdata(struct device *dev,
 
 #ifdef ODM_WT_EDIT
 	sdhci_irq_gpio = pdata->status_gpio;
-#endif
+#endif /* ODM_WT_EDIT */
 
 	if (gpio_is_valid(pdata->status_gpio) && !(flags & OF_GPIO_ACTIVE_LOW))
 		pdata->caps2 |= MMC_CAP2_CD_ACTIVE_HIGH;
@@ -5256,7 +5256,7 @@ static int sdhci_msm_probe(struct platform_device *pdev)
 				mmc_hostname(host->mmc), __func__, ret);
 		}
 	}
-#endif
+#endif /* ODM_WT_EDIT */
 
 	/* Successful initialization */
 	goto out;
@@ -5364,7 +5364,7 @@ static int sdhci_msm_remove(struct platform_device *pdev)
 	if (!strcmp(mmc_hostname(host->mmc), "mmc1")) {
 		card_tray_detect_remove_proc();
 	}
-#endif
+#endif /* ODM_WT_EDIT */
 	sdhci_pltfm_free(pdev);
 
 	return 0;

@@ -21,7 +21,7 @@
 #include <linux/of_batterydata.h>
 #ifdef ODM_WT_EDIT
 #include <linux/of_gpio.h>
-#endif
+#endif /* ODM_WT_EDIT */
 #include <linux/alarmtimer.h>
 #include "smb5-lib.h"
 #include "smb5-reg.h"
@@ -41,7 +41,7 @@ int usb_state_ctp = -1;
 #ifdef ODM_WT_EDIT
 #include "schgm-flash.h"
 #include <linux/of_gpio.h>
-#endif
+#endif /* ODM_WT_EDIT */
 
 #define smblib_err(chg, fmt, ...)		\
 	pr_err("%s: %s: " fmt, chg->name,	\
@@ -702,14 +702,14 @@ static const struct apsd_result *smblib_update_usb_type(struct smb_charger *chg)
 		if (!(apsd_result->pst == POWER_SUPPLY_TYPE_USB_FLOAT &&
 			chg->real_charger_type == POWER_SUPPLY_TYPE_USB))
 			chg->real_charger_type = apsd_result->pst;
-		#else
+		#else /* ODM_WT_EDIT */
 		if (!(apsd_result->pst == POWER_SUPPLY_TYPE_USB_FLOAT &&
 			chg->real_charger_type == POWER_SUPPLY_TYPE_USB)) {
 			chg->real_charger_type = apsd_result->pst;
 			if(chg->real_charger_type != POWER_SUPPLY_TYPE_UNKNOWN)
 				chg->usb_online_status = true;
 		}
-		#endif
+		#endif /* ODM_WT_EDIT */
 	}
 
 	smblib_dbg(chg, PR_MISC, "APSD=%s PD=%d\n",
@@ -740,7 +740,7 @@ static int smblib_notifier_call(struct notifier_block *nb,
 
 #ifdef ODM_WT_EDIT
 	//update_charger_notify_code(chg);
-#endif
+#endif /* ODM_WT_EDIT */
 
 	return NOTIFY_OK;
 }
@@ -824,7 +824,7 @@ static void smblib_uusb_removal(struct smb_charger *chg)
 #ifndef ODM_WT_EDIT
 	vote(chg->usb_icl_votable, SW_ICL_MAX_VOTER, true,
 			is_flash_active(chg) ? SDP_CURRENT_UA : SDP_100_MA);
-#endif
+#endif /*ODM_WT_EDIT*/
 	vote(chg->usb_icl_votable, SW_QC3_VOTER, false, 0);
 	vote(chg->usb_icl_votable, CHG_TERMINATION_VOTER, false, 0);
 
@@ -847,7 +847,7 @@ static void smblib_uusb_removal(struct smb_charger *chg)
 	chg->uusb_apsd_rerun_done = false;
 	#ifdef ODM_WT_EDIT
 	chg->usb_online_status = false;
-	#endif
+	#endif /* ODM_WT_EDIT */
 	/* write back the default FLOAT charger configuration */
 	rc = smblib_masked_write(chg, USBIN_OPTIONS_2_CFG_REG,
 				(u8)FLOAT_OPTIONS_MASK, chg->float_cfg);
@@ -1019,13 +1019,13 @@ int smblib_set_icl_current(struct smb_charger *chg, int icl_ua)
 	#ifndef ODM_WT_EDIT
 	if (icl_ua <= USBIN_25MA)
 		return smblib_set_usb_suspend(chg, true);
-	#else
+	#else /* ODM_WT_EDIT */
 	if (icl_ua <= USBIN_25MA){
 		chg->usb_online_status = false;
 		return smblib_set_usb_suspend(chg, true);
 	}
 	chg->usb_online_status = true;
-	#endif
+	#endif /* ODM_WT_EDIT */
 	if (icl_ua == INT_MAX)
 		goto set_mode;
 
@@ -1034,7 +1034,7 @@ int smblib_set_icl_current(struct smb_charger *chg, int icl_ua)
 			|| (chg->real_charger_type == POWER_SUPPLY_TYPE_USB_CDP)) {
 		icl_ua = 500000;
 	}
-#endif
+#endif /* ODM_WT_EDIT */
 	/* configure current */
 	if (chg->real_charger_type == POWER_SUPPLY_TYPE_USB
 		&& (chg->typec_legacy
@@ -1087,13 +1087,13 @@ set_mode:
 	#ifndef ODM_WT_EDIT
 	if (chg->real_charger_type != POWER_SUPPLY_TYPE_USB)
 		rc = smblib_run_aicl(chg, RERUN_AICL);
-	#else
+	#else /* ODM_WT_EDIT */
 	if (chg->real_charger_type != POWER_SUPPLY_TYPE_USB) {
 		if (chg->real_charger_type != POWER_SUPPLY_TYPE_UNKNOWN)
 			chg->usb_online_status = true;
 		rc = smblib_run_aicl(chg, RERUN_AICL);
 	}
-	#endif
+	#endif /* ODM_WT_EDIT */
 out:
 	return rc;
 }
@@ -1642,9 +1642,9 @@ int smblib_get_prop_batt_health(struct smb_charger *chg,
 			 */
 		#ifndef ODM_WT_EDIT
 			effective_fv_uv = get_effective_result(chg->fv_votable);
-		#else
+		#else /* ODM_WT_EDIT */
 			effective_fv_uv = 4500000 - 40000; // 4.5V show battery overvoltage;
-		#endif
+		#endif /* ODM_WT_EDIT */
 			if (pval.intval >= effective_fv_uv + 40000) {
 				val->intval = POWER_SUPPLY_HEALTH_OVERVOLTAGE;
 				smblib_err(chg, "battery over-voltage vbat_fg = %duV, fv = %duV\n",
@@ -1671,7 +1671,7 @@ int smblib_get_prop_batt_health(struct smb_charger *chg,
 		val->intval = POWER_SUPPLY_HEALTH_WARM;
 	else
 		val->intval = POWER_SUPPLY_HEALTH_GOOD;
-#else
+#else /* ODM_WT_EDIT */
 	if (chg->sw_jeita_enabled) {
 		if (stat & BAT_TEMP_STATUS_TOO_COLD_BIT)
 			val->intval = POWER_SUPPLY_HEALTH_COLD;
@@ -1702,7 +1702,7 @@ int smblib_get_prop_batt_health(struct smb_charger *chg,
 		else
 			val->intval = POWER_SUPPLY_HEALTH_GOOD;
 	}
-#endif
+#endif /* ODM_WT_EDIT */
 
 done:
 	return rc;
@@ -1812,7 +1812,7 @@ int smblib_get_prop_batt_cc(struct smb_charger *chg,
 				       POWER_SUPPLY_PROP_BATT_CC, val);
 	return rc;
 }
-#endif
+#endif /* ODM_WT_EDIT */
 
 /***********************
  * BATTERY PSY SETTERS *
@@ -2050,7 +2050,7 @@ int smblib_disable_hw_jeita(struct smb_charger *chg, bool disable)
 	if (rc < 0) {
 		dev_err(chg->dev, "Couldn't set hw jeita rc=%d\n", rc);
 	}
-	#endif
+	#endif /* ODM_WT_EDIT */
 
 	/*
 	 * Disable h/w base JEITA compensation if s/w JEITA is enabled
@@ -2067,7 +2067,7 @@ int smblib_disable_hw_jeita(struct smb_charger *chg, bool disable)
 		| JEITA_EN_COLD_SL_CCC_BIT
 		| JEITA_EN_HARDLIMIT_BIT;
 	#endif /* CONFIG_DISABLE_TEMP_PROTECT */
-	#endif
+	#endif /* ODM_WT_EDIT */
 	rc = smblib_masked_write(chg, JEITA_EN_CFG_REG, mask,
 			disable ? 0 : mask);
 	if (rc < 0) {
@@ -2182,7 +2182,7 @@ int smblib_get_prop_usb_online(struct smb_charger *chg,
 	val->intval = (bool)(stat & USBIN_PLUGIN_RT_STS_BIT);
 	return rc;
 	}
-	#endif
+	#endif /* ODM_WT_EDIT */
 
 	if (get_client_vote_locked(chg->usb_icl_votable, USER_VOTER) == 0) {
 		val->intval = false;
@@ -2561,7 +2561,7 @@ static int smblib_handle_usb_current(struct smb_charger *chg,
 			chg->real_charger_type = POWER_SUPPLY_TYPE_USB;
 			#ifdef ODM_WT_EDIT
 			chg->usb_online_status = true;
-			#endif
+			#endif /* ODM_WT_EDIT */
 			rc = vote(chg->usb_icl_votable, USB_PSY_VOTER,
 							true, usb_current);
 			if (rc < 0) {
@@ -2575,7 +2575,7 @@ static int smblib_handle_usb_current(struct smb_charger *chg,
 		if (usb_current == 100000) {
 			usb_current = 500000;
 		}
-	#endif
+	#endif /* ODM_WT_EDIT */
 		rc = vote(chg->usb_icl_votable, USB_PSY_VOTER,
 					true, usb_current);
 		if (rc < 0) {
@@ -2596,7 +2596,7 @@ static int smblib_handle_usb_current(struct smb_charger *chg,
 		//do_charger_icl(chg);
 		set_icl_flags(chg, 4);
 	}
-#endif
+#endif /* ODM_WT_EDIT */
 
 	return 0;
 }
@@ -2733,11 +2733,11 @@ int smblib_set_prop_pd_active(struct smb_charger *chg,
 		vote(chg->usb_icl_votable, PD_VOTER, true, USBIN_500MA);
 #ifndef ODM_WT_EDIT
 		vote(chg->usb_icl_votable, SW_ICL_MAX_VOTER, false, 0);
-#endif
+#endif /*ODM_WT_EDIT*/
 	} else {
 #ifndef ODM_WT_EDIT
 		vote(chg->usb_icl_votable, SW_ICL_MAX_VOTER, true, SDP_100_MA);
-#endif
+#endif /*ODM_WT_EDIT*/
 		vote(chg->usb_icl_votable, PD_VOTER, false, 0);
 		vote(chg->usb_irq_enable_votable, PD_VOTER, false, 0);
 
@@ -2976,7 +2976,7 @@ irqreturn_t default_irq_handler_nolog(int irq, void *data)
 	smblib_dbg(chg, PR_OTHERS, "IRQ: %s\n", irq_data->name);
 	return IRQ_HANDLED;
 }
-#endif
+#endif /* ODM_WT_EDIT */
 #define CHG_TERM_WA_ENTRY_DELAY_MS		300000		/* 5 min */
 #define CHG_TERM_WA_EXIT_DELAY_MS		60000		/* 1 min */
 static void smblib_eval_chg_termination(struct smb_charger *chg, u8 batt_status)
@@ -3303,7 +3303,7 @@ void smblib_usb_plugin_locked(struct smb_charger *chg)
 			chg->charger_times = 0;
 		}
 		wake_chg_monitor_work(chg, 20);
-	#endif
+	#endif /* ODM_WT_EDIT */
 	} else {
 		#ifdef ODM_WT_EDIT
 		usb_state_ctp = 0;
@@ -3365,7 +3365,7 @@ void smblib_usb_plugin_locked(struct smb_charger *chg)
 		reset_charge_modify_setting(chg, 1);
 		wake_chg_monitor_work(chg, 0);
 		vote(chg->awake_votable, USB_PSY_VOTER, false, 0);
-	#endif
+	#endif /* ODM_WT_EDIT */
 		smblib_update_usb_type(chg);
 	}
 
@@ -3494,7 +3494,7 @@ static void smblib_handle_hvdcp_check_timeout(struct smb_charger *chg,
 #ifndef ODM_WT_EDIT
 			vote(chg->usb_icl_votable, SW_ICL_MAX_VOTER, true,
 				HVDCP_CURRENT_UA);
-#endif
+#endif /*ODM_WT_EDIT*/
 		} else {
 			/* A plain DCP, enforce DCP ICL if specified */
 			vote(chg->usb_icl_votable, DCP_VOTER,
@@ -3580,7 +3580,7 @@ static void update_sw_icl_max(struct smb_charger *chg, int pst)
 		break;
 	}
 }
-#endif
+#endif /*ODM_WT_EDIT*/
 
 static void smblib_handle_apsd_done(struct smb_charger *chg, bool rising)
 {
@@ -3593,7 +3593,7 @@ static void smblib_handle_apsd_done(struct smb_charger *chg, bool rising)
 
 #ifndef ODM_WT_EDIT
 	update_sw_icl_max(chg, apsd_result->pst);
-#endif
+#endif /*ODM_WT_EDIT*/
 
 	switch (apsd_result->bit) {
 	case SDP_CHARGER_BIT:
@@ -3609,7 +3609,7 @@ static void smblib_handle_apsd_done(struct smb_charger *chg, bool rising)
 	#ifdef ODM_WT_EDIT
 		//do_charger_icl(chg); // Do ICL here maybe cause setting dcp online later.
 		set_icl_flags(chg, 1);
-	#endif
+	#endif /* ODM_WT_EDIT */
 		break;
 	default:
 		break;
@@ -3620,7 +3620,7 @@ static void smblib_handle_apsd_done(struct smb_charger *chg, bool rising)
 		vote(chg->usb_icl_votable, DEFAULT_100MA_VOTER, false, 0);
 		vote(chg->usb_icl_votable, USB_PSY_VOTER, true, CDP_CURRENT_UA);
 	}
-#endif
+#endif /* ODM_WT_EDIT */
 
 	smblib_dbg(chg, PR_INTERRUPT, "IRQ: apsd-done rising; %s detected\n",
 		   apsd_result->name);
@@ -3799,7 +3799,7 @@ static void typec_src_removal(struct smb_charger *chg)
 #ifndef ODM_WT_EDIT
 	vote(chg->usb_icl_votable, SW_ICL_MAX_VOTER, true,
 			is_flash_active(chg) ? SDP_CURRENT_UA : SDP_100_MA);
-#endif
+#endif /*ODM_WT_EDIT*/
 	vote(chg->usb_icl_votable, PD_VOTER, false, 0);
 	vote(chg->usb_icl_votable, USB_PSY_VOTER, false, 0);
 	vote(chg->usb_icl_votable, DCP_VOTER, false, 0);
@@ -4266,7 +4266,7 @@ static void smblib_uusb_otg_work(struct work_struct *work)
 		goto out;
 	}
 	otg = !!(stat & U_USB_GROUND_NOVBUS_BIT);
-#endif
+#endif /* ODM_WT_EDIT */
 	if (chg->otg_present != otg)
 		smblib_notify_usb_host(chg, otg);
 	else
@@ -4335,9 +4335,9 @@ static void smblib_icl_change_work(struct work_struct *work)
 
 #ifndef ODM_WT_EDIT
 	smblib_dbg(chg, PR_INTERRUPT, "icl_settled=%d\n", settled_ua);
-#else
+#else /* ODM_WT_EDIT */
 	smblib_dbg(chg, PR_OTHERS, "icl_settled=%d\n", settled_ua);
-#endif
+#endif /* ODM_WT_EDIT */
 }
 
 static void smblib_pl_enable_work(struct work_struct *work)

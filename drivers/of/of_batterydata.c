@@ -21,7 +21,7 @@
 #include <linux/power_supply.h>
 #ifdef ODM_WT_EDIT
 #include <linux/hardware_info.h>
-#endif
+#endif /* ODM_WT_EDIT */
 
 
 static int of_batterydata_read_lut(const struct device_node *np,
@@ -399,14 +399,14 @@ struct device_node *of_batterydata_get_best_profile(
 		pr_info("%s found\n", battery_type);
 	else
 		pr_info("%s found\n", best_node->name);
-	#else
+	#else /* ODM_WT_EDIT */
 	if (!rc) {
 		pr_info("Profile:%s found.\n", battery_type);
 		hardwareinfo_set_prop(HARDWARE_BATTERY_ID, battery_type);
 	}
 	else
 		pr_info("not best node found\n");
-	#endif
+	#endif /* ODM_WT_EDIT */
 
 	return best_node;
 }

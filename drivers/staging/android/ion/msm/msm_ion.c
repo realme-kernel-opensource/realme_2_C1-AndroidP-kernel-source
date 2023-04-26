@@ -815,9 +815,9 @@ long msm_ion_custom_ioctl(struct ion_client *client,
 		end = start + data.flush_data.length;
 #ifdef ODM_WT_EDIT
 		if (start && check_vaddr_bounds(start, end)) {
-#else
+#else /* ODM_WT_EDIT */
 		if (check_vaddr_bounds(start, end)) {
-#endif
+#endif /* ODM_WT_EDIT */
 			pr_err("%s: virtual address %pK is out of bounds\n",
 			       __func__, data.flush_data.vaddr);
 			ret = -EINVAL;
@@ -881,7 +881,7 @@ long msm_ion_custom_ioctl(struct ion_client *client,
 	return 0;
 }
 
-#if defined(VENDOR_EDIT) && defined(CONFIG_ARM64) /* Shiming.Zhang@PSW.BSP.Driver.ION */
+#if defined(VENDOR_EDIT) && defined(CONFIG_ARM64)
 int msm_ion_heap_pages_zero(struct page **pages, int num_pages)
 {
         int i;

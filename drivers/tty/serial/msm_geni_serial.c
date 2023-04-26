@@ -201,7 +201,6 @@ static struct msm_geni_serial_port msm_geni_console_port;
 static struct msm_geni_serial_port msm_geni_serial_ports[GENI_UART_NR_PORTS];
 
 #ifdef VENDOR_EDIT
-/*Tong.han@BSP.group.TP, Modify for selct console config for diffrent scene,2015/11/15*/
 static bool boot_with_console(void)
 {
 #ifdef CONFIG_OPPO_DAILY_BUILD

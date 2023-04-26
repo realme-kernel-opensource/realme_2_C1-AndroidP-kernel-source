@@ -1,0 +1,21 @@
+#*******************************************************************************
+# Copyright (C), 2008-2016, OPPO Mobile Comm Corp., Ltd.
+# ODM_WT_EDIT
+# FILE: - Kconfig
+# Description : Novatek NT36xxx touchscreen driver configuration
+# Version: 1.0
+# Date : 2018/12/27
+#
+# -------------------------Revision History:----------------------------------
+#  <author>	 <data> 	<version >			<desc>
+#
+#
+#*******************************************************************************/
+config SILEAD_FP_PLATFORM
+	bool "silead host download SPI driver"
+	default y
+	help
+	  Say Y here if you have a silead  fp 
+	  to your system by SPI bus.
+
+	  If unsure, say N.

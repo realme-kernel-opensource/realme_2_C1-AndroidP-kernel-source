@@ -168,6 +168,7 @@ static int fb_event_callback(struct notifier_block *self,
 
 	pdata->mfd = evdata->info->par;
 #ifndef ODM_WT_EDIT
+//Tianchen.Zhao@ODM_RH.Display Porting
 	if (event == FB_EVENT_BLANK) {
 		int *blank = evdata->data;
 		struct dsi_status_data *pdata = container_of(self,
@@ -207,8 +208,9 @@ static int fb_event_callback(struct notifier_block *self,
 		case FB_BLANK_POWERDOWN:
 		case FB_BLANK_HSYNC_SUSPEND:
 			#ifdef ODM_WT_EDIT
+			//Tianchen.Zhao@ODM_RH.Display Porting
 			pinfo->esd_check_running = false;
-			#endif
+			#endif /* ODM_WT_EDIT */
 			pr_err("%s : LCD_LOG, ESD thread stop esd_check_running %d \n", __func__, pinfo->esd_check_running);
 			cancel_delayed_work(&pdata->check_status);
 			break;
@@ -225,8 +227,9 @@ static int fb_event_callback(struct notifier_block *self,
 		switch (*blank) {
 		case FB_BLANK_UNBLANK:
 			#ifdef ODM_WT_EDIT
+			//Tianchen.Zhao@ODM_RH.Display Porting
 			pinfo->esd_check_running = true;
-			#endif
+			#endif /* ODM_WT_EDIT */
 			pr_err("%s : LCD_LOG, ESD thread start esd_check_running %d\n", __func__, pinfo->esd_check_running);
 			schedule_delayed_work(&pdata->check_status,
 				msecs_to_jiffies(interval));

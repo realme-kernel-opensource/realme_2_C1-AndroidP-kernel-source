@@ -126,9 +126,11 @@ int sysctl_tcp_default_init_rwnd __read_mostly = TCP_INIT_CWND * 2;
 #define TCP_REMNANT (TCP_FLAG_FIN|TCP_FLAG_URG|TCP_FLAG_SYN|TCP_FLAG_PSH)
 #define TCP_HP_BITS (~(TCP_RESERVED_BITS|TCP_FLAG_PSH))
 
+//#ifdef VENDOR_EDIT
 //Add code for appo sla function
 void (*statistic_dev_rtt)(struct sock *sk,long rtt) = NULL;
 EXPORT_SYMBOL(statistic_dev_rtt);
+//#endif /* VENDOR_EDIT */
 
 #define REXMIT_NONE	0 /* no loss recovery to do */
 #define REXMIT_LOST	1 /* retransmit packets marked lost */
@@ -769,10 +771,12 @@ static void tcp_rtt_estimator(struct sock *sk, long mrtt_us)
 			tp->rtt_seq = tp->snd_nxt;
 			tp->mdev_max_us = tcp_rto_min_us(sk);
 		}
+		//#ifdef VENDOR_EDIT
 		//Add code for appo sla function
 		if(TCP_ESTABLISHED == sk->sk_state && NULL != statistic_dev_rtt){
 			statistic_dev_rtt(sk,mrtt_us);
 		}
+		//#endif /* VENDOR_EDIT */
 	} else {
 		/* no previous measure. */
 		srtt = m << 3;		/* take the measured time to be rtt */

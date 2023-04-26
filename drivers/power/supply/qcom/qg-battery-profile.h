@@ -18,6 +18,6 @@ int lookup_soc_ocv(u32 *soc, u32 ocv_uv, int batt_temp, bool charging);
 int qg_get_nominal_capacity(u32 *nom_cap_uah, int batt_temp, bool charging);
 #ifdef ODM_WT_EDIT
 int lookup_ocv_soc(u32 *ocv_uv, u32 soc, int batt_temp, bool charging);
-#endif
+#endif /* ODM_WT_EDIT */
 
 #endif /* __QG_BATTERY_PROFILE_H__ */

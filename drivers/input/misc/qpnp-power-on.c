@@ -44,7 +44,6 @@
 
 #ifdef VENDOR_EDIT
 #ifdef WT_COMPILE_FACTORY_VERSION
-//zengyunqing@PSW.BSP.Boot  2018-10-03  modify for getting project info from cdt.
 #include <soc/oppo/oppo_project.h>
 #endif
 #endif /* VENDOR_EDIT */
@@ -2250,7 +2249,7 @@ void probe_board_and_set(void)
 		strncpy(modemid_info, "0", HARDWARE_MAX_ITEM_LONGTH);
 	}
 
-	#ifndef WT_COMPILE_FACTORY_VERSION //zengyunqing@PSW.BSP.Boot  2018-10-03  modify for getting project info from cdt.
+	#ifndef WT_COMPILE_FACTORY_VERSION
     //modemid 1,2,3 to 18351, modemid 4 to 18052, modemid 5 to 18051
 	if(strcmp(modemid_info, "1") == 0 || strcmp(modemid_info, "2") == 0 || strcmp(modemid_info, "3") == 0){
 		if(OPPO_PROJECT_FOR_BUILD == 18355) {
@@ -2303,7 +2302,7 @@ void probe_board_and_set(void)
 	oppoversion_info_set("prjVersion", prjversion_info);
 	oppoversion_info_set("bootMode", ftmmode_info);
 }
-#endif
+#endif/*ODM_WT_EDIT*/
 static int pon_twm_notifier_cb(struct notifier_block *nb,
 				unsigned long action, void *data)
 {
@@ -2835,7 +2834,7 @@ static int qpnp_pon_probe(struct platform_device *pdev)
 	qpnp_pon_debugfs_init(pdev);
 	#ifdef ODM_WT_EDIT
 	probe_board_and_set();
-	#endif
+	#endif/*ODM_WT_EDIT*/
 	return 0;
 
 err_out:

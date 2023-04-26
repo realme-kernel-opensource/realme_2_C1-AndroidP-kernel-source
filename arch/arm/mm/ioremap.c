@@ -317,7 +317,7 @@ static void __iomem * __arm_ioremap_pfn_caller(unsigned long pfn,
 	    paddr <= MSM8953_TLMM_END_ADDR)
 		prot = pgprot_stronglyordered(type->prot_pte);
     #endif
-	#endif
+	#endif/*ODM_WT_EDIT*/
 
 	prot = __pgprot(type->prot_pte);
 #ifdef CONFIG_ARCH_MSM8953_SOC_SETTINGS

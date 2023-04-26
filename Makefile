@@ -97,6 +97,8 @@ endif
 endif
 
 export quiet Q KBUILD_VERBOSE
+export ODM_WT_EDIT=yes
+export TARGET_PRODUCT=S88051AA1
 
 # kbuild supports saving output files in a separate directory.
 # To locate output files in a separate directory two syntaxes are supported.
@@ -422,7 +424,7 @@ endif
 
 
 # ifdef VENDOR_EDIT
-KBUILD_CFLAGS +=   -DVENDOR_EDIT
+KBUILD_CFLAGS +=   -DVENDOR_EDIT -DODM_WT_EDIT
 KBUILD_CPPFLAGS += -DVENDOR_EDIT
 CFLAGS_KERNEL +=   -DVENDOR_EDIT
 CFLAGS_MODULE +=   -DVENDOR_EDIT
@@ -539,7 +541,6 @@ ifneq ($(KBUILD_SRC),)
 	    $(srctree) $(objtree) $(VERSION) $(PATCHLEVEL)
 endif
 
-# Hanxing.Duan@ODM.BSP.CHG.Basic add runin macro 2019.07.31
 ifeq ($(SPECIAL_OPPO_CONFIG),1)
 KBUILD_CFLAGS +=-DCONFIG_OPPO_SPECIAL_BUILD
 endif

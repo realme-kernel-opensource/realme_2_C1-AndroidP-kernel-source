@@ -13,9 +13,11 @@
 
 #include <dt-bindings/gpio/gpio.h>
 #include <dt-bindings/clock/msm-clocks-8953.h>
-
+//#ifndef ODM_WT_EDIT
 //#include "msm8953-camera-sensor-mtp.dtsi"
+//#else /* ODM_WT_EDIT */
 #include "sdm450-camera-sensor-mtp-S88051AA1.dtsi"
+//#endif /* ODM_WT_EDIT */
 
 &blsp1_uart0 {
 	status = "ok";

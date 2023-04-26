@@ -219,15 +219,14 @@ static enum hrtimer_restart alarmtimer_fired(struct hrtimer *timer)
 	if (alarm->function)
 		restart = alarm->function(alarm, base->gettime());
 	#ifdef VENDOR_EDIT
-	//Yunqing.Zeng@BSP.Power.Basic 2017/12/12 add for count alarm times
 	if (alarm->type == ALARM_REALTIME || alarm->type == ALARM_BOOTTIME) {
 //wenxian.zhen msm-4.9 no ALARM_POWEROFF_REALTIME 	if (alarm->type == ALARM_POWEROFF_REALTIME || alarm->type == ALARM_BOOTTIME) {
 
-		if(!((alarm->function) && (alarm->function == net_alarm_func)))    //Yunqing.Zeng@BSP.Power.Basic 2017/12/12 add for filter net alarm
+		if(!((alarm->function) && (alarm->function == net_alarm_func)))
 			alarm_count++;
 
 		if(atomic_read(&alarm_atomic) || atomic_read(&alarm_sleep_busy_atomic)) {
-			if(!((alarm->function) && (alarm->function == net_alarm_func))) //Yunqing.Zeng@BSP.Power.Basic 2017/12/12 add for filter net alarm
+			if(!((alarm->function) && (alarm->function == net_alarm_func)))
 //wenxian.zhen 	use pmic			wakeup_source_count_rtc++;
 
 			if(atomic_read(&alarm_sleep_busy_atomic)) {
@@ -318,7 +317,6 @@ static int alarmtimer_suspend(struct device *dev)
 	if (ktime_to_ns(min) < 2 * NSEC_PER_SEC) {
 		__pm_wakeup_event(ws, 2 * MSEC_PER_SEC);
 		#ifdef VENDOR_EDIT
-		//Yunqing.Zeng@BSP.Power.Basic 2017/12/12 add for count alarm times
 		atomic_set(&alarm_atomic, 0);
 		atomic_set(&alarm_sleep_busy_atomic, 1);
 		#endif /* VENDOR_EDIT */

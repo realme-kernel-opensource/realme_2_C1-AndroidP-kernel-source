@@ -56,7 +56,6 @@
 #define CREATE_TRACE_POINTS
 #include <trace/events/almk.h>
 #ifdef VENDOR_EDIT
-/*yixue.ge@PSW.BSP.Kernel.Driver 20170808 modify for get some data about performance */
 #include <linux/proc_fs.h>
 #endif /*VENDOR_EDIT*/
 #include <linux/show_mem_notifier.h>
@@ -106,7 +105,6 @@ static int lowmem_minfree[6] = {
 static int lowmem_minfree_size = 4;
 static int lmk_fast_run = 1;
 #ifdef VENDOR_EDIT
-/*huacai.zhou@PSW.BSP.Kernel.MM 2018-01-15 modify for lowmemkill count */
 static bool lmk_cnt_enable = false;
 static unsigned long adaptive_lowmem_kill_count = 0;
 static unsigned long tatal_lowmem_kill_count = 0;
@@ -162,7 +160,6 @@ enum {
 
 
 #ifdef VENDOR_EDIT
-/*tangshaoqing@RM.BSP.Kernel.MM 2019-03-28 modify for adaptive lowmemkill adj */
 #define ALMK_NR_PAGES_1GB (SZ_1G >> PAGE_SHIFT)
 
 
@@ -210,7 +207,6 @@ static int adjust_minadj(short *min_score_adj)
 {
 	int ret = VMPRESSURE_NO_ADJUST;
 #ifdef VENDOR_EDIT
-/*tangshaoqing@RM.BSP.Kernel.MM 2019-03-28 modify for adaptive lowmemkill adj */
 	long almk_pages_swap = total_swap_pages - get_nr_swap_pages();
 	unsigned long almk_pages_anon = global_node_page_state(NR_ACTIVE_ANON) + global_node_page_state(NR_INACTIVE_ANON);
 	unsigned long almk_pages_file = global_node_page_state(NR_ACTIVE_FILE) + global_node_page_state(NR_INACTIVE_FILE);
@@ -229,7 +225,6 @@ static int adjust_minadj(short *min_score_adj)
 			ret = VMPRESSURE_ADJUST_NORMAL;
 		*min_score_adj = adj_max_shift;
 #ifdef VENDOR_EDIT
-/*huacai.zhou@PSW.BSP.Kernel.MM 2018-01-15 modify for adaptive lowmemkill count */
 /*Maybe it can not select task to kill, it's just a rough number */
 		if (lmk_cnt_enable)
 			adaptive_lowmem_kill_count++;
@@ -237,7 +232,6 @@ static int adjust_minadj(short *min_score_adj)
 #endif /*VENDOR_EDIT*/
 
 #ifdef VENDOR_EDIT
-/*tangshaoqing@RM.BSP.Kernel.MM 2019-03-28 modify for adaptive lowmemkill adj */
 	if (totalram_pages <= (ALMK_NR_PAGES_1GB*2)) {
 		int i;
 
@@ -576,7 +570,6 @@ static void mark_lmk_victim(struct task_struct *tsk)
 }
 
 #ifdef VENDOR_EDIT
-/*yixue.ge@PSW.BSP.Kernel.Driver 20170808 modify for get some data about performance */
 static ssize_t lowmem_kill_count_proc_read(struct file *file, char __user *buf,
 		size_t count,loff_t *off)
 {
@@ -806,13 +799,11 @@ static unsigned long lowmem_scan(struct shrinker *s, struct shrink_control *sc)
 		task_unlock(selected);
 		trace_lowmemory_kill(selected, cache_size, cache_limit, free);
 #ifdef VENDOR_EDIT
-/*yixue.ge@PSW.BSP.Kernel.Driver 20170808 modify for get some data about performance */
 		if (lmk_cnt_enable)
 			tatal_lowmem_kill_count++;
 #endif /* VENDOR_EDIT */
 
 #ifdef VENDOR_EDIT
-/*tangshaoqing@RM.BSP.Kernel.MM 2019-04-01 modify for adaptive lowmemkill adj */
 		if (ALMK_ADJUST_MINADJ_LEVEL_INVALID != almk_adjust_minadj_level)
 			lowmem_print(1, "almk_adjust_minadj_level=%d\n", almk_adjust_minadj_level);
 #endif /* VENDOR_EDIT */
@@ -1056,7 +1047,6 @@ module_param_named(debug_level, lowmem_debug_level, uint, S_IRUGO | S_IWUSR);
 module_param_named(lmk_fast_run, lmk_fast_run, int, S_IRUGO | S_IWUSR);
 
 #ifdef VENDOR_EDIT
-/*huacai.zhou@PSW.BSP.Kernel.MM 2018-01-15 modify for lowmemkill count */
 module_param_named(lmk_cnt_enable, lmk_cnt_enable, bool, S_IRUGO | S_IWUSR);
 #endif /*VENDOR_EDIT*/
 

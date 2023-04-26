@@ -28,11 +28,17 @@
 
 #define MPSS_RMTS_CLIENT_ID 1
 
+//#ifdef ODM_WT_EDIT
 //#define MPSS_RMTS_OEM_SMEM_CLIENT_ID 2
+//#endif /* ODM_WT_EDIT */
 
 
+//#ifdef VENDOR_EDIT
 //add for nv backup and restore
+//#ifdef FEATURE_OPPO_NV_BACKUP
 #define MPSS_OEMBACK_CLIENT_ID 4
+//#endif /* FEATURE_OPPO_NV_BACKUP */
+//#endif /* VENDOR_EDIT */
 static int uio_get_mem_index(struct uio_info *info, struct vm_area_struct *vma)
 {
 	if (vma->vm_pgoff >= MAX_UIO_MAPS)
@@ -92,8 +98,12 @@ static void setup_shared_ram_perms(u32 client_id, phys_addr_t addr, u32 size)
 			     PERM_READ|PERM_WRITE};
 	//#ifndef VENDOR_EDIT
 	//add for nv backup and restore
+	//#ifdef FEATURE_OPPO_NV_BACKUP
 	//if (client_id != MPSS_RMTS_CLIENT_ID)
+	//#else
 	if ((client_id != MPSS_RMTS_CLIENT_ID) && (client_id != MPSS_OEMBACK_CLIENT_ID))
+	//#endif /* FEATURE_OPPO_NV_BACKUP */
+	//#endif /* VENDOR_EDIT */
 		return;
 
 	ret = hyp_assign_phys(addr, size, source_vmlist, 1, dest_vmids,

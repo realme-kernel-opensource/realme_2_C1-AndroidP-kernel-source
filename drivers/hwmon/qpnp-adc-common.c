@@ -751,7 +751,7 @@ static const struct qpnp_vadc_map_pt adcmap_batt_therm_qrd[] = {
 	{114,	960},
 	{107,	980}
 };
-#else
+#else /* ODM_WT_EDIT */
 /* Voltage to temperature */
 //NTC 10k, Beta 3380. Add 1K resistance in NTC network. voltage to temperature
 //From the attached of 80-p3255-39_a
@@ -828,7 +828,7 @@ static const struct qpnp_vadc_map_pt adcmap_batt_therm_qrd[] = {
 	{118,	960},
 	{115,	980}
 };
-#endif
+#endif /* ODM_WT_EDIT */
 
 /* Voltage to temperature */
 static const struct qpnp_vadc_map_pt adcmap_batt_therm_qrd_215[] = {

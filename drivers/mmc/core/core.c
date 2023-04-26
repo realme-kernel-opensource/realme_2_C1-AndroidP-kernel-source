@@ -2018,7 +2018,6 @@ EXPORT_SYMBOL(mmc_start_req);
 void mmc_wait_for_req(struct mmc_host *host, struct mmc_request *mrq)
 {
 #ifdef VENDOR_EDIT
-//Guohua.Zhong@BSP.Storage.Sdcard,1411172 2018-07-18 disable CONFIG_MMC_BLOCK_DEFERRED_RESUME for sdcard only
 	if (!(mmc_card_is_removable(host) && !(host->caps & MMC_CAP_NEEDS_POLL)))
 #endif /*VENDOR_EDIT*/
 		if (mmc_bus_needs_resume(host))
@@ -2467,7 +2466,6 @@ void mmc_get_card(struct mmc_card *card)
 	mmc_claim_host(card->host);
 
 #ifdef VENDOR_EDIT
-//Guohua.Zhong@BSP.Storage.Sdcard,1411172 2018-07-18 disable CONFIG_MMC_BLOCK_DEFERRED_RESUME for sdcard only
 	if (!(mmc_card_is_removable(card->host) && !(card->host->caps & MMC_CAP_NEEDS_POLL)))
 #endif /*VENDOR_EDIT*/
 		if (mmc_bus_needs_resume(card->host))
@@ -4611,7 +4609,6 @@ void mmc_rescan(struct work_struct *work)
 {
 	unsigned long flags;
 	#ifdef VENDOR_EDIT
-	//weiguixiong@RM.BSP.Storage.sdcard 2019/03/22 add sdcard retry time
 	unsigned int i;
 	#endif //VENDOR_EDIT
 	struct mmc_host *host =
@@ -4696,7 +4693,6 @@ void mmc_rescan(struct work_struct *work)
 		goto out;
 	}
 	#ifdef VENDOR_EDIT
-        //weiguixiong@RM.BSP.Storage.sdcard 2019/03/22 add sdcard retry time
 	for (i = 0; i < ARRAY_SIZE(freqs); i++) {
 		if(!mmc_rescan_try_freq(host, max(freqs[i], host->f_min)))
 			break;
@@ -4750,7 +4746,7 @@ void mmc_stop_host(struct mmc_host *host)
 		disable_irq(host->slot.cd_irq);
 
 	host->rescan_disable = 1;
-#ifndef VENDOR_EDIT //yixue.ge@bsp.drv modify
+#ifndef VENDOR_EDIT
 	cancel_delayed_work_sync(&host->detect);
 #else
 	cancel_delayed_work(&host->detect);

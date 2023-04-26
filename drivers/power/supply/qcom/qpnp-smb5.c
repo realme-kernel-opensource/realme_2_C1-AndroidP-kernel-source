@@ -31,7 +31,7 @@
 #include "schgm-flash.h"
 #ifdef ODM_WT_EDIT
 #include <linux/of_gpio.h>
-#endif
+#endif /* ODM_WT_EDIT */
 
 static struct smb_params smb5_pmi632_params = {
 	.fcc			= {
@@ -226,13 +226,13 @@ struct smb5 {
 
 #ifndef ODM_WT_EDIT
 static int __debug_mask;
-#else
+#else /* ODM_WT_EDIT */
 #ifdef WT_FINAL_RELEASE
 static int __debug_mask;
 #else /* WT_FINAL_RELEASE */
 static int __debug_mask = PR_INTERRUPT;
 #endif /* WT_FINAL_RELEASE */
-#endif
+#endif /* ODM_WT_EDIT */
 module_param_named(
 	debug_mask, __debug_mask, int, 0600
 );
@@ -439,7 +439,7 @@ static void smb5_usbid_irq_register(struct smb5 *chip)
 			smb5_usbid_config_gpio(&chip->chg, 0);
 	}
 }
-#endif
+#endif /* ODM_WT_EDIT */
 
 
 #define MICRO_1P5A		1500000
@@ -490,7 +490,7 @@ static int smb5_parse_dt(struct smb5 *chip)
 		chg->batt_profile_fcc_ua = 1500000;
 		chg->batt_profile_fv_uv = 4100000;
 	#endif /* CONFIG_DISABLE_TEMP_PROTECT */
-	#endif
+	#endif /* ODM_WT_EDIT */
 
 	rc = of_property_read_u32(node,
 				"qcom,usb-icl-ua", &chip->dt.usb_icl_ua);
@@ -572,7 +572,7 @@ static int smb5_parse_dt(struct smb5 *chip)
 	}
 	#ifdef ODM_WT_EDIT
 	chg->auto_recharge_mv = chip->dt.auto_recharge_vbat_mv;
-	#endif
+	#endif /* ODM_WT_EDIT */
 
 	chg->dcp_icl_ua = chip->dt.usb_icl_ua;
 
@@ -606,7 +606,7 @@ static int smb5_parse_dt(struct smb5 *chip)
 	} else {
 		pr_err("qcom,usbid-gpio unvalid\n");
 	}
-#endif
+#endif /* ODM_WT_EDIT */
 	chg->fcc_stepper_enable = of_property_read_bool(node,
 					"qcom,fcc-stepping-enable");
 	return 0;
@@ -731,7 +731,7 @@ static enum power_supply_property smb5_usb_props[] = {
 #ifdef ODM_WT_EDIT
 	POWER_SUPPLY_PROP_OTG_SWITCH,
 	POWER_SUPPLY_PROP_OTG_ONLINE,
-#endif
+#endif /* ODM_WT_EDIT */
 };
 
 static int smb5_usb_get_prop(struct power_supply *psy,
@@ -759,9 +759,9 @@ static int smb5_usb_get_prop(struct power_supply *psy,
 		   (chg->connector_type == POWER_SUPPLY_CONNECTOR_MICRO_USB))
 			#ifndef ODM_WT_EDIT
 			&& (chg->real_charger_type == POWER_SUPPLY_TYPE_USB)
-			#else
+			#else /* ODM_WT_EDIT */
 			&& ((chg->real_charger_type == POWER_SUPPLY_TYPE_USB) || (chg->real_charger_type == POWER_SUPPLY_TYPE_USB_CDP))
-			#endif
+			#endif /* ODM_WT_EDIT */
 			)
 			val->intval = 0;
 		else
@@ -871,7 +871,7 @@ static int smb5_usb_get_prop(struct power_supply *psy,
 			val->intval = 0;
 			return rc;
 		}
-	#endif
+	#endif /* ODM_WT_EDIT */
 	#ifdef ODM_WT_EDIT
 		if (chg->smb_version == PMI632_SUBTYPE){
 			do{
@@ -910,7 +910,7 @@ static int smb5_usb_get_prop(struct power_supply *psy,
 	case POWER_SUPPLY_PROP_OTG_ONLINE:
 		val->intval = chg->otg_present;
 		break;
-#endif
+#endif /* ODM_WT_EDIT */
 	default:
 		pr_err("get prop %d is not supported in usb\n", psp);
 		rc = -EINVAL;
@@ -976,7 +976,7 @@ static int smb5_usb_set_prop(struct power_supply *psy,
 			smb5_usbid_change_handler(0, chip);
 		}
 		break;
-#endif
+#endif /* ODM_WT_EDIT */
 	default:
 		pr_err("set prop %d is not supported\n", psp);
 		rc = -EINVAL;
@@ -995,7 +995,7 @@ static int smb5_usb_prop_is_writeable(struct power_supply *psy,
 #ifdef ODM_WT_EDIT
 	case POWER_SUPPLY_PROP_OTG_SWITCH:
 		return 1;
-#endif
+#endif /* ODM_WT_EDIT */
 	default:
 		break;
 	}
@@ -1062,9 +1062,9 @@ static int smb5_usb_port_get_prop(struct power_supply *psy,
 		   (chg->connector_type == POWER_SUPPLY_CONNECTOR_MICRO_USB))
 			#ifndef ODM_WT_EDIT
 			&& (chg->real_charger_type == POWER_SUPPLY_TYPE_USB)
-			#else
+			#else /* ODM_WT_EDIT */
 			&& ((chg->real_charger_type == POWER_SUPPLY_TYPE_USB) || (chg->real_charger_type == POWER_SUPPLY_TYPE_USB_CDP))
-			#endif
+			#endif /* ODM_WT_EDIT */
 			)
 			val->intval = 1;
 		else
@@ -1249,7 +1249,7 @@ static int smb5_usb_main_set_prop(struct power_supply *psy,
 				vote(chg->usb_icl_votable, SW_ICL_MAX_VOTER,
 							true, SDP_100_MA);
 			}
-#endif
+#endif /*ODM_WT_EDIT*/
 
 			pr_debug("flash active VBUS 5V restriction %s\n",
 				chg->flash_active ? "applied" : "removed");
@@ -1428,9 +1428,9 @@ static int smb5_ac_get_prop(struct power_supply *psy,
 		   (chg->connector_type == POWER_SUPPLY_CONNECTOR_MICRO_USB))
 			#ifndef ODM_WT_EDIT
 			&& (chg->real_charger_type == POWER_SUPPLY_TYPE_USB)
-			#else
+			#else /* ODM_WT_EDIT */
 			&& ((chg->real_charger_type == POWER_SUPPLY_TYPE_USB) || (chg->real_charger_type == POWER_SUPPLY_TYPE_USB_CDP))
-			#endif
+			#endif /* ODM_WT_EDIT */
 			)
 			val->intval = 0;
 		else
@@ -1508,7 +1508,7 @@ static int smb5_init_ac_psy(struct smb5 *chip)
 
 	return 0;
 }
-#endif
+#endif /* ODM_WT_EDIT */
 
 /*************************
  * BATT PSY REGISTRATION *
@@ -1545,11 +1545,11 @@ static enum power_supply_property smb5_batt_props[] = {
 	POWER_SUPPLY_PROP_CHARGE_FULL,
 	#ifdef ODM_WT_EDIT
 	POWER_SUPPLY_PROP_RECHARGE_UV,
-	#endif
+	#endif /* ODM_WT_EDIT */
 	#ifdef ODM_WT_EDIT
 	POWER_SUPPLY_PROP_STOPCHARGING_TEST,
 	POWER_SUPPLY_PROP_STARTCHARGING_TEST,
-	#endif
+	#endif /* ODM_WT_EDIT */
 	#ifdef ODM_WT_EDIT
 	POWER_SUPPLY_PROP_ADAPTER_FW_UPDATE,
 	POWER_SUPPLY_PROP_AUTHENTICATE,
@@ -1570,7 +1570,7 @@ static enum power_supply_property smb5_batt_props[] = {
 	POWER_SUPPLY_PROP_FCC_STEPPER_ENABLE,
 	POWER_SUPPLY_PROP_NOTIFY_CODE,
 	POWER_SUPPLY_PROP_CALL_MODE,
-	#endif
+	#endif /* ODM_WT_EDIT */
 };
 
 #define ITERM_SCALING_FACTOR_PMI632	1525
@@ -1627,7 +1627,7 @@ static int smb5_batt_get_prop(struct power_supply *psy,
 	int rc = 0;
 	#ifdef ODM_WT_EDIT
 	union power_supply_propval pval = {0, };
-	#endif
+	#endif /* ODM_WT_EDIT */
 
 #ifdef ODM_WT_EDIT
 	int ret_number = 0;
@@ -1638,22 +1638,22 @@ static int smb5_batt_get_prop(struct power_supply *psy,
 	case POWER_SUPPLY_PROP_STATUS:
 	#ifndef ODM_WT_EDIT
 		rc = smblib_get_prop_batt_status(chg, val);
-	#else
+	#else /* ODM_WT_EDIT */
 		val->intval = get_battery_status_modify(chg);
-	#endif
+	#endif /* ODM_WT_EDIT */
 		break;
 	#ifdef ODM_WT_EDIT
 	case POWER_SUPPLY_PROP_REAL_STATUS:
 		rc = smblib_get_prop_batt_status(chg, val);
 		break;
-	#endif
+	#endif /* ODM_WT_EDIT */
 	case POWER_SUPPLY_PROP_HEALTH:
 		rc = smblib_get_prop_batt_health(chg, val);
 		#ifdef ODM_WT_EDIT
 		#ifdef CONFIG_DISABLE_TEMP_PROTECT
 		val->intval = POWER_SUPPLY_HEALTH_GOOD;
 		#endif /* CONFIG_DISABLE_TEMP_PROTECT */
-		#endif
+		#endif /* ODM_WT_EDIT */
 		break;
 	case POWER_SUPPLY_PROP_PRESENT:
 		rc = smblib_get_prop_batt_present(chg, val);
@@ -1671,20 +1671,20 @@ static int smb5_batt_get_prop(struct power_supply *psy,
 	case POWER_SUPPLY_PROP_CAPACITY:
 		#ifndef ODM_WT_EDIT
 		rc = smblib_get_prop_batt_capacity(chg, val);
-		#else
+		#else /* ODM_WT_EDIT */
 		if (chg->fake_capacity >= 0) {
 			val->intval = chg->fake_capacity;
 		} else if ((chg->ui_soc <= 100) && (chg->ui_soc >= 0))
 			val->intval = chg->ui_soc;
 		else
 			rc = smblib_get_prop_batt_capacity(chg, val);
-		#endif
+		#endif /* ODM_WT_EDIT */
 		#ifdef ODM_WT_EDIT
 		#ifdef CONFIG_DISABLE_TEMP_PROTECT
 		if (val->intval < 4)
 			val->intval = 4;
 		#endif /* CONFIG_DISABLE_TEMP_PROTECT */
-		#endif
+		#endif /* ODM_WT_EDIT */
 		break;
 	case POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT:
 		rc = smblib_get_prop_system_temp_level(chg, val);
@@ -1715,7 +1715,7 @@ static int smb5_batt_get_prop(struct power_supply *psy,
 #ifndef ODM_WT_EDIT
 		if (!rc)
 			val->intval *= (-1);
-#endif
+#endif /*ODM_WT_EDIT*/
 		break;
 	case POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT_MAX:
 		val->intval = get_client_vote(chg->fcc_votable,
@@ -1750,7 +1750,7 @@ static int smb5_batt_get_prop(struct power_supply *psy,
 		pr_err("WINGTECH disable temp protect version; real temp:%d\n",val->intval);
 		val->intval = 250;
 		#endif /* CONFIG_DISABLE_TEMP_PROTECT */
-		#endif
+		#endif /* ODM_WT_EDIT */
 		break;
 	case POWER_SUPPLY_PROP_TECHNOLOGY:
 		val->intval = POWER_SUPPLY_TECHNOLOGY_LION;
@@ -1793,7 +1793,7 @@ static int smb5_batt_get_prop(struct power_supply *psy,
 	case POWER_SUPPLY_PROP_RECHARGE_UV:
 		val->intval = chg->auto_recharge_mv * 1000;
 		break;
-	#endif
+	#endif /* ODM_WT_EDIT */
 	#ifdef ODM_WT_EDIT
 	case POWER_SUPPLY_PROP_STOPCHARGING_TEST:
 		pval.intval = 1;
@@ -1805,7 +1805,7 @@ static int smb5_batt_get_prop(struct power_supply *psy,
 		rc = smblib_set_prop_input_suspend(chg, &pval);
 		pr_err("show_StartCharging_Test : %x success\n", rc);
 		break;
-	#endif
+	#endif /* ODM_WT_EDIT */
 	#ifdef ODM_WT_EDIT
 	case POWER_SUPPLY_PROP_ADAPTER_FW_UPDATE:
 		val->intval = -1;
@@ -1833,7 +1833,7 @@ static int smb5_batt_get_prop(struct power_supply *psy,
 			val->intval = 0;
 			return rc;
 		}
-	#endif
+	#endif /* ODM_WT_EDIT */
 		if (chg->smb_version == PMI632_SUBTYPE)
 			rc = smb5_get_adc_data(chg, USBIN_VOLTAGE, val);
 		val->intval = val->intval / 1000; //Report mV for BatteryInfoShow,default was uV.
@@ -1878,7 +1878,7 @@ static int smb5_batt_get_prop(struct power_supply *psy,
 	case POWER_SUPPLY_PROP_UI_SOC:
 		val->intval = chg->ui_soc;
 		break;
-	#endif
+	#endif /* ODM_WT_EDIT */
 	case POWER_SUPPLY_PROP_CHARGE_FULL:
 
 		rc = smblib_get_prop_from_bms(chg,
@@ -1981,7 +1981,7 @@ static int smb5_batt_set_prop(struct power_supply *psy,
 		#ifndef ODM_WT_EDIT
 			/* charge disable delay */
 			msleep(50);
-		#endif
+		#endif /* ODM_WT_EDIT */
 			vote(chg->chg_disable_votable, FORCE_RECHARGE_VOTER,
 					false, 0);
 		}
@@ -2022,7 +2022,7 @@ static int smb5_batt_set_prop(struct power_supply *psy,
 			}
 		}
 		break;
-	#endif
+	#endif /* ODM_WT_EDIT */
 	#ifdef ODM_WT_EDIT
 	case POWER_SUPPLY_PROP_MMI_CHARGING_ENABLE:
 		//Stop charging the battery.
@@ -2040,7 +2040,7 @@ static int smb5_batt_set_prop(struct power_supply *psy,
 		if ((val->intval <= 100) && (val->intval >= 0))
 			chg->ui_soc = val->intval;
 		break;
-	#endif
+	#endif /* ODM_WT_EDIT */
 	default:
 		rc = -EINVAL;
 	}
@@ -2068,7 +2068,7 @@ static int smb5_batt_prop_is_writeable(struct power_supply *psy,
 	case POWER_SUPPLY_PROP_MMI_CHARGING_ENABLE:
 	case POWER_SUPPLY_PROP_CALL_MODE:
 	case POWER_SUPPLY_PROP_UI_SOC:
-	#endif
+	#endif /* ODM_WT_EDIT */
 		return 1;
 	default:
 		break;
@@ -2605,7 +2605,7 @@ static int smb5_init_hw(struct smb5 *chip)
 	if (rc < 0) {
 		pr_info("Couldn't set USBIN_AICL_OPTIONS_CFG_REG bit7 to 0 rc=%d\n", rc);
 	}
-#endif
+#endif /* ODM_WT_EDIT */
 
 	/*
 	 * AICL configuration:
@@ -2779,7 +2779,7 @@ static int smb5_init_hw(struct smb5 *chip)
 	if (rc < 0) {
 		dev_err(chg->dev, "Couldn't set CHARGE_RCHG_SOC_THRESHOLD_CFG_REG to 0x11 rc=%d\n", rc);
 	}
-#endif
+#endif /* ODM_WT_EDIT */
 
 	/* program the auto-recharge threshold */
 	if (chip->dt.auto_recharge_soc != -EINVAL) {
@@ -2802,7 +2802,7 @@ static int smb5_init_hw(struct smb5 *chip)
 
 	#ifdef ODM_WT_EDIT
 	rc = smblib_masked_write(chg, 0x1286, 0x03, 0x01);
-	#endif
+	#endif /* ODM_WT_EDIT */
 
 	if (chg->sw_jeita_enabled) {
 		rc = smblib_disable_hw_jeita(chg, true);
@@ -2821,7 +2821,7 @@ static int smb5_init_hw(struct smb5 *chip)
 		dev_err(chg->dev, "Couldn't disable hw jeita rc=%d\n", rc);
 	}
 	#endif /* CONFIG_DISABLE_TEMP_PROTECT */
-	#endif
+	#endif /* ODM_WT_EDIT */
 
 	rc = smblib_configure_wdog(chg,
 			chg->step_chg_enabled || chg->sw_jeita_enabled);
@@ -3123,9 +3123,9 @@ static struct smb_irq_info smb5_irqs[] = {
 		.name		= "aicl-done",
 	#ifndef ODM_WT_EDIT
 		.handler	= default_irq_handler,
-	#else
+	#else /* ODM_WT_EDIT */
 		.handler	= default_irq_handler_nolog,
-	#endif
+	#endif /* ODM_WT_EDIT */
 	},
 	[SMB_EN_IRQ] = {
 		.name		= "smb-en",
@@ -3409,7 +3409,7 @@ static int smb5_probe(struct platform_device *pdev)
 	chg->otg_switch = false; //default status
 	chg->ui_soc = -EINVAL;
 	chg->prop_status = POWER_SUPPLY_STATUS_UNKNOWN;
-#endif
+#endif /* ODM_WT_EDIT */
 
 	mutex_init(&chg->vadc_lock);
 
@@ -3490,7 +3490,7 @@ static int smb5_probe(struct platform_device *pdev)
 	if (rc < 0) {
 		pr_err("Couldn't initialize ac psy rc=%d\n", rc);
 	}
-#endif
+#endif /* ODM_WT_EDIT */
 
 	rc = smb5_init_usb_psy(chip);
 	if (rc < 0) {
@@ -3539,7 +3539,7 @@ static int smb5_probe(struct platform_device *pdev)
 	if (chip->chg.usb_id_gpio != 0){
 		smb5_usbid_irq_register(chip);
 	}
-#endif
+#endif /* ODM_WT_EDIT */
 
 	smb5_create_debugfs(chip);
 
@@ -3556,7 +3556,7 @@ static int smb5_probe(struct platform_device *pdev)
 	init_fg_chg_work(chg);
 #endif
 	init_chg_monitor_work(chg);
-#endif
+#endif /* ODM_WT_EDIT */
 
 	pr_info("QPNP SMB5 probed successfully\n");
 
@@ -3581,7 +3581,7 @@ static int smb5_remove(struct platform_device *pdev)
 	deinit_fg_chg_work(chg);
 #endif
 	deinit_chg_monitor_work(chg);
-#endif
+#endif /* ODM_WT_EDIT */
 	/* force enable APSD */
 	smblib_masked_write(chg, USBIN_OPTIONS_1_CFG_REG,
 				BC1P2_SRC_DETECT_BIT, BC1P2_SRC_DETECT_BIT);
@@ -3640,7 +3640,7 @@ static const struct dev_pm_ops smb5_pm_ops = {
 	.suspend	= smb5_suspend,
 	.resume		= smb5_resume,
 };
-#endif
+#endif /* ODM_WT_EDIT */
 
 static const struct of_device_id match_table[] = {
 	{ .compatible = "qcom,qpnp-smb5", },
@@ -3654,7 +3654,7 @@ static struct platform_driver smb5_driver = {
 		.of_match_table	= match_table,
 	#ifdef ODM_WT_EDIT
 		.pm		= &smb5_pm_ops,
-	#endif
+	#endif /* ODM_WT_EDIT */
 	},
 	.probe		= smb5_probe,
 	.remove		= smb5_remove,

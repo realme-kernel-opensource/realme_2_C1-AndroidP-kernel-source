@@ -7,7 +7,6 @@
  *
  ** Version: 1
  ** Date created: 2016/01/06
- ** Author: Jiemin.Zhu@AD.Android.SdcardFs
  ** ------------------------------- Revision History: ---------------------------------------
  **        <author>      <data>           <desc>
  **      Jiemin.Zhu    2017/12/12    create this file

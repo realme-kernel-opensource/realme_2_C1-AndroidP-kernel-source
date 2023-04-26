@@ -421,7 +421,6 @@ static struct uid_tag_data *uid_tag_data_tree_search(struct rb_root *root,
 }
 
 #ifdef VENDOR_EDIT
-//Yunqing.Zeng@BSP.Power.Basic 2018/01/11 add for backup of netstat before sleep
 struct proc_dir_entry * get_xt_qtaguid_procdir(void)
 {
 	return xt_qtaguid_procdir;

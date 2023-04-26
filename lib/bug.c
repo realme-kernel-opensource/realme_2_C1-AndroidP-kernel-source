@@ -140,6 +140,7 @@ const struct bug_entry *find_bug(unsigned long bugaddr)
 	for (bug = __start___bug_table; bug < __stop___bug_table; ++bug)
 		if (bugaddr == bug_addr(bug))
 			return bug;
+
 #ifdef VENDOR_EDIT
 #ifdef CONFIG_QIHOO
 	bug = qihoo_patch_find_bug(bugaddr);

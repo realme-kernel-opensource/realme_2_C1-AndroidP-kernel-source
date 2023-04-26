@@ -1106,6 +1106,7 @@ static void himax_mcu_read_FW_ver(void)
 	, (ic_data->vendor_cid_maj_ver << 8 | ic_data->vendor_cid_min_ver));
 
 #ifdef ODM_WT_EDIT
+//Tianchen.Zhao@ODM_RH.TP Porting
     if ( hx_ctpmodule == 0 ) {
         sprintf(Ctp_name,"HLT,HX83102d,FW:0x%x\n",ic_data->vendor_touch_cfg_ver);
         sprintf(version,"Hlt_Hx8310_0x%x",ic_data->vendor_touch_cfg_ver);

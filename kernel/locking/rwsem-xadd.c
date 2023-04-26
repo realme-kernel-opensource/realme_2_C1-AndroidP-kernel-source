@@ -261,6 +261,7 @@ struct rw_semaphore __sched *rwsem_down_read_failed(struct rw_semaphore *sem)
 			list_del(&waiter.list);
 			break;
 		}
+		//#endif
 		schedule();
 	}
 
@@ -528,6 +529,7 @@ __rwsem_down_write_failed_common(struct rw_semaphore *sem, int state)
 				raw_spin_lock_irq(&sem->wait_lock);
 				goto out;
 			}
+			//#endif
 			if (signal_pending_state(state, current))
 				goto out_nolock;
 
@@ -539,6 +541,7 @@ __rwsem_down_write_failed_common(struct rw_semaphore *sem, int state)
 	}
 
 out:
+//#endif
 
 	__set_current_state(TASK_RUNNING);
 	list_del(&waiter.list);

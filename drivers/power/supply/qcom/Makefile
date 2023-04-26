@@ -4,7 +4,7 @@ ccflags-y += -D__WT_BATTERY_CHARGER_LOG_OUTPUT__
 endif #/* WT_FINAL_RELEASE */
 obj-y += wt_charger_log.o
 obj-y += charger_monitor.o
-endif #
+endif #/* ODM_WT_EDIT */
 obj-$(CONFIG_QPNP_FG)		+= qpnp-fg.o
 obj-$(CONFIG_QPNP_FG_GEN3)     += qpnp-fg-gen3.o fg-memif.o fg-util.o
 obj-$(CONFIG_QPNP_SMBCHARGER)	+= qpnp-smbcharger.o pmic-voter.o

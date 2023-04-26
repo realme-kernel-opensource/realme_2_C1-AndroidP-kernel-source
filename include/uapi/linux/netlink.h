@@ -30,7 +30,10 @@
 #define NETLINK_SOCKEV          22      /* Socket Administrative Events */
 #define NETLINK_INET_DIAG	NETLINK_SOCK_DIAG
 
+//#ifdef VENDOR_EDIT
+//#ifdef CONFIG_OPPO_KEVENT_UPLOAD
 //#define NETLINK_OPPO_KEVENT 34
+//#endif /* VENDOR_EDIT */
 
 #ifndef VENDOR_EDIT
 //Add for WeChat lucky money recognition
@@ -38,8 +41,10 @@
 #else /* VENDOR_EDIT */
 #define NETLINK_OPPO_NF_HOOKS	32	/*OPPO netfilter hooks*/
 
+//#ifdef VENDOR_EDIT
 //Add code for appo sla function
 #define NETLINK_OPPO_SLA  33      /*SLA NETLINK SOCK*/
+//#endif /* VENDOR_EDIT */
 
 #define MAX_LINKS 36
 #endif /* VENDOR_EDIT */

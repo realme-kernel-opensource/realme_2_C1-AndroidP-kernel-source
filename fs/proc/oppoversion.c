@@ -150,7 +150,7 @@ unsigned int str2u(char *str)
 	return val;
 }
 
-
+//ODM_WT.BSP.Kernel.Driver.1372106, 2018/06/17, Add interface for driver level usage
 unsigned int get_project(void)
 {
 	int item_index = -1;

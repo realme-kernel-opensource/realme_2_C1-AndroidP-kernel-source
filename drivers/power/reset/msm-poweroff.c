@@ -27,7 +27,7 @@
 #include <linux/of_address.h>
 #ifdef ODM_WT_EDIT
 #include <linux/wt_system_monitor.h>
-#endif
+#endif /* ODM_WT_EDIT */
 
 #include <asm/cacheflush.h>
 #include <asm/system_misc.h>
@@ -73,10 +73,10 @@ static int download_mode = 0;
 #else
 static int download_mode = 1;
 #endif //WT_FINAL_RELEASE
-#endif
+#endif /* ODM_WT_EDIT */
 #endif
 
-#ifdef VENDOR_EDIT //Tong.han@BSP.group.TP, Modify for selct dump config for diffrent sw version,2015/06/28
+#ifdef VENDOR_EDIT
 #if defined(CONFIG_OPPO_DAILY_BUILD)
 	static int download_mode = 1;
 #else
@@ -318,7 +318,7 @@ static void msm_restart_prepare(const char *cmd)
 		if (get_dload_mode() ||
 #ifdef ODM_WT_EDIT
 			in_panic ||
-#endif
+#endif /* ODM_WT_EDIT */
 			((cmd != NULL && cmd[0] != '\0') &&
 			!strcmp(cmd, "edl")))
 			need_warm_reset = true;
@@ -326,7 +326,7 @@ static void msm_restart_prepare(const char *cmd)
 		need_warm_reset = (get_dload_mode() ||
 #ifdef ODM_WT_EDIT
 				in_panic ||
-#endif
+#endif /* ODM_WT_EDIT */
 				(cmd != NULL && cmd[0] != '\0'));
 	}
 #ifdef ODM_WT_EDIT
@@ -368,7 +368,7 @@ static void msm_restart_prepare(const char *cmd)
 #ifdef WT_SYSTEM_MONITOR
 		set_reset_magic(RESET_MAGIC_CMD_REBOOT);
 #endif
-#endif
+#endif /* ODM_WT_EDIT */
 		if (!strncmp(cmd, "bootloader", 10)) {
 #ifdef ODM_WT_EDIT
 #ifndef WT_FINAL_RELEASE
@@ -466,7 +466,7 @@ static void msm_restart_prepare(const char *cmd)
 				PON_RESTART_REASON_REBOOT);
 			__raw_writel(0x77665501, restart_reason);
 		}
-		#endif
+		#endif /* ODM_WT_EDIT */
 	}
 
 	flush_cache_all();

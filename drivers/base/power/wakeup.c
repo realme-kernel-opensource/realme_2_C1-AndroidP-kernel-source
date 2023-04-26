@@ -24,7 +24,6 @@
 #include <linux/irqdesc.h>
 #ifdef VENDOR_EDIT
 
-//Yunqing.Zeng@BSP.Power.Basic 2017/11/09 add for wakelock profiler
 #include <linux/kobject.h>
 #include <linux/sysfs.h>
 #include <linux/fb.h>
@@ -66,7 +65,6 @@ extern u16 modem_wakeup_source;
  */
 static atomic_t combined_event_count = ATOMIC_INIT(0);
 #ifdef VENDOR_EDIT
-//Yunqing.Zeng@BSP.Power.Basic 2017/11/28 add for kernel wakelock time statistics
 static atomic_t ws_all_release_flag = ATOMIC_INIT(1);
 static ktime_t ws_start_node;
 static ktime_t ws_end_node;
@@ -565,7 +563,6 @@ static void wakeup_source_activate(struct wakeup_source *ws)
 		return;
 
 	#ifdef VENDOR_EDIT
-	//Yunqing.Zeng@BSP.Power.Basic 2017/11/28 add for kernel wakelock time statistics
 	if(atomic_read(&ws_all_release_flag)) {
 		atomic_set(&ws_all_release_flag, 0);
 		spin_lock(&statistics_lock);
@@ -718,7 +715,6 @@ static void wakeup_source_deactivate(struct wakeup_source *ws)
 	split_counters(&cnt, &inpr);
 	if (!inpr && waitqueue_active(&wakeup_count_wait_queue)) {
 		#ifdef VENDOR_EDIT
-		//Yunqing.Zeng@BSP.Power.Basic 2017/11/28 add for kernel wakelock time statistics
 		ktime_t ws_hold_delta = ktime_set(0, 0);
 		atomic_set(&ws_all_release_flag, 1);
 		spin_lock(&statistics_lock);
@@ -979,7 +975,7 @@ bool pm_wakeup_pending(void)
 	}
 	spin_unlock_irqrestore(&events_lock, flags);
 
-	#ifndef VENDOR_EDIT //yixue.ge@bsp.drv modify for maybe pm_abort_suspend happend here
+	#ifndef VENDOR_EDIT
 	if (ret) {
 	#else
 	if (ret || pm_abort_suspend) {
@@ -1264,7 +1260,6 @@ static int __init wakeup_sources_debugfs_init(void)
 	return 0;
 }
 #ifdef VENDOR_EDIT
-//Yunqing.Zeng@BSP.Power.Basic 2017/11/09 add for wakelock profiler
 ktime_t active_max_reset_time;
 static ssize_t active_max_show(struct kobject *kobj, struct kobj_attribute *attr, char *buf)
 {
@@ -1485,6 +1480,5 @@ static int __init wakelock_profiler_init(void)
 
 postcore_initcall(wakeup_sources_debugfs_init);
 #ifdef VENDOR_EDIT
-//Yunqing.Zeng@BSP.Power.Basic 2017/11/09 add for wakelock profiler
 postcore_initcall(wakelock_profiler_init);
 #endif /* VENDOR_EDIT */

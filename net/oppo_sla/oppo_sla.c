@@ -6,7 +6,6 @@
 **
 ** Version: 1.0
 ** Date : 2018/04/03
-** Author: Junyuan.Huang@PSW.CN.WiFi.Network.internet.1197891
 **
 ** ------------------ Revision History:------------------------
 ** <author> <data> <version > <desc>

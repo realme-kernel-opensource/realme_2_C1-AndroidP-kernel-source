@@ -6,7 +6,6 @@
 **
 ** Version: 1.0
 ** Date : 2018/05/08
-** Author: Ming.He@BSP.Kernel.Boot
 **
 ** ------------------------------- Revision History: -------------------------------
 **  	<author>		<data> 	   <version >	       <desc>

@@ -129,7 +129,6 @@ static int __init start_reason_init(void)
 char boot_mode[MAX_CMD_LENGTH + 1] __ro_after_init;
 
 #ifdef VENDOR_EDIT
-//Fuchun.Liao@Mobile.BSP.CHG 2016-01-14 add for charge
 bool qpnp_is_power_off_charging(void)
 {
 	//pr_err("%s boot_mode:%s\n", __func__, boot_mode);
@@ -140,7 +139,6 @@ bool qpnp_is_power_off_charging(void)
 }
 #endif
 #ifdef VENDOR_EDIT
-//PengNan@SW.BSP add for detect charger when reboot 2016-04-22
 char charger_reboot[MAX_CMD_LENGTH + 1];
 bool qpnp_is_charger_reboot(void)
 {
@@ -168,7 +166,6 @@ static int __init oppo_charger_reboot(void)
 #endif /*VENDOR_EDIT*/
 
 #ifdef VENDOR_EDIT
-/*Xianlin.Wu@ROM.Security add for detect bootloader unlock state 2019-10-28*/
 static int verified_boot_state __ro_after_init = VERIFIED_BOOT_STATE__GREEN;
 bool is_bootloader_unlocked(void)
 {
@@ -221,11 +218,9 @@ static int __init boot_mode_init(void)
 /* OPPO 2013-09-03 heiwei add for add interface start reason and boot_mode begin */
     start_reason_init();
 #ifdef VENDOR_EDIT
-//PengNan@SW.BSP add for detect charger when reboot 2016-04-22
 	oppo_charger_reboot();
 #endif /*VENDOR_EDIT*/
 #ifdef VENDOR_EDIT
-/*Xianlin.Wu@ROM.Security add for detect bootloader unlock state 2019-10-28*/
 		verified_boot_state_init();
 #endif /*VENDOR_EDIT*/
 /* OPPO 2013-09-03 zhanglong add for add interface start reason and boot_mode end */

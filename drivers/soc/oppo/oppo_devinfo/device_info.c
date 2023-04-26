@@ -298,14 +298,14 @@ static void sub_mainboard_verify(struct devinfo_data *devinfo_data)
 			if(get_PCB_Version() <= OPPO_18031_HW_DVT) { //t0 t1 evt dvt
 				operator = get_Operator_Version();
 				if((id2 == 0) && (id1 == 1) && ((operator == OPPO_18031_OPERATOR_FULLBAND) || (operator == OPPO_18031_OPERATOR_FOREIGN))) {
-					/* ȫƵ��/��Ӫ��+̨��С�� */
+					/* È«Æµ¶Î/ÔËÓªÉÌ+Ì¨ÍåÐ¡°å */
 					snprintf(mainboard_info.manufacture, INFO_BUF_LEN, "%d-match", get_project());
 				}
 				else if((id2 == 1) && (id1 == 1) &&
 					((operator == OPPO_18031_OPERATOR_ASIA) || (operator == OPPO_18031_OPERATOR_CHINA_MOBILE)
 					 ||(operator == OPPO_18031_OPERATOR_ALLNET) || (operator == OPPO_18031_OPERATOR_INDIA) || (operator == OPPO_18031_OPERATOR_ASIA_VIETNAM)))
 				{
-					/* ��̫/CMCC/ȫ��ͨ/��̫��֮Խ��ר��+��̫С�� */
+					/* ÑÇÌ«/CMCC/È«ÍøÍ¨/ÑÇÌ«°æÖ®Ô½ÄÏ×¨°æ+ÑÇÌ«Ð¡°å */
 					snprintf(mainboard_info.manufacture, INFO_BUF_LEN, "%d-match", get_project());
 				} else {
 					snprintf(mainboard_info.manufacture, INFO_BUF_LEN, "%d-unmatch", get_project());
@@ -313,18 +313,18 @@ static void sub_mainboard_verify(struct devinfo_data *devinfo_data)
 			} else { //pvt...
 				operator = get_Operator_Version();
 				if((id2 == 0) && (id1 == 1) && ((operator == OPPO_18031_OPERATOR_FULLBAND) || (operator == OPPO_18031_OPERATOR_FOREIGN))) {
-					/* ȫƵ��/��Ӫ��+̨��С�� */
+					/* È«Æµ¶Î/ÔËÓªÉÌ+Ì¨ÍåÐ¡°å */
 					snprintf(mainboard_info.manufacture, INFO_BUF_LEN, "%d-match", get_project());
 				}
 				else if((id2 == 1) && (id1 == 1) &&
 					((operator == OPPO_18031_OPERATOR_ASIA) || (operator == OPPO_18031_OPERATOR_INDIA) || (operator == OPPO_18031_OPERATOR_ASIA_VIETNAM)))
 				{
-					/* ��̫/��̫��֮Խ��ר��+��̫С�� */
+					/* ÑÇÌ«/ÑÇÌ«°æÖ®Ô½ÄÏ×¨°æ+ÑÇÌ«Ð¡°å */
 					snprintf(mainboard_info.manufacture, INFO_BUF_LEN, "%d-match", get_project());
 				} else if((id2 == 1) && (id1 == 0) &&
 					      ((operator == OPPO_18031_OPERATOR_CHINA_MOBILE)||(operator == OPPO_18031_OPERATOR_ALLNET)))
 				{
-					/* CMCC/ȫ��ͨ+����С�� */
+					/* CMCC/È«ÍøÍ¨+ÄÚÏúÐ¡°å */
 					snprintf(mainboard_info.manufacture, INFO_BUF_LEN, "%d-match", get_project());
 				}
 				else {
@@ -344,15 +344,15 @@ static void sub_mainboard_verify(struct devinfo_data *devinfo_data)
 				if((id2 == 1) && (id1 == 1) &&
 				   ((operator == OPPO_18171_OPERATOR_ASIA) || (operator == OPPO_18171_OPERATOR_ASIA_COSTDOWN)
 					|| (operator == OPPO_18171_OPERATOR_CHINA_MOBILE) || (operator == OPPO_18171_OPERATOR_ALLNET))) {
-					/* ��̫��/ȫ��ͨ��/CMCC�� */
+					/* ÑÇÌ«°æ/È«ÍøÍ¨°æ/CMCC°æ */
 					snprintf(mainboard_info.manufacture, INFO_BUF_LEN, "%d-match", get_project());
 				} else if((id2 == 0) && (id1 == 1) &&
 				   (operator == OPPO_18171_OPERATOR_TAIWAN_MACAO)) {
-					/* Ӫ����(̨�ģ��ձ�)�汾 */
+					/* ÓªÔËÉÌ(Ì¨°Ä£¬ÈÕ±¾)°æ±¾ */
 					snprintf(mainboard_info.manufacture, INFO_BUF_LEN, "%d-match", get_project());
 				} else if((id2 == 1) && (id1 == 0) &&
 				   (operator == OPPO_18171_OPERATOR_FULLBAND)) {
-					/* ȫƵ�ΰ汾 */
+					/* È«Æµ¶Î°æ±¾ */
 					snprintf(mainboard_info.manufacture, INFO_BUF_LEN, "%d-match", get_project());
 				} else {
 					snprintf(mainboard_info.manufacture, INFO_BUF_LEN, "%d-unmatch", get_project());
@@ -362,19 +362,19 @@ static void sub_mainboard_verify(struct devinfo_data *devinfo_data)
 				if((id2 == 1) && (id1 == 1) &&
 				   ((operator == OPPO_18171_OPERATOR_ASIA) || (operator == OPPO_18171_OPERATOR_ASIA_COSTDOWN)
 					|| (operator == OPPO_18171_OPERATOR_VIETNAM_1) || (operator == OPPO_18171_OPERATOR_VIETNAM_2))) {
-					/* ��̫��(18571/18572/18576/18577) */
+					/* ÑÇÌ«°æ(18571/18572/18576/18577) */
 					snprintf(mainboard_info.manufacture, INFO_BUF_LEN, "%d-match", get_project());
 				} else if((id2 == 0) && (id1 == 0) &&
 				   ((operator == OPPO_18171_OPERATOR_ALLNET) || (operator == OPPO_18171_OPERATOR_CHINA_MOBILE))) {
-					/* ��������(18171/17172) */
+					/* ÄÚÏú»úÐÍ(18171/17172) */
 					snprintf(mainboard_info.manufacture, INFO_BUF_LEN, "%d-match", get_project());
 				} else if((id2 == 1) && (id1 == 0) &&
 				   (operator == OPPO_18171_OPERATOR_FULLBAND)) {
-					/* ȫƵ�ΰ汾 */
+					/* È«Æµ¶Î°æ±¾ */
 					snprintf(mainboard_info.manufacture, INFO_BUF_LEN, "%d-match", get_project());
 				} else if((id2 == 0) && (id1 == 1) &&
 				   (operator == OPPO_18171_OPERATOR_TAIWAN_MACAO)) {
-					/* Ӫ����(̨��,�ձ�:18573) */
+					/* ÓªÔËÉÌ(Ì¨°Ä,ÈÕ±¾:18573) */
 					snprintf(mainboard_info.manufacture, INFO_BUF_LEN, "%d-match", get_project());
 				} else {
 					snprintf(mainboard_info.manufacture, INFO_BUF_LEN, "%d-unmatch", get_project());
@@ -392,6 +392,7 @@ static void sub_mainboard_verify(struct devinfo_data *devinfo_data)
 	register_device_proc("sub_mainboard", mainboard_info.version, mainboard_info.manufacture);
 }
 
+//#ifdef VENDOR_EDIT//Fanhong.Kong@ProDrv.CHG,modified 2016.9.28 for 16061
 static void audio_board_verify(struct devinfo_data *devinfo_data)
 {
 	int ret;
@@ -446,6 +447,7 @@ static void audio_board_verify(struct devinfo_data *devinfo_data)
 	}
 	register_device_proc("audio_mainboard", mainboard_info.version, mainboard_info.manufacture);
 }
+//#endif /*VENDOR_EDIT*/
 
 static void mainboard_verify(struct devinfo_data *devinfo_data)
 {
@@ -456,7 +458,6 @@ static void mainboard_verify(struct devinfo_data *devinfo_data)
 		pr_err("devinfo_data is NULL\n");
 		return;
 	}
-	/***Tong.han@Bsp.Group.Tp Added for Operator_Pcb detection***/
 	hw_opreator_version = get_hw_opreator_version(devinfo_data);
 	/*end of Add*/
 	mainboard_info.manufacture = temp_manufacture;
@@ -499,6 +500,7 @@ static void mainboard_verify(struct devinfo_data *devinfo_data)
 	register_device_proc("mainboard", mainboard_info.version, mainboard_info.manufacture);
 }
 
+//#ifdef VENDOR_EDIT
 static ssize_t mainboard_resource_read_proc(struct file *file, char __user *buf,
 		size_t count,loff_t *off)
 {
@@ -522,6 +524,7 @@ struct file_operations mainboard_res_proc_fops = {
 	.read = mainboard_resource_read_proc,
 	.write = NULL,
 };
+//#endif
 
 
 static int devinfo_probe(struct platform_device *pdev)

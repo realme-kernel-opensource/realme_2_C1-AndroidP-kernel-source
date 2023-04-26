@@ -107,7 +107,7 @@ struct ilitek_corner_info ilitek_corner[10];
 static bool ilitek_corner_point_process(int i)
 {
     int j;
-        //节点/proc/touchpanel/oppo_tp_limit_enable的bit1位来控制控制
+        //陆脷碌茫/proc/touchpanel/oppo_tp_limit_enable碌脛bit1脦禄脌麓驴脴脰脝驴脴脰脝
         //ipio_info("enable :%d %d %d %d \n",edge_limit_data.limit_corner_lu_enable,edge_limit_data.limit_corner_ru_enable,edge_limit_data.limit_corner_ld_enable,edge_limit_data.limit_corner_rd_enable);
 		//ipio_info("x=%d,y=%d\n",g_mutual_data.mtp[i].x,g_mutual_data.mtp[i].y);
 		//ipio_info("lx1=%d,ly1=%d\n",edge_limit_data.edge_limit.left_x1,edge_limit_data.edge_limit.left_y1);
@@ -126,7 +126,7 @@ static bool ilitek_corner_point_process(int i)
 
             edge_limit_data.edge_limit.in_which_area = g_mutual_data.mtp[i].type;
         }
-         //节点/proc/touchpanel/oppo_tp_limit_enable的bit2位来控制控制
+         //陆脷碌茫/proc/touchpanel/oppo_tp_limit_enable碌脛bit2脦禄脌麓驴脴脰脝驴脴脰脝
         if ((edge_limit_data.limit_corner_ru_enable)  && (g_mutual_data.mtp[i].x > edge_limit_data.edge_limit.right_x1 && g_mutual_data.mtp[i].y < edge_limit_data.edge_limit.right_y1)) {
             g_mutual_data.mtp[i].type  = ILITEK_AREA_CORNER;
             if (edge_limit_data.edge_limit.in_which_area == ILITEK_AREA_NORMAL)
@@ -139,7 +139,7 @@ static bool ilitek_corner_point_process(int i)
 
             edge_limit_data.edge_limit.in_which_area = g_mutual_data.mtp[i].type;
         }
-         //节点/proc/touchpanel/oppo_tp_limit_enable的bit3位来控制控制
+         //陆脷碌茫/proc/touchpanel/oppo_tp_limit_enable碌脛bit3脦禄脌麓驴脴脰脝驴脴脰脝
         if ((edge_limit_data.limit_corner_ld_enable)  && (g_mutual_data.mtp[i].x < edge_limit_data.edge_limit.left_x2 && g_mutual_data.mtp[i].y > edge_limit_data.edge_limit.left_y2)) {
             g_mutual_data.mtp[i].type  = ILITEK_AREA_CORNER;
             if (edge_limit_data.edge_limit.in_which_area == ILITEK_AREA_NORMAL)
@@ -152,7 +152,7 @@ static bool ilitek_corner_point_process(int i)
 
             edge_limit_data.edge_limit.in_which_area = g_mutual_data.mtp[i].type;
         }
-         //节点/proc/touchpanel/oppo_tp_limit_enable的bit4位来控制控制
+         //陆脷碌茫/proc/touchpanel/oppo_tp_limit_enable碌脛bit4脦禄脌麓驴脴脰脝驴脴脰脝
         if ((edge_limit_data.limit_corner_rd_enable)  && (g_mutual_data.mtp[i].x > edge_limit_data.edge_limit.right_x2 && g_mutual_data.mtp[i].y > edge_limit_data.edge_limit.right_y2)) {
             g_mutual_data.mtp[i].type  = ILITEK_AREA_CORNER;
             if (edge_limit_data.edge_limit.in_which_area == ILITEK_AREA_NORMAL)
@@ -165,7 +165,7 @@ static bool ilitek_corner_point_process(int i)
 
             edge_limit_data.edge_limit.in_which_area = g_mutual_data.mtp[i].type;
         }
-        //坐标点为非边角区域时，弹起前面记录的边角坐标点
+        //脳酶卤锚碌茫脦陋路脟卤脽陆脟脟酶脫貌脢卤拢卢碌炉脝冒脟掳脙忙录脟脗录碌脛卤脽陆脟脳酶卤锚碌茫
 		//ipio_info("check corner\n");
 		//ipio_info("i=%d\n",i);
 		//ipio_info("%d  %d\n",g_mutual_data.mtp[i].type,edge_limit_data.edge_limit.in_which_area);

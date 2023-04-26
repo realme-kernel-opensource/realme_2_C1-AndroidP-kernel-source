@@ -5,10 +5,8 @@
 *                          Manage all charger IC and define abstarct function flow.
 * Version   : 1.0
 * Date       : 2018-05-24
-* Author     : wenbin.liu@PSW.Kernel.MM
 * ------------------------------ Revision History: --------------------------------
 * <version>           <date>                <author>                            <desc>
-* Revision 1.0        2018-06-22      wenbin.liu@PSW.Kernel.MM       Created for Healthinfomonitor
 ***********************************************************************************/
 
 #ifndef _OPPO_HEALTHINFO_H_

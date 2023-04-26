@@ -273,7 +273,7 @@ extern unsigned int kobjsize(const void *objp);
 #define MSM8953_TLMM_START_ADDR	0x01000000
 #define MSM8953_TLMM_END_ADDR	(0x01300000 - 1)
 #endif
-#endif
+#endif/*ODM_WT_EDIT*/
 
 #ifdef CONFIG_ARCH_MSM8953_SOC_SETTINGS
 #define MSM8953_TLMM_START_ADDR	0x01000000

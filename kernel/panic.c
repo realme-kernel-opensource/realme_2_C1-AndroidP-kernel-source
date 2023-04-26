@@ -30,7 +30,7 @@
 #include <soc/qcom/minidump.h>
 #ifdef ODM_WT_EDIT
 #include <linux/wt_system_monitor.h>
-#endif
+#endif /* ODM_WT_EDIT */
 #define PANIC_TIMER_STEP 100
 #define PANIC_BLINK_SPD 18
 
@@ -247,7 +247,7 @@ void panic(const char *fmt, ...)
 	int old_cpu, this_cpu;
 	bool _crash_kexec_post_notifiers = crash_kexec_post_notifiers;
 
-#ifdef VENDOR_EDIT //yixue.ge@bsp.drv add for dump cpu contex for minidump
+#ifdef VENDOR_EDIT
 #ifdef CONFIG_QCOM_MINIDUMP
 	in_panic++;
 	dumpcpuregs(NULL);
@@ -309,7 +309,7 @@ void panic(const char *fmt, ...)
 #ifdef WT_BOOT_REASON
 	save_panic_key_log("Kernel panic - not syncing: %s\n", buf);
 #endif
-#endif
+#endif /* ODM_WT_EDIT */
 #ifdef CONFIG_DEBUG_BUGVERBOSE
 	/*
 	 * Avoid nested stack-dumping if a panic occurs during oops processing

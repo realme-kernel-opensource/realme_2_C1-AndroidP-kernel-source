@@ -30,6 +30,7 @@ extern enum hrtimer_restart himax_ts_timer_func(struct hrtimer *timer);
 extern int himax_chip_common_init(void);
 extern void himax_chip_common_deinit(void);
 #ifdef ODM_WT_EDIT
+//Tianchen.Zhao@ODM_RH.TP Porting
 int hx_ctpmodule = -1;
 #endif
 int himax_dev_set(struct himax_ts_data *ts)
@@ -650,7 +651,9 @@ int himax_ts_register_interrupt(void)
 			ts->irq_enabled = 1;
 			irq_enable_count = 1;
 			I("%s: irq enabled at qpio: %d\n", __func__, private_ts->hx_irq);
+//#ifdef HX_SMART_WAKEUP
 			//irq_set_irq_wake(private_ts->hx_irq , 1);
+//#endif
 		} else {
 			ts->use_irq = 0;
 			E("%s: request_irq failed\n", __func__);
@@ -835,6 +838,7 @@ int himax_chip_common_probe(struct spi_device *spi)
 	struct himax_ts_data *ts;
 	int ret = 0;
 #ifdef ODM_WT_EDIT
+//Tianchen.Zhao@ODM_RH.TP Porting
 	char *temp = NULL;
 	char *temp_tcl = NULL;
 	char * cmdline_tp = NULL;
@@ -842,6 +846,7 @@ int himax_chip_common_probe(struct spi_device *spi)
 	int ctpmodule = 0;
 #endif
 #ifdef ODM_WT_EDIT
+//Tianchen.Zhao@ODM_RH.TP Porting
 	cmdline_tp = strstr(saved_command_line,"qcom,mdss_dsi_hx83102d_");
 	if ( cmdline_tp == NULL ){
 		printk("get qcom,mdss_dsi_hx83102d_ fail ");

@@ -48,7 +48,7 @@
 #ifdef ODM_WT_EDIT
 //hangtianqi porting WT patch 2019/3/29
 #include <linux/hardware_info.h>
-#endif
+#endif /* ODM_WT_EDIT */
 
 #define DEVICE "wcnss_wlan"
 #define CTRL_DEVICE "wcnss_ctrl"
@@ -2767,7 +2767,7 @@ static bool autodetect_xo_featue_disabled(void){
 	}
 	return false;
 }
-#endif
+#endif /* ODM_WT_EDIT */
 
 static int
 wcnss_trigger_config(struct platform_device *pdev)
@@ -2827,14 +2827,14 @@ wcnss_trigger_config(struct platform_device *pdev)
                has_autodetect_xo =
                        of_property_read_bool(node, "qcom,has-autodetect-xo");
  	}
-#else
+#else  /* ODM_WT_EDIT */
         if(!autodetect_xo_featue_disabled()){
                 if (has_autodetect_xo == WCNSS_CONFIG_UNSPECIFIED && has_pronto_hw) {
                         has_autodetect_xo =
                                 of_property_read_bool(node, "qcom,has-autodetect-xo");
                 }
         }
-#endif
+#endif /* ODM_WT_EDIT */
 
 
 	penv->thermal_mitigation = 0;

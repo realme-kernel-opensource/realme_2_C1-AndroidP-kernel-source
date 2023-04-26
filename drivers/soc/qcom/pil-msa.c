@@ -666,7 +666,9 @@ int pil_mss_reset_load_mba(struct pil_desc *pil)
 	//#ifndef VENDOR_EDIT
 	//Add for customized subsystem ramdump
 	//char *dp_name = "msadp";
+	//#else
 	char *dp_name = "msadp.mbn";
+	//#endif
 	char *fw_name_p;
 	void *mba_dp_virt;
 	dma_addr_t mba_dp_phys, mba_dp_phys_end;

@@ -5,10 +5,8 @@
 *
 * Version   : 1.0
 * Date       : 2018-06-05
-* Author     : wenbin.liu@PSW.Kernel.MM
 * ------------------------------ Revision History: --------------------------------
 * <version>           <date>                <author>                            <desc>
-* Revision 1.0        2018-05-24       wenbin.liu@PSW.Kernel.MM       Created for Healthinfomonitor
 ***********************************************************************************/
 
 #include "oppo_healthinfo.h"

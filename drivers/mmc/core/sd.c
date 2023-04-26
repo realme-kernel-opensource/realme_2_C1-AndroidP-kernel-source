@@ -1567,6 +1567,7 @@ err:
 	mmc_detach_bus(host);
 
 #ifdef VENDOR_EDIT
+        if (err)
     host->detect_change_retry--;
     pr_err("detect_change_retry = %d !!!,err = %d\n", host->detect_change_retry,err);
 #endif /* VENDOR_EDIT */

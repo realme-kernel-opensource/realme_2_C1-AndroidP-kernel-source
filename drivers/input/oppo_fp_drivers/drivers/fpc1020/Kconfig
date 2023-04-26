@@ -1,0 +1,19 @@
+############################################################
+## Copyright (C), 2008-2016, OPPO Mobile Comm Corp., Ltd.
+## ODM_WT_EDIT
+## File: - Kconfig
+## Description: kernel fingerprint Kconfig.
+##
+## Version: v2.2.10-2018-03-05
+## Date : 2018/06/26
+##
+## ------------------------------- Revision History: -------------------------------
+##  	<author>		<data> 	   <version >	       <desc>
+##	
+##
+#############################################################
+config FINGERPRINT_FPC_1020
+       tristate "FPC Fingerprint"
+       default y
+       help
+          FPC Fingerprint

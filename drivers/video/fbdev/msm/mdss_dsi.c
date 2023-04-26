@@ -408,6 +408,7 @@ static int mdss_dsi_panel_power_off(struct mdss_panel_data *pdata)
 	}
 
 #ifdef ODM_WT_EDIT
+	//Tianchen.Zhao@ODM_RH.Display Porting
 	if(g_shutdown_pending == 1){
 		if (mdss_dsi_pinctrl_set_state(ctrl_pdata, false))
 			pr_debug("reset disable: pinctrl not enabled\n");
@@ -420,13 +421,14 @@ static int mdss_dsi_panel_power_off(struct mdss_panel_data *pdata)
 		}
 	}
 
-#else
+#else /* ODM_WT_EDIT */
 	if (mdss_dsi_pinctrl_set_state(ctrl_pdata, false))
 		pr_debug("reset disable: pinctrl not enabled\n");
-#endif
+#endif /* ODM_WT_EDIT */
 
 
 #ifdef ODM_WT_EDIT
+//Tianchen.Zhao@ODM_RH.Display Porting
 	if(pdata->panel_info.panel_dead == 0) {
 		if ( g_shutdown_pending == 0 && g_gesture == 1) {
 				pr_info("%s: lcd power-off and do not reset \n", __func__);
@@ -452,11 +454,11 @@ static int mdss_dsi_panel_power_off(struct mdss_panel_data *pdata)
 				ctrl_pdata->panel_power_data.num_vreg, 0);
 			}
 		}
-#else
+#else /* ODM_WT_EDIT */
 	ret = msm_mdss_enable_vreg(
 		ctrl_pdata->panel_power_data.vreg_config,
 		ctrl_pdata->panel_power_data.num_vreg, 0);
-#endif
+#endif /* ODM_WT_EDIT */
 
 	if (ret)
 		pr_err("%s: failed to disable vregs for %s\n",
@@ -471,6 +473,7 @@ end:
 }
 
 #ifdef ODM_WT_EDIT
+ //Tianchen.Zhao@ODM_RH.Display Porting
 int mdss_dsi_panel_hx_power_off(struct mdss_panel_data *pdata)
 {
 	int ret = 0;
@@ -522,7 +525,7 @@ end:
 	#endif
 	return ret;
 }
-#endif
+#endif /* ODM_WT_EDIT */
 
 static int mdss_dsi_panel_power_on(struct mdss_panel_data *pdata)
 {
@@ -584,11 +587,11 @@ static int mdss_dsi_panel_power_on(struct mdss_panel_data *pdata)
 			}
 		}
 	}
-#else
+#else /* ODM_WT_EDIT */
 	ret = msm_mdss_enable_vreg(
 		ctrl_pdata->panel_power_data.vreg_config,
 		ctrl_pdata->panel_power_data.num_vreg, 1);
-#endif
+#endif /* ODM_WT_EDIT */
 
 	if (ret) {
 		pr_err("%s: failed to enable vregs for %s\n",
@@ -711,14 +714,15 @@ int mdss_dsi_panel_power_ctrl(struct mdss_panel_data *pdata,
 	switch (power_state) {
 	case MDSS_PANEL_POWER_OFF:
 		#ifdef ODM_WT_EDIT
+		//Tianchen.Zhao@ODM_RH.Display Porting
 		if (pinfo->gesture_off_cmd && (g_gesture == 0)) {
 			pr_err("%s  g_gesture hx831112a_huaxian not do power off \n", __func__);
 		} else {
 			ret = mdss_dsi_panel_power_off(pdata);
 		}
-		#else
+		#else /* ODM_WT_EDIT */
 		ret = mdss_dsi_panel_power_off(pdata);
-		#endif
+		#endif /* ODM_WT_EDIT */
 		break;
 	case MDSS_PANEL_POWER_ON:
 		if (mdss_dsi_is_panel_on_ulp(pdata)) {
@@ -1537,7 +1541,7 @@ static int mdss_dsi_off(struct mdss_panel_data *pdata, int power_state)
 				pr_err("%s: Panel power off failed line(%d) ret = %d.\n", __func__, __LINE__, ret);
 			}
 		}
-#endif
+#endif /* ODM_WT_EDIT */
 		goto panel_power_ctrl;
 	}
 #ifdef ODM_WT_EDIT
@@ -1547,7 +1551,7 @@ static int mdss_dsi_off(struct mdss_panel_data *pdata, int power_state)
 					pr_err("%s: Panel power off failed line(%d) ret = %d.\n", __func__, __LINE__, ret);
 				}
 			}
-#endif
+#endif /* ODM_WT_EDIT */
 
 	/*
 	 * Link clocks should be turned off before PHY can be disabled.
@@ -1579,9 +1583,9 @@ panel_power_ctrl:
 #ifdef ODM_WT_EDIT
 	if (pdata->panel_info.mipi.lp11_deinit == false)
 		ret = mdss_dsi_panel_power_ctrl(pdata, power_state);
-#else
+#else /* ODM_WT_EDIT */
 	ret = mdss_dsi_panel_power_ctrl(pdata, power_state);
-#endif
+#endif /* ODM_WT_EDIT */
 	if (ret) {
 		pr_err("%s: Panel power off failed\n", __func__);
 		goto end;
@@ -1746,6 +1750,7 @@ int mdss_dsi_on(struct mdss_panel_data *pdata)
 		goto end;
 	}
 #ifdef ODM_WT_EDIT
+	//Tianchen.Zhao@ODM_RH.Display Porting
 	if (strncmp(pinfo->panel_name, "hx831112a_huaxian", strlen("hx831112a_huaxian")) == 0) {
 		if (mdss_dsi_pinctrl_set_state(ctrl_pdata, false))
 			pr_debug("reset disable: pinctrl not false\n");
@@ -1771,6 +1776,7 @@ int mdss_dsi_on(struct mdss_panel_data *pdata)
 	}
 
 #ifdef ODM_WT_EDIT
+//Tianchen.Zhao@ODM_RH.Display Porting
 	if(strstr(pdata->panel_info.panel_name, "nt36525") != NULL){
 		if (mipi->lp11_init) {
 			if (mdss_dsi_pinctrl_set_state(ctrl_pdata, false))
@@ -1815,6 +1821,7 @@ int mdss_dsi_on(struct mdss_panel_data *pdata)
 	 */
 	if (mipi->lp11_init) {
 		#ifndef ODM_WT_EDIT
+		//Tianchen.Zhao@ODM_RH.Display Porting
 		if (mdss_dsi_pinctrl_set_state(ctrl_pdata, true))
 			pr_debug("reset enable: pinctrl not enabled\n");
 		#else
@@ -1826,6 +1833,7 @@ int mdss_dsi_on(struct mdss_panel_data *pdata)
 		mdss_dsi_panel_reset(pdata, 1);
 	}
 	#ifdef ODM_WT_EDIT
+	//Tianchen.Zhao@ODM_RH.TP Porting
 	if(novatek_tp ==1) {
 		lcd_resume_load_nvt_fw();
 	} else if(ilitek_tp == 1) {

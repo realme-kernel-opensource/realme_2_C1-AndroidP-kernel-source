@@ -176,6 +176,7 @@ static int qtech_gc8034_insensor_read_otp_info(struct msm_eeprom_ctrl_t *e_ctrl,
     return rc;
 }
 
+#if 0
 static int qtech_hi846_insensor_read_otp_info(struct msm_eeprom_ctrl_t *e_ctrl, struct msm_eeprom_memory_block_t *block)
 {
 	uint16_t i, rc = 0, complete = 0;
@@ -244,6 +245,7 @@ static int qtech_hi846_insensor_read_otp_info(struct msm_eeprom_ctrl_t *e_ctrl, 
 	e_ctrl->i2c_client.i2c_func_tbl->i2c_write(&(e_ctrl->i2c_client), 0x0a00, 0x01, MSM_CAMERA_I2C_BYTE_DATA);
 	return 0;
 }
+#endif
 
 static int sunny_s5k4h7yx_insensor_read_otp_info(struct msm_eeprom_ctrl_t *e_ctrl, struct msm_eeprom_memory_block_t *block)
 {
@@ -286,7 +288,7 @@ static int sunny_s5k4h7yx_insensor_read_otp_info(struct msm_eeprom_ctrl_t *e_ctr
 
     return 0;
 }
-#endif
+#endif /*ODM_WT_EDIT*/
 
 /*
  * msm_get_read_mem_size - Get the total size for allocation
@@ -448,6 +450,7 @@ static int read_eeprom_memory(struct msm_eeprom_ctrl_t *e_ctrl,
 		}
 	} else if(!strcmp(eb_info->eeprom_name, "qtech_hi846")){
 		pr_info("%s:%d qtech_hi846 do noting", __func__, __LINE__);
+#if 0
 		if(g_front_module_id != 0)return -1;
 	//	int module_id_addr = -1;
 		if (emap[0].saddr.addr) {
@@ -470,6 +473,7 @@ static int read_eeprom_memory(struct msm_eeprom_ctrl_t *e_ctrl,
 			pr_err("%s qtech_hi846_insensor_read_otp_info failed!\n", __func__);
 			return rc;
 		}
+#endif
     } else if(!strcmp(eb_info->eeprom_name, "qtech_gc8034")){
         pr_info("qtech_gc8034 g_front_module_id %d", g_front_module_id);
         if(g_front_module_id != 0)return -1;
@@ -516,7 +520,7 @@ static int read_eeprom_memory(struct msm_eeprom_ctrl_t *e_ctrl,
     if(!check_module_id(e_ctrl, eb_info->eeprom_name))
 		return -1;
 
-#endif
+#endif /*ODM_WT_EDIT*/
 	for (j = 0; j < block->num_map; j++) {
 		if (emap[j].saddr.addr) {
 			eb_info->i2c_slaveaddr = emap[j].saddr.addr;
@@ -584,7 +588,7 @@ static int read_eeprom_memory(struct msm_eeprom_ctrl_t *e_ctrl,
 	}
 #ifdef ODM_WT_EDIT
 }
-#endif
+#endif /*ODM_WT_EDIT*/
 	return rc;
 }
 /*
@@ -1021,14 +1025,14 @@ static int msm_eeprom_config(struct msm_eeprom_ctrl_t *e_ctrl,
 #ifdef ODM_WT_EDIT
 		CDBG("%s:%d userspace_probe=%d, Eeprom will probed at kernel boot",
 			__func__, __LINE__, e_ctrl->userspace_probe);
-#else
+#else /* ODM_WT_EDIT */
 		if (e_ctrl->userspace_probe == 0) {
 			pr_err("%s:%d Eeprom already probed at kernel boot",
 				__func__, __LINE__);
 			rc = -EINVAL;
 			break;
 		}
-#endif
+#endif/* ODM_WT_EDIT */
 		if (e_ctrl->cal_data.num_data == 0) {
 			rc = eeprom_init_config(e_ctrl, argp);
 			if (rc < 0) {
@@ -1995,14 +1999,14 @@ static int msm_eeprom_config32(struct msm_eeprom_ctrl_t *e_ctrl,
 #ifdef ODM_WT_EDIT
 		CDBG("%s:%d userspace_probe=%d, Eeprom will probed at kernel boot",
 			__func__, __LINE__, e_ctrl->userspace_probe);
-#else
+#else /* ODM_WT_EDIT */
 		if (e_ctrl->userspace_probe == 0) {
 			pr_err("%s:%d Eeprom already probed at kernel boot",
 				__func__, __LINE__);
 			rc = -EINVAL;
 			break;
 		}
-#endif
+#endif /* ODM_WT_EDIT */
 		if (e_ctrl->cal_data.num_data == 0) {
 			rc = eeprom_init_config32(e_ctrl, argp);
 			if (rc < 0)
@@ -2072,7 +2076,7 @@ static int msm_eeprom_platform_probe(struct platform_device *pdev)
 
 #ifdef ODM_WT_EDIT
 	int module_id = 0;
-#endif
+#endif /*ODM_WT_EDIT*/
 
 	CDBG("%s E\n", __func__);
 
@@ -2375,7 +2379,7 @@ static int msm_eeprom_platform_probe(struct platform_device *pdev)
 			}
 		}
 
-#endif
+#endif /*ODM_WT_EDIT*/
 
 		e_ctrl->is_supported |= msm_eeprom_match_crc(&e_ctrl->cal_data);
 

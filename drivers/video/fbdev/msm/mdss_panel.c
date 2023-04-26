@@ -272,7 +272,7 @@ static int _create_phy_ctrl_nodes(struct mdss_panel_debugfs_info *debugfs_info,
 #ifdef ODM_WT_EDIT
 	DEBUGFS_CREATE_ARRAY("timing_8996", phy_node,
 				pinfo->mipi.dsi_phy_db.timing_8996);
-#endif
+#endif /* ODM_WT_EDIT */
 
 	return 0;
 }
@@ -317,11 +317,12 @@ static int _create_dsi_panel_nodes(struct mdss_panel_debugfs_info *dfs,
 	debugfs_create_bool("panel_ack_disabled", 0644, dfs->root,
 			&pinfo->panel_ack_disabled);
 #ifdef ODM_WT_EDIT
+	//Tianchen.Zhao@ODM_RH.Display Porting
 	debugfs_create_bool("vddio_always_on", 0644, dfs->root,
 			&pinfo->vddio_always_on);
 	debugfs_create_bool("gesture_off_cmd", 0644, dfs->root,
 			&pinfo->gesture_off_cmd);
-#endif
+#endif /* ODM_WT_EDIT */
 
 	debugfs_create_u32("hsync_skew", 0644, lcdc_root,
 			(u32 *)&pinfo->lcdc.hsync_skew);
@@ -401,7 +402,7 @@ static int _create_dsi_panel_nodes(struct mdss_panel_debugfs_info *dfs,
 #ifdef ODM_WT_EDIT
 	debugfs_create_u8("lp11_deinit", 0644, mipi_root,
 			(char *)&pinfo->mipi.lp11_deinit);
-#endif
+#endif /* ODM_WT_EDIT */
 
 
 	/* TE reltaed nodes */

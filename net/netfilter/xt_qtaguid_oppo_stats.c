@@ -7,7 +7,6 @@
 **
 ** Version: 1.0
 ** Date : 2018/01/11
-** Author: Yunqing.Zeng@BSP.Power.Basic
 **
 ** ------------------ Revision History:------------------------
 ** <author> <data> <version > <desc>

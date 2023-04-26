@@ -5,7 +5,6 @@
 ** Description: oppo customization lowmemory monitor for lowmemory and memory leak case
 ** Version: 1.0
 ** Date : 2017/06/15
-** Author: Jiemin.Zhu@Swdp.Android.Performance.Memory
 **
 ** ----------------------Revision History: --------------------
 **  <author>	<data> 	   <version >	       <desc>

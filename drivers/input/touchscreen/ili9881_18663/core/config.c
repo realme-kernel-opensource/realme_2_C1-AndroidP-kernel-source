@@ -440,7 +440,9 @@ void core_config_ic_suspend(void)
 		}
 		msleep(5);
 	}
+//#ifdef ILITEK_ESD_CHECK
 	//ilitek_cancel_esd_check();
+//#endif
 	/* sense stop */
 	core_config_sense_ctrl(false);
 

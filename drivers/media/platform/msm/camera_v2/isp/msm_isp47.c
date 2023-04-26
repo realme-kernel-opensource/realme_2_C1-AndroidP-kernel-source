@@ -2028,7 +2028,6 @@ int msm_vfe47_axi_halt(struct vfe_device *vfe_dev,
 		/* Halt AXI Bus Bridge */
 		msm_camera_io_w_mb(0x1, vfe_dev->vfe_base + 0x400);
 #ifndef VENDOR_EDIT
-/*modified by Jinshui.Liu@Camera 20170404 for [wait more time]*/
 		rc = wait_for_completion_interruptible_timeout(
 			&vfe_dev->halt_complete, msecs_to_jiffies(500));
 #else

@@ -2158,9 +2158,6 @@ static void fill_extnum_info(struct elfhdr *elf, struct elf_shdr *shdr4extnum,
 	shdr4extnum->sh_info = segs;
 }
 
-/* yanghao@PSW.Kernel.stability add for the lowmomery or not have order 4 page size
- * will alloc failed and the coredump can't format success 2019/01/14
- */
 #if defined(VENDOR_EDIT) && (defined(CONFIG_OPPO_SPECIAL_BUILD) || defined(CONFIG_OPPO_DAILY_BUILD))
 static elf_addr_t *oppo_coredump_addr = NULL;
 #endif /* VENDOR_EDIT end */
@@ -2254,9 +2251,6 @@ static int elf_core_dump(struct coredump_params *cprm)
 
 	dataoff = offset = roundup(offset, ELF_EXEC_PAGESIZE);
 
-	/* yanghao@PSW.Kernel.stability add for the lowmomery or not have order 4 page size
-	 * will alloc failed and the coredump can't format success 2019/01/14
-	 */
 #if defined(VENDOR_EDIT) && (defined(CONFIG_OPPO_SPECIAL_BUILD) || defined(CONFIG_OPPO_DAILY_BUILD))
 	if(oppo_coredump_addr && (((segs - 1) * sizeof(*vma_filesz)) <= 64*1024))
 		vma_filesz = oppo_coredump_addr;
@@ -2373,9 +2367,6 @@ end_coredump:
 cleanup:
 	free_note_info(&info);
 	kfree(shdr4extnum);
-	/* yanghao@PSW.Kernel.stability add for the lowmomery or not have order 4 page size
-	 * will alloc failed and the coredump can't format success 2019/01/14
-	 */
 #if defined(VENDOR_EDIT) && (defined(CONFIG_OPPO_SPECIAL_BUILD) || defined(CONFIG_OPPO_DAILY_BUILD))
 	if ((oppo_coredump_addr != NULL) && (vma_filesz == oppo_coredump_addr))
 		memset(oppo_coredump_addr, 0, 64*1024);
@@ -2395,9 +2386,6 @@ out:
 static int __init init_elf_binfmt(void)
 {
 
-	/* yanghao@PSW.Kernel.stability add for the lowmomery or not have order 4 page size
-	 * will alloc failed and the coredump can't format success 2019/01/14
-	 */
 #if defined(VENDOR_EDIT) && (defined(CONFIG_OPPO_SPECIAL_BUILD) || defined(CONFIG_OPPO_DAILY_BUILD))
 	oppo_coredump_addr = kmalloc(64*1024, GFP_KERNEL);;
 #endif /* VENDOR_EDIT end */
@@ -2409,9 +2397,6 @@ static int __init init_elf_binfmt(void)
 static void __exit exit_elf_binfmt(void)
 {
 
-	/* yanghao@PSW.Kernel.stability add for the lowmomery or not have order 4 page size
-	 * will alloc failed and the coredump can't format success 2019/01/14
-	 */
 #if defined(VENDOR_EDIT) && (defined(CONFIG_OPPO_SPECIAL_BUILD) || defined(CONFIG_OPPO_DAILY_BUILD))
 	if(oppo_coredump_addr)
 		kfree(oppo_coredump_addr);

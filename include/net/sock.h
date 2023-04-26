@@ -183,8 +183,10 @@ struct sock_common {
 	struct proto		*skc_prot;
 	possible_net_t		skc_net;
 
+	//#ifdef VENDOR_EDIT
 	//Add code for appo sla function
 	u32 skc_oppo_mark;
+	//#endif /* VENDOR_EDIT */
 #ifdef VENDOR_EDIT
 //process which use the same uid
 	char skc_cmdline[TASK_COMM_LEN];
@@ -348,8 +350,10 @@ struct sock {
 #define sk_incoming_cpu		__sk_common.skc_incoming_cpu
 #define sk_flags		__sk_common.skc_flags
 #define sk_rxhash		__sk_common.skc_rxhash
+//#ifdef VENDOR_EDIT
 //Add code for appo sla function
 #define oppo_sla_mark   __sk_common.skc_oppo_mark
+//#endif /* VENDOR_EDIT */
 #ifdef VENDOR_EDIT
 //process which use the same uid
 #define sk_cmdline		__sk_common.skc_cmdline

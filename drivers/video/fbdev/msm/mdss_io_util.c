@@ -29,7 +29,7 @@
 #ifdef ODM_WT_EDIT
 extern int g_shutdown_pending;
 extern int g_gesture;
-#endif
+#endif /* ODM_WT_EDIT */
 
 #ifdef VENDOR_EDIT
 extern int himax_tp;
@@ -311,9 +311,9 @@ int msm_mdss_enable_vreg(struct mdss_vreg *in_vreg, int num_vreg, int enable)
 			} else {
 				rc = regulator_enable(in_vreg[i].vreg);
 			}
-#else
+#else /* ODM_WT_EDIT */
 			rc = regulator_enable(in_vreg[i].vreg);
-#endif
+#endif /* ODM_WT_EDIT */
 			if (in_vreg[i].post_on_sleep && need_sleep)
 				usleep_range((in_vreg[i].post_on_sleep * 1000),
 					(in_vreg[i].post_on_sleep * 1000) + 10);
@@ -338,10 +338,10 @@ int msm_mdss_enable_vreg(struct mdss_vreg *in_vreg, int num_vreg, int enable)
 				if (regulator_is_enabled(in_vreg[i].vreg))
 					regulator_disable(in_vreg[i].vreg);
 			}
-#else
+#else /* ODM_WT_EDIT */
 			if (regulator_is_enabled(in_vreg[i].vreg))
 				regulator_disable(in_vreg[i].vreg);
-#endif
+#endif /* ODM_WT_EDIT */
 			if (in_vreg[i].post_off_sleep)
 				usleep_range((in_vreg[i].post_off_sleep * 1000),
 				(in_vreg[i].post_off_sleep * 1000) + 10);
@@ -371,6 +371,7 @@ vreg_set_opt_mode_fail:
 EXPORT_SYMBOL(msm_mdss_enable_vreg);
 
 #ifdef ODM_WT_EDIT
+//Tianchen.Zhao@ODM_RH.Display Porting
 int msm_mdss_enable_vreg_truly(struct mdss_vreg *in_vreg, int num_vreg, int enable)
 {
 	int i = 0, rc = 0;

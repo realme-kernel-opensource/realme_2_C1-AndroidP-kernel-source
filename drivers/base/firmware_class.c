@@ -299,7 +299,7 @@ static const char * const fw_path[] = {
 #ifdef ODM_WT_EDIT
 	"/vendor/firmware/",
 	"/etc/firmware/",
-#endif
+#endif /* ODM_WT_EDIT */
 	"/lib/firmware/updates/" UTS_RELEASE,
 	"/lib/firmware/updates",
 	"/lib/firmware/" UTS_RELEASE,

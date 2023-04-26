@@ -46,13 +46,14 @@
 extern void wakeup_src_clean(void);
 #endif /* VENDOR_EDIT */
 #ifdef ODM_WT_EDIT
+//Tianchen.Zhao@ODM_RH.Display Porting
 extern int g_shutdown_pending;
 extern int g_gesture;
 extern int himax_tp;
 static int test_dimming = 0;
 extern void core_config_sleep_ctrl(bool out);
 extern int mdss_dsi_panel_hx_power_off(struct mdss_panel_data *pdata);
-#endif
+#endif /* ODM_WT_EDIT */
 
 
 DEFINE_LED_TRIGGER(bl_led_trigger);
@@ -323,14 +324,14 @@ static struct dsi_cmd_desc backlight_dimming_cmd[2] = {
 	{{DTYPE_DCS_LWRITE, 1, 0, 0, 1, sizeof(led_pwm1)}, led_pwm1},
 	{{DTYPE_DCS_LWRITE, 1, 0, 0, 1, sizeof(led_pwm2)}, led_pwm2}
 };
-#else
+#else /* ODM_WT_EDIT */
 static char led_pwm1[2] = {0x51, 0x0};    /* DTYPE_DCS_WRITE1 */
 
 static struct dsi_cmd_desc backlight_cmd = {
         {DTYPE_DCS_WRITE1, 1, 0, 0, 1, sizeof(led_pwm1)},
         led_pwm1
  };
-#endif
+#endif /* ODM_WT_EDIT */
 
 
 static void mdss_dsi_panel_bklt_dcs(struct mdss_dsi_ctrl_pdata *ctrl, int level)
@@ -371,13 +372,13 @@ static void mdss_dsi_panel_bklt_dcs(struct mdss_dsi_ctrl_pdata *ctrl, int level)
 		test_dimming++;
 	}
 
-#else
+#else /* ODM_WT_EDIT */
 	led_pwm1[1] = (unsigned char)level;
 
 	memset(&cmdreq, 0, sizeof(cmdreq));
 	cmdreq.cmds = &backlight_cmd;
 	cmdreq.cmds_cnt = 1;
-#endif
+#endif /* ODM_WT_EDIT */
 
 	cmdreq.flags = CMD_REQ_COMMIT;
 	cmdreq.rlen = 0;
@@ -660,6 +661,7 @@ int mdss_dsi_panel_reset(struct mdss_panel_data *pdata, int enable)
 			gpio_free(ctrl_pdata->disp_en_gpio);
 		}
 
+//Tianchen.Zhao@ODM_RH.Display Porting
 #ifdef ODM_WT_EDIT
 		if (g_shutdown_pending == 0) {
 			if(pdata->panel_info.vddio_always_on) {
@@ -672,9 +674,9 @@ int mdss_dsi_panel_reset(struct mdss_panel_data *pdata, int enable)
 			gpio_set_value((ctrl_pdata->rst_gpio), 0);
 		}
 
-#else
+#else /* ODM_WT_EDIT */
 		gpio_set_value((ctrl_pdata->rst_gpio), 0);
-#endif
+#endif /* ODM_WT_EDIT */
 
 		gpio_free(ctrl_pdata->rst_gpio);
 		if (gpio_is_valid(ctrl_pdata->mode_gpio))
@@ -1069,7 +1071,7 @@ static int mdss_dsi_panel_on(struct mdss_panel_data *pdata)
 
 #ifdef ODM_WT_EDIT
 	test_dimming = 0;
-#endif
+#endif /* ODM_WT_EDIT */
 
 	if (pdata == NULL) {
 		pr_err("%s: Invalid input data\n", __func__);
@@ -1214,19 +1216,20 @@ static int mdss_dsi_panel_off(struct mdss_panel_data *pdata)
 	if (ctrl->off_cmds.cmd_cnt)
 		mdss_dsi_panel_cmds_send(ctrl, &ctrl->off_cmds, CMD_REQ_COMMIT);
 #ifdef ODM_WT_EDIT
+	//Tianchen.Zhao@ODM_RH.Display Porting
 	if (pinfo->gesture_off_cmd && (g_gesture == 0)) {
 		mdss_dsi_panel_hx_power_off(pdata);
 		if (ctrl->gesture_off_cmds.cmd_cnt)
 			mdss_dsi_panel_cmds_send(ctrl, &ctrl->gesture_off_cmds, CMD_REQ_COMMIT);
 	}
-#endif
+#endif /* ODM_WT_EDIT */
 
 #ifdef ODM_WT_EDIT
 	if ((strncmp(pinfo->panel_name, "ilt9881h_hlt", strlen("ilt9881h_hlt")) == 0) && (g_gesture == 0)) {
 		core_config_sleep_ctrl(false);
 		usleep_range(40000,41000);
 	}
-#endif
+#endif /* ODM_WT_EDIT */
 
 	mdss_dsi_panel_off_hdmi(ctrl, pinfo);
 
@@ -1985,11 +1988,11 @@ static bool mdss_dsi_cmp_panel_reg_v2(struct mdss_dsi_ctrl_pdata *ctrl)
 								__func__, ctrl->return_buf[i], i);
 					break;
 			}
-	#else
+	#else /* ODM_WT_EDIT */
 			if (ctrl->return_buf[i] !=
 					ctrl->status_value[group + i])
 					break;
-	#endif
+	#endif/* ODM_WT_EDIT */
 
 		}
 
@@ -1998,14 +2001,15 @@ static bool mdss_dsi_cmp_panel_reg_v2(struct mdss_dsi_ctrl_pdata *ctrl)
 		group += len;
 	}
 	#ifdef ODM_WT_EDIT
+	//Tianchen.Zhao@ODM_RH.Display Porting
 	if (!ctrl->panel_data.panel_info.esd_check_running) {
 		return true;
 	} else {
 		return false;
 	}
-	#else
+	#else /* ODM_WT_EDIT */
 	return false;
-	#endif
+	#endif /* ODM_WT_EDIT */
 }
 
 
@@ -2350,6 +2354,7 @@ static int mdss_dsi_parse_panel_features(struct device_node *np,
 	pr_info("%s: ulps feature %s\n", __func__,
 		(pinfo->ulps_feature_enabled ? "enabled" : "disabled"));
 #ifdef ODM_WT_EDIT
+	//Tianchen.Zhao@ODM_RH.Display Porting
 	pinfo->vddio_always_on = of_property_read_bool(np,
 		"qcom,vddio-always-on-enabled");
 	pr_info("%s: vddio_always_on feature %s\n", __func__,
@@ -2358,7 +2363,7 @@ static int mdss_dsi_parse_panel_features(struct device_node *np,
 		"qcom,mdss-dsi-gesture-off-cmd");
 	pr_info("%s: vddio_always_on feature %s\n", __func__,
 		(pinfo->gesture_off_cmd ? "enabled" : "disabled"));
-#endif
+#endif /* ODM_WT_EDIT */
 
 	pinfo->ulps_suspend_enabled = of_property_read_bool(np,
 		"qcom,suspend-ulps-enabled");
@@ -2932,7 +2937,7 @@ static int mdss_panel_parse_dt(struct device_node *np,
 #ifdef ODM_WT_EDIT
 	u32 *array;
 	int bl_i;
-#endif
+#endif /* ODM_WT_EDIT */
 
 	if (mdss_dsi_is_hw_config_split(ctrl_pdata->shared_data))
 		pinfo->is_split_display = true;
@@ -3030,7 +3035,7 @@ static int mdss_panel_parse_dt(struct device_node *np,
 	} else {
 		pinfo->blmap = NULL;
 	}
-#endif
+#endif /* ODM_WT_EDIT */
 
 	rc = of_property_read_u32(np, "qcom,mdss-dsi-interleave-mode", &tmp);
 	pinfo->mipi.interleave_mode = (!rc ? tmp : 0);
@@ -3160,7 +3165,7 @@ static int mdss_panel_parse_dt(struct device_node *np,
 #ifdef ODM_WT_EDIT
 	pinfo->mipi.lp11_deinit = of_property_read_bool(np,
 					"qcom,mdss-dsi-lp11-deinit");
-#endif
+#endif /* ODM_WT_EDIT */
 
 	rc = of_property_read_u32(np, "qcom,mdss-dsi-post-init-delay", &tmp);
 	pinfo->mipi.post_init_delay = (!rc ? tmp : 0);

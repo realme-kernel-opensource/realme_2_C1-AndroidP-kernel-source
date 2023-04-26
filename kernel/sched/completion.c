@@ -67,6 +67,7 @@ do_wait_for_common(struct completion *x,
 		__add_wait_queue_tail_exclusive(&x->wait, &wait);
 		do {
 			if (signal_pending_state(state, current) || hung_long_and_fatal_signal_pending(current)) {
+			//#endif
 				timeout = -ERESTARTSYS;
 				break;
 			}

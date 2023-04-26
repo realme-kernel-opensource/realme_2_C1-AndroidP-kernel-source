@@ -575,14 +575,18 @@
 
 		hsuart_active: default {
 			mux {
+				//#ifdef ODM_WT_EDIT
 				//pins = "gpio12", "gpio13", "gpio14", "gpio15";
 				pins = "gpio12", "gpio14", "gpio15";
+				//#endif /* ODM_WT_EDIT */
 				function = "blsp_uart4";
 			};
 
 			config {
+				//#ifdef ODM_WT_EDIT
 				//pins = "gpio12", "gpio13", "gpio14", "gpio15";
 				pins = "gpio12", "gpio14", "gpio15";
+				//#endif /* ODM_WT_EDIT */
 				drive-strength = <16>;
 				bias-disable;
 			};
@@ -590,14 +594,18 @@
 
 		hsuart_sleep: sleep {
 			mux {
+				//#ifdef ODM_WT_EDIT
 				//pins = "gpio12", "gpio13", "gpio14", "gpio15";
 				pins = "gpio12", "gpio14", "gpio15";
+				//#endif /* ODM_WT_EDIT */
 				function = "gpio";
 			};
 
 			config {
+				//#ifdef ODM_WT_EDIT
 				//pins = "gpio12", "gpio13", "gpio14", "gpio15";
 				pins = "gpio12", "gpio14", "gpio15";
+				//#endif /* ODM_WT_EDIT */
 				drive-strength = <2>;
 				bias-disable;
 			};
@@ -1958,6 +1966,7 @@
 				input-disable;
 			};
 		};
+		//#ifdef ODM_WT_EDIT
 		usbid_default: usbid_default {
 			mux {
 				pins = "gpio13";
@@ -1983,6 +1992,8 @@
 				bias-pull-down;
 			};
 		};
+		//#endif /* ODM_WT_EDIT */
+	//#ifdef ODM_WT_EDIT
 	msm_gpio_140: msm_gpio_140 {
 		mux {
 			 pins = "gpio140";
@@ -2021,5 +2032,6 @@
 			bias-pull-down;
 		};
 	};
+	//#endif
 	};
 };

@@ -347,7 +347,7 @@ static int mdss_fb_notify_update(struct msm_fb_data_type *mfd,
 static int lcd_backlight_registered;
 
 #ifdef ODM_WT_EDIT
-#else
+#else /* ODM_WT_EDIT */
 static void wt_mdss_bright_to_backlight_map(u64 *values, struct msm_fb_data_type *mfd)
 {
 	int value_temp, value_a, value_b;
@@ -384,7 +384,7 @@ static void wt_mdss_bright_to_backlight_map(u64 *values, struct msm_fb_data_type
 	return ;
 }
 
-#endif
+#endif /* ODM_WT_EDIT */
 
 static void mdss_fb_set_bl_brightness(struct led_classdev *led_cdev,
 				      enum led_brightness value)
@@ -394,7 +394,7 @@ static void mdss_fb_set_bl_brightness(struct led_classdev *led_cdev,
 
 #ifdef ODM_WT_EDIT
 	int value_temp, value_a, value_b;
-#endif
+#endif /* ODM_WT_EDIT */
 
 	if (mfd->boot_notification_led) {
 		led_trigger_event(mfd->boot_notification_led, 0);
@@ -402,6 +402,7 @@ static void mdss_fb_set_bl_brightness(struct led_classdev *led_cdev,
 	}
 
 #ifdef ODM_WT_EDIT
+//Tianchen.Zhao@ODM_RH.Display Porting
 if ( value > 0) {
 	pr_debug(" %s  value %d \n", __func__, value);
 	if (mfd->panel_info->blmap){
@@ -424,7 +425,7 @@ if ( value > 0) {
 	if (value < mfd->panel_info->bl_min)
 		value = mfd->panel_info->bl_min;
 }
-#endif
+#endif /* ODM_WT_EDIT */
 
 	if (value > mfd->panel_info->brightness_max)
 		value = mfd->panel_info->brightness_max;
@@ -435,11 +436,11 @@ if ( value > 0) {
 #ifdef ODM_WT_EDIT
 	MDSS_BRIGHT_TO_BL(bl_lvl, value, mfd->panel_info->bl_max,
 				mfd->panel_info->brightness_max);
-#else
+#else /* ODM_WT_EDIT */
 	bl_lvl = value;
 	wt_mdss_bright_to_backlight_map(&bl_lvl, mfd);
 	pr_debug(" %s  value after %lld \n", __func__, bl_lvl);
-#endif
+#endif /* ODM_WT_EDIT */
 
 
 
@@ -3304,6 +3305,7 @@ static int mdss_fb_open(struct fb_info *info, int user)
 	int result;
 	struct task_struct *task = current->group_leader;
 	#ifdef ODM_WT_EDIT
+	//Tianchen.Zhao@ODM_RH.Display Porting
 	g_shutdown_pending = 0;
 	#endif
 

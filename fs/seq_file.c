@@ -27,7 +27,6 @@ static void *seq_buf_alloc(unsigned long size)
 {
 	void *buf;
 #ifndef VENDOR_EDIT
-/*huacai.zhou@PSW.BSP.Kernel.MM 2018/07/18 optimize for high order allocation*/
 	gfp_t gfp = GFP_KERNEL;
 	/*
 	 * For high order allocations, use __GFP_NORETRY to avoid oom-killing -

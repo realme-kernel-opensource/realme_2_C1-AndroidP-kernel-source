@@ -213,6 +213,7 @@ static inline int __sched __down_common(struct semaphore *sem, long state,
 
 	for (;;) {
 		if (signal_pending_state(state, task) || hung_long_and_fatal_signal_pending(task))
+		//#endif
 			goto interrupted;
 		if (unlikely(timeout <= 0))
 			goto timed_out;

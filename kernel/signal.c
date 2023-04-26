@@ -1047,7 +1047,9 @@ static int __send_signal(int sig, struct siginfo *info, struct task_struct *t,
         if(1) {
                 /*add the SIGKILL print log for some debug*/
                 if((sig == SIGHUP || sig == 33 || sig == SIGKILL || sig == SIGSTOP || sig == SIGABRT || sig == SIGTERM || sig == SIGCONT) && is_key_process(t)) {
+                        //#ifdef VENDOR_EDIT
                         dump_stack();
+                        //#endif
                         printk("Some other process %d:%s want to send sig:%d to pid:%d tgid:%d comm:%s\n", current->pid, current->comm,sig, t->pid, t->tgid, t->comm);
                 }
         }
@@ -2931,6 +2933,7 @@ SYSCALL_DEFINE4(rt_sigtimedwait, const sigset_t __user *, uthese,
 SYSCALL_DEFINE2(kill, pid_t, pid, int, sig)
 {
 #ifdef CONFIG_OPPO_SPECIAL_BUILD
+/*Hanxing.Duan@ODM.RH.BSP.CHARGER debug kill -9 2019.07.29*/
 	int ret=0;
 #endif /*CONFIG_OPPO_SPECIAL_BUILD*/
 	struct siginfo info;
@@ -2940,6 +2943,7 @@ SYSCALL_DEFINE2(kill, pid_t, pid, int, sig)
 	info.si_code = SI_USER;
 
 #ifdef CONFIG_OPPO_SPECIAL_BUILD
+/*Hanxing.Duan@ODM.RH.BSP.CHARGER debug kill -9 2019.07.29*/
 	if(sig==SIGKILL)
 		printk("SIGKILL debug Signal %d ,pid=%d. in\n", sig,pid);
 #endif /*CONFIG_OPPO_SPECIAL_BUILD*/
@@ -2948,6 +2952,7 @@ SYSCALL_DEFINE2(kill, pid_t, pid, int, sig)
 	info.si_uid = from_kuid_munged(current_user_ns(), current_uid());
 
 #ifdef CONFIG_OPPO_SPECIAL_BUILD
+/*Hanxing.Duan@ODM.RH.BSP.CHARGER debug kill -9 2019.07.29*/
 	ret=kill_something_info(sig, &info, pid);
 	if(sig==SIGKILL)
 		printk("SIGKILL debug Signal %d ,pid=%d. ret = %d out\n", sig, pid, ret);

@@ -480,6 +480,7 @@ struct diag_logging_mode_param_t {
 	int peripheral;
 } __packed;
 
+//#ifdef VENDOR_EDIT
 //add for fix diag_mdlog kill fail,case 03877835 ,cr 2326409
 struct diag_query_pid_t {
 	uint32_t peripheral_mask;
@@ -491,6 +492,7 @@ struct diag_con_all_param_t {
 	uint32_t diag_con_all;
 	uint32_t num_peripherals;
 };
+//#endif
 struct diag_md_session_t {
 	int pid;
 	int peripheral_mask;

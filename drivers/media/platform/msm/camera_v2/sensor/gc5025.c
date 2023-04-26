@@ -21,10 +21,13 @@
 DEFINE_MSM_MUTEX(gc5025_mut);
 
 //#undef CDBG
+//#ifdef CONFIG_MSMB_CAMERA_DEBUG
 #define CDBG(fmt, args...) pr_debug(fmt, ##args)
 #define CINFO(fmt, args...) pr_info(fmt, ##args)
 #define CERR(fmt, args...) pr_err(fmt, ##args)
+//#else
 //#define CDBG(fmt, args...) do { } while (0)
+//#endif
 
 #define IMAGE_NORMAL_MIRROR
 //#define IMAGE_H_MIRROR

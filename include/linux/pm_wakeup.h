@@ -62,7 +62,6 @@ struct wakeup_source {
 	
 	
 #ifdef VENDOR_EDIT
-// Wenxian.Zhen@PSW.BSP.Power.Basic,, 2018/05/21, add for analysis power consumption
     ktime_t total_time_backup;
 #endif //VENDOR_EDIT	
 	ktime_t max_time;

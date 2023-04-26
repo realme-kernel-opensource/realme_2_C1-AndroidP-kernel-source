@@ -1683,9 +1683,10 @@ static int exec_binprm(struct linux_binprm *bprm)
 	return ret;
 }
 
+#ifdef VENDOR_EDIT
 #ifdef OPPO_DISALLOW_KEY_INTERFACES
 
-#ifdef VENDOR_EDIT
+
 #if defined(CONFIG_OPPO_EXECVE_BLOCK) || defined(CONFIG_OPPO_EXECVE_REPORT)
 static int boot_state = -1;
 int get_oem_boot_state(void)

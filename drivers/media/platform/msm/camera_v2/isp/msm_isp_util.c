@@ -420,7 +420,7 @@ static int msm_isp_start_fetch_engine_multi_pass(struct vfe_device *vfe_dev,
 		    stream_info->wm[vfe_idx][i], 1);
 		    wm_reload_mask |= (1 << stream_info->wm[vfe_idx][i]);
 		}
-#endif
+#endif /* ODM_WT_EDIT */
 		vfe_dev->hw_info->vfe_ops.core_ops.reg_update(vfe_dev,
 			VFE_SRC_MAX);
 		vfe_dev->hw_info->vfe_ops.axi_ops.reload_wm(vfe_dev,
